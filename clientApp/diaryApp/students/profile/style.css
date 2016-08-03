@@ -4,3 +4,7 @@ md-input-container .md-input{
     color: rgba(0, 0, 0, .6)!important;
     border-color: rgba(63, 63, 63, .5);
 }
+
+md-sidenav {
+    max-width: 300px;
+}

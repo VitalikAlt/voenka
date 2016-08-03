@@ -11,17 +11,17 @@
           templateUrl: 'diaryApp/students/view.html',
           abstract: true
         })
-          .state('students.add', {
-            url: '/add',
-            controller: 'StudentsAddController',
-            controllerAs: 'add',
-            templateUrl: 'diaryApp/students/add/view.html'
-          });
-          // .state('students.profile', {
-          //   url: '/profile/:student_id',
+          // .state('students.add', {
+          //   url: '/add',
           //   controller: 'StudentsAddController',
           //   controllerAs: 'add',
           //   templateUrl: 'diaryApp/students/add/view.html'
           // });
+          .state('students.profile', {
+            url: '/profile/:student_id',
+            controller: 'StudentsProfileController',
+            controllerAs: 'profile',
+            templateUrl: 'diaryApp/students/profile/view.html'
+          });
     });
 })();

@@ -44,12 +44,16 @@ angular.module('app',
     angular
         .module('app.auth')
         .controller('AuthController',
-            function (authHelper, $state) {
+            function (authHelper, $state, $mdDialog) {
                 var vm = this;
 
                 vm.authorize = authorize;
-                vm.addStudent = addStudent;
+                vm.addStudent = startAddStudentDialog;
                 vm.registerTeacher = registerTeacher;
+
+                vm.mdDialog = $mdDialog;
+                vm.dialogDone = dialogDone;
+                vm.dialogCancel = dialogCancel;
 
                 function authorize(login, password) {
                     var type = authHelper.login(login, password).type;
@@ -60,12 +64,54 @@ angular.module('app',
                     }   
                 }
 
-                function addStudent() {
-                    $state.go('students.add');
-                }
+                // function addStudent(ev) {
+                //     // $state.go('students.add');
+                //     $state.go('students.profile', { student_id: 'temp' });
+                //     //startAddStudentDialog(ev);
+                // }
 
                 function registerTeacher() {
                     $state.go('teachers.add');
+                }
+
+
+                // Запуск диалогового окна добавления студента
+                function startAddStudentDialog(ev) {
+                    var controller = this;
+                    controller.mdDialog.show({
+                        controller: 'AuthController',
+                        controllerAs: 'auth',
+                        templateUrl: 'diaryApp/auth/views/addStudentDialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: false,
+                    })
+                    .then(function(newStudent) {
+                        console.log(newStudent);
+                        var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
+                        $state.go('students.profile', { student_id: newID });
+                        // if (controller.dialogParams.getParams().isAddedState) {
+                        //     insertToStageArray(newStage, controller.config.sales_funnel.stages);
+                        //     controller.config.sales_funnel.countUserStages++;
+                        // }
+                        // else {
+                        //     delFromStageArray(newStage, controller.config.sales_funnel.stages);
+                        //     insertToStageArray(newStage, controller.config.sales_funnel.stages);
+                        // }
+                    }, function() {
+                        // закрыто диалоговое окно
+                    });
+                }
+
+                // Обработка подтверждения действия и закрытия диалогового окна
+                // objFromDialog (Object) - объект изменений
+                function dialogDone(objFromDialog) {
+                    this.mdDialog.hide(objFromDialog);
+                }
+
+                // Нажатие отмены (закрыть)
+                function dialogCancel() {
+                    this.mdDialog.cancel();
                 }
             }
         ); 
@@ -166,7 +212,7 @@ angular.module('app',
 (function(){
     angular
         .module('app.students')
-        .controller('StudentsAddController',
+        .controller('StudentsProfileController',
             function () {
                 var vm = this;
             }
@@ -192,17 +238,17 @@ angular.module('app',
           templateUrl: 'diaryApp/students/view.html',
           abstract: true
         })
-          .state('students.add', {
-            url: '/add',
-            controller: 'StudentsAddController',
-            controllerAs: 'add',
-            templateUrl: 'diaryApp/students/add/view.html'
-          });
-          // .state('students.profile', {
-          //   url: '/profile/:student_id',
+          // .state('students.add', {
+          //   url: '/add',
           //   controller: 'StudentsAddController',
           //   controllerAs: 'add',
           //   templateUrl: 'diaryApp/students/add/view.html'
           // });
+          .state('students.profile', {
+            url: '/profile/:student_id',
+            controller: 'StudentsProfileController',
+            controllerAs: 'profile',
+            templateUrl: 'diaryApp/students/profile/view.html'
+          });
     });
 })();

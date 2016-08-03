@@ -20,23 +20,23 @@
     display: flex;
 }
 
-md-input-container label,
-md-input-container.md-input-has-value label{
+.authForm md-input-container label,
+.authForm md-input-container.md-input-has-value label{
     color: #9e9e9e!important;
 }
 
-md-input-container .md-input{
+.authForm md-input-container .md-input{
     border-color: rgba(255, 255, 255, 0.33);
     color: rgba(255, 255, 255, 0.7);
 }
 
-.md-input-focused label{
+.authForm .md-input-focused label{
     color: white!important;
 }
-.md-input-focused input{
+.authForm .md-input-focused input{
     border-color: white!important;
 }
 
-.md-button span {
+.authForm .md-button.auth_form_btn span {
     color: white;
 }

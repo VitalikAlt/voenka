@@ -1,7 +1,7 @@
 (function(){
     angular
         .module('app.students')
-        .controller('StudentsAddController',
+        .controller('StudentsProfileController',
             function () {
                 var vm = this;
             }

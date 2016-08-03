@@ -1,0 +1,22 @@
+.add_student_dialog {
+    padding: 50px 20px 0 50px;
+}
+
+.add_student_dialog md-input-container label,
+.add_student_dialog md-input-container.md-input-has-value label{
+    color: #5e5e5e!important;
+}
+
+.add_student_dialog md-input-container .md-input{
+    border-color: rgba(0, 0, 0, 0.33);
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.add_student_dialog md-input-container {
+    margin: 0;
+}
+
+.student_fields_container {
+    margin-top: 20px;
+}
+
