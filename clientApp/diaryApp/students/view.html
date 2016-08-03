@@ -1,0 +1,33 @@
+<div class="students_view_container" layout="row" flex>
+    <link rel="stylesheet" href="diaryApp/students/styles/menu.css">
+    <link rel="stylesheet" href="diaryApp/students/styles/styles.css">
+    <md-sidenav flex
+                md-is-open="true"
+                layout="column"
+                md-component-id="left"
+                class="md-sidenav-left md-whiteframe-z2"
+                md-is-locked-open="true">
+        <md-toolbar layout="row">
+            <div class="menu-header-label">Меню</div>
+        </md-toolbar>
+        <md-content flex id="content" flex role="navigation">
+            <md-button ui-sref="students.profile" id="menu_btn_student_profile" class="menu-row" badge-menu layout="row" > 
+                <span class="menu-label">Профиль</span>
+                <!--<md-icon md-font-library="material-icons">desktop_windows</md-icon>-->
+            </md-button>
+            <md-button ui-sref="students.marks" id="menu_btn_student_marks" class="menu-row" badge-menu layout="row" > 
+                <span class="menu-label">Успеваемость</span>
+            </md-button>
+            <md-button ui-sref="students.shedule" id="menu_btn_student_shedule" class="menu-row" badge-menu layout="row" > 
+                <span class="menu-label">Расписание</span>
+            </md-button>
+        </md-content>
+    </md-sidenav>
+
+    <md-content layout-padding
+                flex
+                class="ui-view nested_students_block"
+                md-whiteframe="4">
+    </md-content>
+    <!--<ui-view class="nested_students_block" flex></ui-view>-->
+</div>

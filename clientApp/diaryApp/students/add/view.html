@@ -1,0 +1,39 @@
+<div class="students_add_container">
+    <link rel="stylesheet" href="diaryApp/students/add/style.css">
+    <h2 class="inner_header">Карточка студента</h2>
+    
+    <div class="edited_string" layout="row">
+        <div class="card_left_column" flex="80">
+            <md-input-container>
+            <input name="name"
+                    type="text"
+                    ng-model="studentName"
+                    placeholder="Имя"
+                    aria-label="name">
+            </md-input-container>
+            <md-input-container>
+            <input name="surname"
+                    type="text"
+                    ng-model="studentSurname"
+                    placeholder="Фамилия"
+                    aria-label="surname">
+            </md-input-container>
+            <md-input-container>
+            <input name="father_name"
+                    type="text"
+                    ng-model="studentFatherName"
+                    placeholder="Отчество"
+                    aria-label="father_name">
+            </md-input-container>
+        </div>
+        <div class="card_right_column" flex="20">
+            <div class="student_photo"
+                 style="width: 150px; height:200px;background:grey;"></div>
+            <md-button href="url"
+                       id="download_photo_btn"
+                       class="md-primary"
+                       aria-label="download_photo"> Загрузить фото </md-button>
+        </div>
+
+    </div>
+</div>
