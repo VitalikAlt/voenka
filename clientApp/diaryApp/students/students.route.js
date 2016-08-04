@@ -8,20 +8,20 @@
           url: '/students',
           controller: 'StudentsController',
           controllerAs: 'students',
-          templateUrl: 'diaryApp/students/view.html',
-          abstract: true
+          templateUrl: 'diaryApp/students/students.html',
+          abstract: true,
+          // resolve: {
+          // Кидать AuthorizationError <- Error и обрабатывать в run
+          //   isGranted: function(permissionService) {
+          //     return permissionService.isGrantedAccessToStudent;
+          //   }
+          // }
         })
-          // .state('students.add', {
-          //   url: '/add',
-          //   controller: 'StudentsAddController',
-          //   controllerAs: 'add',
-          //   templateUrl: 'diaryApp/students/add/view.html'
-          // });
           .state('students.profile', {
             url: '/profile/:student_id',
             controller: 'StudentsProfileController',
             controllerAs: 'profile',
-            templateUrl: 'diaryApp/students/profile/view.html'
+            templateUrl: 'diaryApp/students/profile/profile.html'
           });
     });
 })();

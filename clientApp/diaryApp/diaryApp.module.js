@@ -8,6 +8,15 @@ angular.module('app',
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 
+        // Handle exceptions
+        $rootScope.$on('$stateChangeError', function() {
+            var error = arguments[5];
+            // Перекидывание на страницу авторизации
+            // if (error instanceof AuthorizationError) {
+            //     $state.go('auth');
+            // }
+            throw error;
+        });
         // $rootScope.$on('$routeChangeStart',
         //  function(evt, next, current) {
         //     if (!authHelper.isLogin()) {

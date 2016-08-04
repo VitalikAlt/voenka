@@ -7,7 +7,7 @@
 
                 vm.authorize = authorize;
                 vm.addStudent = startAddStudentDialog;
-                vm.registerTeacher = registerTeacher;
+                vm.registerTeacher = startAddTeacherDialog;
 
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
@@ -28,9 +28,9 @@
                 //     //startAddStudentDialog(ev);
                 // }
 
-                function registerTeacher() {
-                    $state.go('teachers.add');
-                }
+                // function registerTeacher() {
+                //     $state.go('teachers.add');
+                // }
 
 
                 // Запуск диалогового окна добавления студента
@@ -48,14 +48,26 @@
                         console.log(newStudent);
                         var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
                         $state.go('students.profile', { student_id: newID });
-                        // if (controller.dialogParams.getParams().isAddedState) {
-                        //     insertToStageArray(newStage, controller.config.sales_funnel.stages);
-                        //     controller.config.sales_funnel.countUserStages++;
-                        // }
-                        // else {
-                        //     delFromStageArray(newStage, controller.config.sales_funnel.stages);
-                        //     insertToStageArray(newStage, controller.config.sales_funnel.stages);
-                        // }
+                    }, function() {
+                        // закрыто диалоговое окно
+                    });
+                }
+
+                // Запуск диалогового окна добавления студента
+                function startAddTeacherDialog(ev) {
+                    var controller = this;
+                    controller.mdDialog.show({
+                        controller: 'AuthController',
+                        controllerAs: 'auth',
+                        templateUrl: 'diaryApp/auth/views/addTeacherDialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: false,
+                    })
+                    .then(function(newStudent) {
+                        console.log(newStudent);
+                        var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
+                        // $state.go('teachers.profile', { student_id: newID });
                     }, function() {
                         // закрыто диалоговое окно
                     });

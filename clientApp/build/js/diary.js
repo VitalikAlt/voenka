@@ -24,6 +24,15 @@ angular.module('app',
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 
+        // Handle exceptions
+        $rootScope.$on('$stateChangeError', function() {
+            var error = arguments[5];
+            // Перекидывание на страницу авторизации
+            // if (error instanceof AuthorizationError) {
+            //     $state.go('auth');
+            // }
+            throw error;
+        });
         // $rootScope.$on('$routeChangeStart',
         //  function(evt, next, current) {
         //     if (!authHelper.isLogin()) {
@@ -49,7 +58,7 @@ angular.module('app',
 
                 vm.authorize = authorize;
                 vm.addStudent = startAddStudentDialog;
-                vm.registerTeacher = registerTeacher;
+                vm.registerTeacher = startAddTeacherDialog;
 
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
@@ -70,9 +79,9 @@ angular.module('app',
                 //     //startAddStudentDialog(ev);
                 // }
 
-                function registerTeacher() {
-                    $state.go('teachers.add');
-                }
+                // function registerTeacher() {
+                //     $state.go('teachers.add');
+                // }
 
 
                 // Запуск диалогового окна добавления студента
@@ -90,14 +99,26 @@ angular.module('app',
                         console.log(newStudent);
                         var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
                         $state.go('students.profile', { student_id: newID });
-                        // if (controller.dialogParams.getParams().isAddedState) {
-                        //     insertToStageArray(newStage, controller.config.sales_funnel.stages);
-                        //     controller.config.sales_funnel.countUserStages++;
-                        // }
-                        // else {
-                        //     delFromStageArray(newStage, controller.config.sales_funnel.stages);
-                        //     insertToStageArray(newStage, controller.config.sales_funnel.stages);
-                        // }
+                    }, function() {
+                        // закрыто диалоговое окно
+                    });
+                }
+
+                // Запуск диалогового окна добавления студента
+                function startAddTeacherDialog(ev) {
+                    var controller = this;
+                    controller.mdDialog.show({
+                        controller: 'AuthController',
+                        controllerAs: 'auth',
+                        templateUrl: 'diaryApp/auth/views/addTeacherDialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: false,
+                    })
+                    .then(function(newStudent) {
+                        console.log(newStudent);
+                        var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
+                        // $state.go('teachers.profile', { student_id: newID });
                     }, function() {
                         // закрыто диалоговое окно
                     });
@@ -126,7 +147,7 @@ angular.module('app',
           url: '/auth',
           controller: 'AuthController',
           controllerAs: 'auth',
-          templateUrl: 'diaryApp/auth/view.html'
+          templateUrl: 'diaryApp/auth/auth.html'
         });
     });
 })();
@@ -139,10 +160,19 @@ angular.module('app',
   function authHelper($location, $mdDialog) {
     var factory = {
       isLogin: isLogin, // проверка авторизации текущего пользователя
-      login: login // авторизация пользователя
+      login: login, // авторизация пользователя
+      getGrantedAccess: getGrantedAccess
     };
 
     return factory;
+
+    function getGrantedAccess() {
+      // Return permissions number. 
+      // 7 (111) - full permissions (admin)
+      // 6 (110) - teacher
+      // 4 (100) - student
+      // 0 (000) - not authorized
+    }
 
     function isLogin() {
         return false; // mock
@@ -161,6 +191,15 @@ angular.module('app',
   }
 })();
 
+(function() {
+    angular
+        .module('app')
+        .factory('AuthorizationError', AuthorizationError);
+
+    function AuthorizationError() {
+        return angular.extend(this, Error);
+    }
+})();
 (function(){
     angular
         .module('app')
@@ -203,7 +242,7 @@ angular.module('app',
                 })
                 .state('page404', {
                     url: '/404_page_not_found',
-                    templateUrl: 'diaryApp/page404/view.html'
+                    templateUrl: 'diaryApp/page404/page404.html'
                 });
                 $urlRouterProvider.otherwise('/404_page_not_found');
         });
@@ -215,8 +254,20 @@ angular.module('app',
         .controller('StudentsProfileController',
             function () {
                 var vm = this;
+
+                // Mock for config from server
+                vm.config = config;
             }
         ); 
+    
+    var config = {
+        faculties: [
+            'ИВТФ',
+            'ТЭФ',
+            'ЭЭФ',
+            'ФЭУ'
+        ]
+    }
 })();
 (function(){
     angular
@@ -235,20 +286,20 @@ angular.module('app',
           url: '/students',
           controller: 'StudentsController',
           controllerAs: 'students',
-          templateUrl: 'diaryApp/students/view.html',
-          abstract: true
+          templateUrl: 'diaryApp/students/students.html',
+          abstract: true,
+          // resolve: {
+          // Кидать AuthorizationError <- Error и обрабатывать в run
+          //   isGranted: function(permissionService) {
+          //     return permissionService.isGrantedAccessToStudent;
+          //   }
+          // }
         })
-          // .state('students.add', {
-          //   url: '/add',
-          //   controller: 'StudentsAddController',
-          //   controllerAs: 'add',
-          //   templateUrl: 'diaryApp/students/add/view.html'
-          // });
           .state('students.profile', {
             url: '/profile/:student_id',
             controller: 'StudentsProfileController',
             controllerAs: 'profile',
-            templateUrl: 'diaryApp/students/profile/view.html'
+            templateUrl: 'diaryApp/students/profile/profile.html'
           });
     });
 })();

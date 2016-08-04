@@ -19,7 +19,7 @@
                 })
                 .state('page404', {
                     url: '/404_page_not_found',
-                    templateUrl: 'diaryApp/page404/view.html'
+                    templateUrl: 'diaryApp/page404/page404.html'
                 });
                 $urlRouterProvider.otherwise('/404_page_not_found');
         });

@@ -8,7 +8,7 @@
           url: '/auth',
           controller: 'AuthController',
           controllerAs: 'auth',
-          templateUrl: 'diaryApp/auth/view.html'
+          templateUrl: 'diaryApp/auth/auth.html'
         });
     });
 })();
