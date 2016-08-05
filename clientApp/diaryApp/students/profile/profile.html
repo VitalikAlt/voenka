@@ -1,74 +1,144 @@
 <div class="students_profile_container">
-    <link rel="stylesheet" href="diaryApp/students/profile/style.css">
+    <link rel="stylesheet" href="diaryApp/students/profile/profile.css">
     <h2 class="inner_header">Карточка студента</h2>
     
-    <div class="profile_field" layout="row">
-        <div class="card_left_column" flex="80">
-            <div class="edited_string">
-                <md-input-container>
-                    <input name="name"
-                        type="text"
-                        ng-model="student.name"
-                        placeholder="Имя"
-                        aria-label="name">
-                </md-input-container>
-                <md-input-container>
-                    <input name="surname"
-                        type="text"
-                        ng-model="student.surname"
-                        placeholder="Фамилия"
-                        aria-label="surname">
-                </md-input-container>
-                <md-input-container>
-                    <input name="father_name"
-                        type="text"
-                        ng-model="student.fatherName"
-                        placeholder="Отчество"
-                        aria-label="father_name">
-                </md-input-container>
-            </div>
+    <div class="profile_field" layout="column">
+        <div layout="row">
+            <div class="card_left_column" flex="80">
+                <div class="edited_string">
+                    <md-input-container flex class="field-container">
+                        <input name="name"
+                            type="text"
+                            ng-model="student.name"
+                            placeholder="Имя"
+                            aria-label="name">
+                    </md-input-container>
+                    <md-input-container flex class="field-container">
+                        <input name="surname"
+                            type="text"
+                            ng-model="student.surname"
+                            placeholder="Фамилия"
+                            aria-label="surname">
+                    </md-input-container>
+                    <md-input-container flex class="field-container">
+                        <input name="father_name"
+                            type="text"
+                            ng-model="student.fatherName"
+                            placeholder="Отчество"
+                            aria-label="father_name">
+                    </md-input-container>
+                </div>
 
-            <div class="edited_string">
-                <md-input-container>
-                    <input name="email"
-                        type="email"
-                        ng-model="student.email"
-                        placeholder="Email"
-                        aria-label="email">
-                </md-input-container>
-                <md-input-container>
-                    <input name="birth_place"
-                        type="text"
-                        ng-model="student.birthPlace"
-                        placeholder="Место рождения"
-                        aria-label="birthPlace">
-                </md-input-container>
-                <!--Сделать более удобным выбор года, месяца и дня-->
-                <md-datepicker ng-model="student.birthDate"
-                               md-placeholder="Дата рождения"></md-datepicker>
-                
+                <div class="edited_string">
+                    <md-input-container flex="50" class="field-container">
+                        <input name="email"
+                            type="email"
+                            ng-model="student.email"
+                            placeholder="Email"
+                            aria-label="email">
+                    </md-input-container>
+                    <div class="h_flex_centered field-container" flex>
+                        <md-button id="change_pass_btn"
+                                class="green-btn md-raised"
+                                aria-label="change_pass_btn"> Изменить пароль </md-button>
+                    </div>
+                </div>
+                <div class="edited_string">
+                    <md-input-container flex="50" class="field-container">
+                        <input name="birth_place"
+                            type="text"
+                            ng-model="student.birthPlace"
+                            placeholder="Место рождения"
+                            aria-label="birthPlace">
+                    </md-input-container>
+                    <div class="h_flex_centered field-container" flex>
+                        <!--Сделать более удобным выбор года, месяца и дня-->
+                        <md-datepicker ng-model="student.birthDate"
+                                    md-placeholder="Дата рождения"></md-datepicker>
+                    </div>
+                    
+                </div>
+                <div class="edited_string">
+                    <md-input-container flex class="field-container">
+                        <input name="education"
+                            type="text"
+                            ng-model="student.education"
+                            placeholder="Образование"
+                            aria-label="education">
+                    </md-input-container>
+                    <md-input-container flex class="field-container">
+                        <input name="military"
+                            type="text"
+                            ng-model="student.military"
+                            placeholder="Служба в армии, звание"
+                            aria-label="military">
+                    </md-input-container>
+                </div>
+                <div class="edited_string">
+                    <md-input-container flex="20" class="field-container">
+                        <label>Факультет</label>
+                        <md-select flex 
+                                ng-model="student.faculty"
+                                placeholder="Факультет">
+                            <md-option ng-value="faculty" ng-repeat="faculty in profile.config.faculties">
+                                {{ faculty }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex="30" class="field-container">
+                        <label>Год приема</label>
+                        <md-select flex 
+                                ng-model="student.start_study_year"
+                                placeholder="Год приема">
+                            <md-option ng-value="year" ng-repeat="year in profile.years">
+                                {{ year }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex class="field-container">
+                        <label>Заключение ВВК</label>
+                        <md-select flex 
+                                ng-model="student.conclusion"
+                                placeholder="Заключение ВВК">
+                            <md-option ng-value="conclusion" ng-repeat="conclusion in profile.config.conclusions">
+                                {{ conclusion }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div class="edited_string">
+                    <md-input-container flex class="field-container">
+                        <input name="address"
+                            type="text"
+                            ng-model="student.address"
+                            placeholder="Адрес студента"
+                            aria-label="address">
+                    </md-input-container>
+                </div>
+                <div class="edited_string">
+                    <md-input-container flex class="field-container">
+                        <input name="parents_address"
+                            type="text"
+                            ng-model="student.parents_address"
+                            placeholder="Адрес родителей студента"
+                            aria-label="parents_address">
+                    </md-input-container>
+                </div>
             </div>
-            <div class="edited_string">
-                <md-select ng-model="student.faculty"
-                           placeholder="Факультет"
-                           flex="30">
-                  <md-option ng-value="faculty" ng-repeat="faculty in profile.config.faculties">
-                    {{ faculty }}
-                  </md-option>
-                </md-select>
+            <div class="card_right_column" layout="column" flex="20">
+                <div class="student_photo"
+                    style="width: 150px; height:200px;background:grey;"></div>
+                <md-button href="url"
+                        id="download_photo_btn"
+                        class="green_btn"
+                        aria-label="download_photo"> Загрузить фото </md-button>
             </div>
         </div>
-        <div class="card_right_column" flex="20">
-            <md-button id="change_pass_btn"
-                       class="md-primary"
-                       aria-label="change_pass_btn"> Изменить пароль </md-button>
-            <div class="student_photo"
-                 style="width: 150px; height:200px;background:grey;"></div>
-            <md-button href="url"
-                       id="download_photo_btn"
-                       class="md-primary"
-                       aria-label="download_photo"> Загрузить фото </md-button>
+        <div class="actions_block" layout="row" flex>
+            <md-button class="green_btn"
+                aria-label="cancel_btn"> Сброс </md-button>
+            <md-button class="green_btn"
+                aria-label="save_btn"> Сохранить </md-button>
         </div>
-
     </div>
 </div>

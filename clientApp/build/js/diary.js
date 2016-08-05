@@ -17,6 +17,7 @@
 angular.module('app',
     [
         'app.core',
+        'app.directives',
         'app.auth',
         'app.students'
     ])
@@ -51,6 +52,9 @@ angular.module('app',
         // });
     }
 );
+(function() {
+    angular.module('app.directives', []);
+})();
 (function(){
     'use strict';
     angular.module('app.students', []);
@@ -181,17 +185,18 @@ angular.module('app',
       // 0 (000) - not authorized
     }
 
+    // TODO: использовать метод getGrantedAccess для разделения доступа
     function isLogin() {
         //return false; // mock
         var defered = $q.defer();
-        // defered.resolve(true);
-        if (true) {
-          $rootScope.$broadcast(
-            'AuthorizationError',
-            new AuthorizationError('Current user is not authorized')
-          );
-          defered.reject();
-        }
+        defered.resolve(true);
+        // if (true) {
+        //   $rootScope.$broadcast(
+        //     'AuthorizationError',
+        //     new AuthorizationError('Current user is not authorized')
+        //   );
+        //   defered.reject();
+        // }
         return defered.promise;
     }
 
@@ -260,12 +265,50 @@ function AuthorizationError(message) {
         });
 })();
 
+ // Директива для подсветки пунктов меню
+ angular.module('app.directives').directive('badgeMenu', function ($state) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            scope.$on('$stateChangeSuccess', function(){
+                badgeCurrentMenuRow(element, attrs.uiSref, $state.current.name);
+            });
+        }
+    }
+});
+
+// Проверяет, совпадают ли id пункта меню и параметр текущей страницы
+function badgeCurrentMenuRow(element, elemId, currentState) {
+    if (currentState.indexOf(elemId) !== -1) {
+        element.addClass('active-row');
+        element.removeClass('unactive-row');
+    }
+    else {
+        element.removeClass('active-row');
+        element.addClass('unactive-row');
+    }
+}
+(function(){
+    'use strict';
+    angular
+        .module('app.students')
+        .controller('StudentsMarksController', function() {
+            
+        });
+})();
 (function(){
     angular
         .module('app.students')
         .controller('StudentsProfileController',
             function () {
                 var vm = this;
+
+                vm.years = [];
+                var currentYear = new Date().getFullYear();
+                var CountYearsForSelect = 10;
+                for (var year = currentYear; year > currentYear - CountYearsForSelect; year--) {
+                    vm.years.push(year);
+                }
 
                 // Mock for config from server
                 vm.config = config;
@@ -278,8 +321,20 @@ function AuthorizationError(message) {
             'ТЭФ',
             'ЭЭФ',
             'ФЭУ'
+        ],
+        conclusions: [
+            "А - годен к военной службе",
+            "Б - годен с ограничениями"
         ]
     }
+})();
+(function(){
+    'use strict';
+    angular
+        .module('app.students')
+        .controller('StudentsScheduleController', function() {
+
+        });
 })();
 (function(){
     angular
@@ -317,6 +372,18 @@ function AuthorizationError(message) {
             controller: 'StudentsProfileController',
             controllerAs: 'profile',
             templateUrl: 'diaryApp/students/profile/profile.html'
+          })
+          .state('students.marks', {
+            url: '/marks/:student_id',
+            controller: 'StudentsMarksController',
+            controllerAs: 'marks',
+            templateUrl: 'diaryApp/students/marks/marks.html'
+          })
+          .state('students.schedule', {
+            url: '/schedule/:student_id',
+            controller: 'StudentsScheduleController',
+            controllerAs: 'schedule',
+            templateUrl: 'diaryApp/students/schedule/schedule.html'
           });
     });
 })();

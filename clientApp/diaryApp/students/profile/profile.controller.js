@@ -5,6 +5,13 @@
             function () {
                 var vm = this;
 
+                vm.years = [];
+                var currentYear = new Date().getFullYear();
+                var CountYearsForSelect = 10;
+                for (var year = currentYear; year > currentYear - CountYearsForSelect; year--) {
+                    vm.years.push(year);
+                }
+
                 // Mock for config from server
                 vm.config = config;
             }
@@ -16,6 +23,10 @@
             'ТЭФ',
             'ЭЭФ',
             'ФЭУ'
+        ],
+        conclusions: [
+            "А - годен к военной службе",
+            "Б - годен с ограничениями"
         ]
     }
 })();

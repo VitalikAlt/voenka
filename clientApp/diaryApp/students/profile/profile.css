@@ -1,0 +1,42 @@
+md-input-container label,
+md-input-container.md-input-has-value label,
+md-input-container .md-input,
+md-input-container .md-placeholder,
+md-input-container .md-select-value,
+md-input-container .md-select-value span {
+    color: rgba(0, 0, 0, .6)!important;
+    border-color: rgba(63, 63, 63, .5);
+}
+
+.edited_string {
+    display: flex;
+    align-items: center;
+}
+
+.card_right_column {
+    padding: 20px;
+    align-items: center;
+    display: flex;
+}
+
+.h_flex_centered {
+    display: flex;
+    justify-content: center;  
+}
+
+.field-container {
+    margin-left: 10px;
+}
+
+.actions_block {
+    justify-content: flex-end;
+}
+
+.md-button.green_btn {
+    color: rgb(28, 112, 0);
+}
+
+/*.md-raised.green-btn {
+    color: white;
+    background-color: rgb(28, 112, 0);
+}*/

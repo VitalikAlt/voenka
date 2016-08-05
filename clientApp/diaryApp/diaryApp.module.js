@@ -1,6 +1,7 @@
 angular.module('app',
     [
         'app.core',
+        'app.directives',
         'app.auth',
         'app.students'
     ])

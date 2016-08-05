@@ -27,6 +27,18 @@
             controller: 'StudentsProfileController',
             controllerAs: 'profile',
             templateUrl: 'diaryApp/students/profile/profile.html'
+          })
+          .state('students.marks', {
+            url: '/marks/:student_id',
+            controller: 'StudentsMarksController',
+            controllerAs: 'marks',
+            templateUrl: 'diaryApp/students/marks/marks.html'
+          })
+          .state('students.schedule', {
+            url: '/schedule/:student_id',
+            controller: 'StudentsScheduleController',
+            controllerAs: 'schedule',
+            templateUrl: 'diaryApp/students/schedule/schedule.html'
           });
     });
 })();

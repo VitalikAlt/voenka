@@ -21,17 +21,18 @@
       // 0 (000) - not authorized
     }
 
+    // TODO: использовать метод getGrantedAccess для разделения доступа
     function isLogin() {
         //return false; // mock
         var defered = $q.defer();
-        // defered.resolve(true);
-        if (true) {
-          $rootScope.$broadcast(
-            'AuthorizationError',
-            new AuthorizationError('Current user is not authorized')
-          );
-          defered.reject();
-        }
+        defered.resolve(true);
+        // if (true) {
+        //   $rootScope.$broadcast(
+        //     'AuthorizationError',
+        //     new AuthorizationError('Current user is not authorized')
+        //   );
+        //   defered.reject();
+        // }
         return defered.promise;
     }
 

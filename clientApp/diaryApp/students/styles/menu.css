@@ -21,15 +21,16 @@
     font-size: 1.3em; 
     text-align: right;
     padding: 20px;
-    background: rgba(5, 40, 0, 1);
+    background: rgb(9, 73, 0);
 }
 
 .active-row {
-    background-color: rgb(74, 88, 125);
+    background-color: rgb(9, 73, 0);
+    color: white;
 }
 
 .active-row:hover {
-    background-color: rgb(55, 72, 121)!important;
+    background-color: rgb(15, 118, 0)!important;
 }
 
 /*md-sidenav  {
@@ -38,6 +39,7 @@
 }*/
 
 md-sidenav {
-    /*position: fixed!important;*/
+    position: fixed!important;
     height: 100vh;
+    width: 300px;
 }
