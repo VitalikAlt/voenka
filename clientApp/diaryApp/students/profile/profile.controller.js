@@ -27,6 +27,16 @@
         conclusions: [
             "А - годен к военной службе",
             "Б - годен с ограничениями"
+        ],
+        docs: [
+            {
+                name: 'Паспорт',
+                cover: '/assets/images/background.png' //url("/assets/images/background.png")
+            },
+            {
+                name: 'СНИЛС',
+                cover: '/assets/images/background.png'
+            },
         ]
     }
 })();

@@ -40,3 +40,29 @@ md-input-container .md-select-value span {
     color: white;
     background-color: rgb(28, 112, 0);
 }*/
+
+.doc_container {
+    padding: 10px;
+    align-items: center;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+}
+
+.doc_container img {
+    width: 100%;
+    height: 200px;
+}
+
+.doc_container span {
+    margin-top: 10px;
+}
+
+.md-button.md-fab {
+    background-color: #007200;
+    font-size: 1.3em;
+}
+
+.md-button.md-fab:hover {
+    background-color: #008f00!important;
+}

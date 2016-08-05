@@ -124,7 +124,22 @@
                             aria-label="parents_address">
                     </md-input-container>
                 </div>
+
+                <div class="documents_block" flex>
+                    <h3 class="inner_header inner_h3">Документы</h3>
+                    <div class="edited_string" layout="row">
+                        <div class="doc_container" ng-repeat="doc in profile.config.docs" layout="column">
+                            <img ng-src="{{doc.cover}}" alt="{{doc.name}}">
+                            <span class="doc_name">{{doc.name}}</span>
+                        </div>
+                        <div class="doc_container">
+                            <md-button class="md-fab" aria-label="add_doc"> + </md-button>
+                        </div>
+                       
+                    </div>
+                </div>
             </div>
+
             <div class="card_right_column" layout="column" flex="20">
                 <div class="student_photo"
                     style="width: 150px; height:200px;background:grey;"></div>
@@ -133,6 +148,7 @@
                         class="green_btn"
                         aria-label="download_photo"> Загрузить фото </md-button>
             </div>
+
         </div>
         <div class="actions_block" layout="row" flex>
             <md-button class="green_btn"

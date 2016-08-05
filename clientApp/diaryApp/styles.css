@@ -1,5 +1,5 @@
 .background {
-    background: url("/diaryApp/content/images/background.png");
+    background: url("/assets/images/background.png");
 }
 
 .inner_header {
@@ -9,6 +9,14 @@
     font-weight: 600;
     letter-spacing: 2px;
     font-size: 1.3em;
+}
+
+.inner_h2 {
+    font-size: 1.3em;
+}
+
+.inner_h3 {
+    font-size: 1em;
 }
 
 /* fallback */

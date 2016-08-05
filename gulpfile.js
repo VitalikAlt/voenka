@@ -25,7 +25,7 @@ var vendorsCssFiles = mainBowerFiles({
 // Пути к пользовательским файлам
 var diaryJsPath    = 'clientApp/diaryApp/**/*.js',
     diaryCssPath   = 'clientApp/diaryApp/styles.css',
-    diaryFontsPath = 'clientApp/diaryApp/content/fonts/*';
+    diaryFontsPath = 'clientApp/assets/fonts/*';
 
 gulp.task('vendors_js', function(){
   return gulp.src(vendorsJsFiles)
