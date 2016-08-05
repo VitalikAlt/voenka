@@ -20,7 +20,7 @@ angular.module('app',
         'app.auth',
         'app.students'
     ])
-.run(function($http, $cookies, $rootScope, authHelper, $state) {
+.run(function($http, $cookies, $rootScope, authHelper, $state, $log) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 
@@ -33,15 +33,22 @@ angular.module('app',
             // }
             throw error;
         });
-        // $rootScope.$on('$routeChangeStart',
-        //  function(evt, next, current) {
-        //     if (!authHelper.isLogin()) {
-        //         if (next.templateUrl === "login.html") {
-        //         } else {
-        //             $state.go('auth');
-        //         }
-        //     }
-        //  });
+
+        // Упрощенная проверка и прееброс на страницу авторизации
+        $rootScope.$on('$stateChangeStart',
+         function(evt, next, current) {
+             if (next.name == 'auth') return;
+             authHelper.isLogin()
+                .catch(function() {
+                    $state.go('auth');
+                    evt.preventDefault();
+                });
+         });
+
+        // $rootScope.$on('AuthorizationError', function (ev, error){
+        //     $log.error(error.message);
+        //     $state.go('auth');
+        // });
     }
 );
 (function(){
@@ -157,7 +164,7 @@ angular.module('app',
     .module('app.auth')
     .factory('authHelper', authHelper);
 
-  function authHelper($location, $mdDialog) {
+  function authHelper($location, $mdDialog, $rootScope, $q) {
     var factory = {
       isLogin: isLogin, // проверка авторизации текущего пользователя
       login: login, // авторизация пользователя
@@ -175,7 +182,17 @@ angular.module('app',
     }
 
     function isLogin() {
-        return false; // mock
+        //return false; // mock
+        var defered = $q.defer();
+        // defered.resolve(true);
+        if (true) {
+          $rootScope.$broadcast(
+            'AuthorizationError',
+            new AuthorizationError('Current user is not authorized')
+          );
+          defered.reject();
+        }
+        return defered.promise;
     }
 
     function login(username, password) {
@@ -191,15 +208,10 @@ angular.module('app',
   }
 })();
 
-(function() {
-    angular
-        .module('app')
-        .factory('AuthorizationError', AuthorizationError);
-
-    function AuthorizationError() {
-        return angular.extend(this, Error);
-    }
-})();
+function AuthorizationError(message) {
+    this.name = 'AuthorizationError';
+    this.message = message;
+}
 (function(){
     angular
         .module('app')
@@ -215,9 +227,9 @@ angular.module('app',
             function ($state, authHelper) {
                 var vm = this;
                 // $state.go('auth');
-                if (!authHelper.isLogin()) {
-                    $state.go('auth');
-                }
+                // if (!authHelper.isLogin()) {
+                //     $state.go('auth');
+                // }
             }
         ); 
 })();
@@ -289,7 +301,12 @@ angular.module('app',
           templateUrl: 'diaryApp/students/students.html',
           abstract: true,
           // resolve: {
-          // Кидать AuthorizationError <- Error и обрабатывать в run
+          //   isLogin: function(authHelper) {
+          //     return authHelper.isLogin();
+          //   }
+          // }
+          // resolve: {
+          // //Кидать AuthorizationError <- Error и обрабатывать в run
           //   isGranted: function(permissionService) {
           //     return permissionService.isGrantedAccessToStudent;
           //   }

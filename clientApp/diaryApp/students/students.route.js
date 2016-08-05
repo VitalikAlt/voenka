@@ -11,7 +11,12 @@
           templateUrl: 'diaryApp/students/students.html',
           abstract: true,
           // resolve: {
-          // Кидать AuthorizationError <- Error и обрабатывать в run
+          //   isLogin: function(authHelper) {
+          //     return authHelper.isLogin();
+          //   }
+          // }
+          // resolve: {
+          // //Кидать AuthorizationError <- Error и обрабатывать в run
           //   isGranted: function(permissionService) {
           //     return permissionService.isGrantedAccessToStudent;
           //   }

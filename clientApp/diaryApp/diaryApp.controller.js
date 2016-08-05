@@ -5,9 +5,9 @@
             function ($state, authHelper) {
                 var vm = this;
                 // $state.go('auth');
-                if (!authHelper.isLogin()) {
-                    $state.go('auth');
-                }
+                // if (!authHelper.isLogin()) {
+                //     $state.go('auth');
+                // }
             }
         ); 
 })();

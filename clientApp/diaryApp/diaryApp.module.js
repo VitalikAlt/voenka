@@ -4,7 +4,7 @@ angular.module('app',
         'app.auth',
         'app.students'
     ])
-.run(function($http, $cookies, $rootScope, authHelper, $state) {
+.run(function($http, $cookies, $rootScope, authHelper, $state, $log) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 
@@ -17,14 +17,21 @@ angular.module('app',
             // }
             throw error;
         });
-        // $rootScope.$on('$routeChangeStart',
-        //  function(evt, next, current) {
-        //     if (!authHelper.isLogin()) {
-        //         if (next.templateUrl === "login.html") {
-        //         } else {
-        //             $state.go('auth');
-        //         }
-        //     }
-        //  });
+
+        // Упрощенная проверка и прееброс на страницу авторизации
+        $rootScope.$on('$stateChangeStart',
+         function(evt, next, current) {
+             if (next.name == 'auth') return;
+             authHelper.isLogin()
+                .catch(function() {
+                    $state.go('auth');
+                    evt.preventDefault();
+                });
+         });
+
+        // $rootScope.$on('AuthorizationError', function (ev, error){
+        //     $log.error(error.message);
+        //     $state.go('auth');
+        // });
     }
 );

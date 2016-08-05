@@ -4,7 +4,7 @@
     .module('app.auth')
     .factory('authHelper', authHelper);
 
-  function authHelper($location, $mdDialog) {
+  function authHelper($location, $mdDialog, $rootScope, $q) {
     var factory = {
       isLogin: isLogin, // проверка авторизации текущего пользователя
       login: login, // авторизация пользователя
@@ -22,7 +22,17 @@
     }
 
     function isLogin() {
-        return false; // mock
+        //return false; // mock
+        var defered = $q.defer();
+        // defered.resolve(true);
+        if (true) {
+          $rootScope.$broadcast(
+            'AuthorizationError',
+            new AuthorizationError('Current user is not authorized')
+          );
+          defered.reject();
+        }
+        return defered.promise;
     }
 
     function login(username, password) {
