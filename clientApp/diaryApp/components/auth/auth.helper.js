@@ -4,47 +4,50 @@
     .module('app.auth')
     .factory('authHelper', authHelper);
 
-  function authHelper($location, $mdDialog, $rootScope, $q) {
+  function authHelper($state, $q, PERMISSIONS, currentUser) {
     var factory = {
-      isLogin: isLogin, // проверка авторизации текущего пользователя
       login: login, // авторизация пользователя
-      getGrantedAccess: getGrantedAccess
     };
 
     return factory;
 
-    function getGrantedAccess() {
-      // Return permissions number. 
-      // 7 (111) - full permissions (admin)
-      // 6 (110) - teacher
-      // 4 (100) - student
-      // 0 (000) - not authorized
-    }
 
-    // TODO: использовать метод getGrantedAccess для разделения доступа
-    function isLogin() {
-        //return false; // mock
-        var defered = $q.defer();
-        defered.resolve(true);
-        // if (true) {
-        //   $rootScope.$broadcast(
-        //     'AuthorizationError',
-        //     new AuthorizationError('Current user is not authorized')
-        //   );
-        //   defered.reject();
-        // }
-        return defered.promise;
-    }
+    function login(loginData) {
+        // Получение permissions
+        // ...
+        // Заглушка
+        if (!loginData.permissions) {
+          loginData.permissions = PERMISSIONS.STUDENT;
+        }
+        // Полученные данные с серва
+        var dataFromServer = loginData;
 
-    function login(username, password) {
+        var deferred = $q.defer();
+        if (loginData.permissions != PERMISSIONS.GUEST) {
+          currentUser.setData(dataFromServer);
+          deferred.resolve(dataFromServer);
+        }
+        else {
+          deferred.reject();
+        }
+        
+        switch (loginData.permissions) {
+          case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
+          case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
+          case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
+          case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
+        }
+        
+        return deferred.promise;
+
         // Заглушка на авторизацию
-        if (username == 'student' && password == '123') {
-            return { type: 'student' };
-        }
-        if (username == 'admin' && password == '123') {
-            return { type: 'admin' };
-        }
-        return { type: 'error' };
+        // if (loginData.login == '777777' && loginData.password == '123') {
+        //     return { type: 'student' };
+        // }
+        // if (loginData.login == 'admin' && loginData.password == '123') {
+        //     return { type: 'admin' };
+        // }
+        // return { type: 'error' };
     }
   }
 })();

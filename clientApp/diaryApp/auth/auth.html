@@ -3,9 +3,9 @@
     <div class="authForm" layout="column">
         <h2>Авторизация</h2>
         <md-input-container>
-           <input name="email"
+           <input name="student_card_number"
                   type="text"
-                  ng-model="login" 
+                  ng-model="form.login" 
                   minlength="0"
                   placeholder="Введите логин"
                   aria-label="login">
@@ -13,13 +13,13 @@
         <md-input-container>
            <input name="password"
                   type="password"
-                  ng-model="password"
+                  ng-model="form.password"
                   minlength="0"
                   placeholder="Введите пароль"
                   aria-label="password">
         </md-input-container>
             
-        <md-button ng-click="auth.authorize(login, password)"
+        <md-button ng-click="auth.authorize(form)"
                    id="auth_btn"
                    class="auth_btn auth_form_btn"
                    aria-label="auth-btn"> Вход </md-button>

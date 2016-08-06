@@ -5,7 +5,7 @@ angular.module('app',
         'app.auth',
         'app.students'
     ])
-.run(function($http, $cookies, $rootScope, authHelper, $state, $log) {
+.run(function($http, $cookies, $rootScope, currentUser, $state, $log) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 
@@ -22,12 +22,16 @@ angular.module('app',
         // Упрощенная проверка и прееброс на страницу авторизации
         $rootScope.$on('$stateChangeStart',
          function(evt, next, current) {
-             if (next.name == 'auth') return;
-             authHelper.isLogin()
-                .catch(function() {
-                    $state.go('auth');
-                    evt.preventDefault();
-                });
+             if (next.data && !currentUser.checkPermissions(next.data.permissions)) {
+                 $state.go('auth');
+                 evt.preventDefault();
+             }
+            //  if (next.name == 'auth') return;
+            //  currentUser.isLogin()
+            //     .catch(function() {
+            //         $state.go('auth');
+            //         evt.preventDefault();
+            //     });
          });
 
         // $rootScope.$on('AuthorizationError', function (ev, error){

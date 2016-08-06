@@ -2,7 +2,7 @@
     angular
         .module('app.auth')
         .controller('AuthController',
-            function (authHelper, $state, $mdDialog) {
+            function (authHelper, $log, $state, $mdDialog, currentUser, registerHelper, PERMISSIONS) {
                 var vm = this;
 
                 vm.authorize = authorize;
@@ -13,13 +13,8 @@
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
 
-                function authorize(login, password) {
-                    var type = authHelper.login(login, password).type;
-                    switch(type) {
-                        case 'student': { console.log(type); break; };
-                        case 'admin': { console.log(type); break; };
-                        default: { console.log(type); break; };
-                    }   
+                function authorize(formData) {
+                    authHelper.login(formData);
                 }
 
                 // function addStudent(ev) {
@@ -46,14 +41,24 @@
                     })
                     .then(function(newStudent) {
                         console.log(newStudent);
-                        var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
-                        $state.go('students.profile', { student_id: newID });
+                        newStudent.token = '12345';
+                        newStudent.permissions = PERMISSIONS.STUDENT;
+                        // $state.go('students.profile');
+                        registerHelper.register(newStudent)
+                            .then(function() {
+                                $log.log('Register success!');
+                            })
+                            .catch(function() {
+                                $log.log('Registration failed');
+                            });
+                        // var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
+                        // $state.go('students.profile', { student_id: newID });
                     }, function() {
                         // закрыто диалоговое окно
                     });
                 }
 
-                // Запуск диалогового окна добавления студента
+                // Запуск диалогового окна добавления преподавателя
                 function startAddTeacherDialog(ev) {
                     var controller = this;
                     controller.mdDialog.show({
@@ -65,8 +70,11 @@
                         clickOutsideToClose: false,
                     })
                     .then(function(newStudent) {
-                        console.log(newStudent);
-                        var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
+                        console.log(newTeacher);
+                        newStudent.token = '12345';
+                        registerHelper.register(newStudent);
+
+                        // var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
                         // $state.go('teachers.profile', { student_id: newID });
                     }, function() {
                         // закрыто диалоговое окно

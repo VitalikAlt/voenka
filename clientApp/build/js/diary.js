@@ -21,7 +21,7 @@ angular.module('app',
         'app.auth',
         'app.students'
     ])
-.run(function($http, $cookies, $rootScope, authHelper, $state, $log) {
+.run(function($http, $cookies, $rootScope, currentUser, $state, $log) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 
@@ -38,12 +38,16 @@ angular.module('app',
         // Упрощенная проверка и прееброс на страницу авторизации
         $rootScope.$on('$stateChangeStart',
          function(evt, next, current) {
-             if (next.name == 'auth') return;
-             authHelper.isLogin()
-                .catch(function() {
-                    $state.go('auth');
-                    evt.preventDefault();
-                });
+             if (next.data && !currentUser.checkPermissions(next.data.permissions)) {
+                 $state.go('auth');
+                 evt.preventDefault();
+             }
+            //  if (next.name == 'auth') return;
+            //  currentUser.isLogin()
+            //     .catch(function() {
+            //         $state.go('auth');
+            //         evt.preventDefault();
+            //     });
          });
 
         // $rootScope.$on('AuthorizationError', function (ev, error){
@@ -64,7 +68,7 @@ angular.module('app',
     angular
         .module('app.auth')
         .controller('AuthController',
-            function (authHelper, $state, $mdDialog) {
+            function (authHelper, $log, $state, $mdDialog, currentUser, registerHelper, PERMISSIONS) {
                 var vm = this;
 
                 vm.authorize = authorize;
@@ -75,13 +79,8 @@ angular.module('app',
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
 
-                function authorize(login, password) {
-                    var type = authHelper.login(login, password).type;
-                    switch(type) {
-                        case 'student': { console.log(type); break; };
-                        case 'admin': { console.log(type); break; };
-                        default: { console.log(type); break; };
-                    }   
+                function authorize(formData) {
+                    authHelper.login(formData);
                 }
 
                 // function addStudent(ev) {
@@ -108,14 +107,24 @@ angular.module('app',
                     })
                     .then(function(newStudent) {
                         console.log(newStudent);
-                        var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
-                        $state.go('students.profile', { student_id: newID });
+                        newStudent.token = '12345';
+                        newStudent.permissions = PERMISSIONS.STUDENT;
+                        // $state.go('students.profile');
+                        registerHelper.register(newStudent)
+                            .then(function() {
+                                $log.log('Register success!');
+                            })
+                            .catch(function() {
+                                $log.log('Registration failed');
+                            });
+                        // var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
+                        // $state.go('students.profile', { student_id: newID });
                     }, function() {
                         // закрыто диалоговое окно
                     });
                 }
 
-                // Запуск диалогового окна добавления студента
+                // Запуск диалогового окна добавления преподавателя
                 function startAddTeacherDialog(ev) {
                     var controller = this;
                     controller.mdDialog.show({
@@ -127,8 +136,11 @@ angular.module('app',
                         clickOutsideToClose: false,
                     })
                     .then(function(newStudent) {
-                        console.log(newStudent);
-                        var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
+                        console.log(newTeacher);
+                        newStudent.token = '12345';
+                        registerHelper.register(newStudent);
+
+                        // var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
                         // $state.go('teachers.profile', { student_id: newID });
                     }, function() {
                         // закрыто диалоговое окно
@@ -168,47 +180,181 @@ angular.module('app',
     .module('app.auth')
     .factory('authHelper', authHelper);
 
-  function authHelper($location, $mdDialog, $rootScope, $q) {
+  function authHelper($state, $q, PERMISSIONS, currentUser) {
     var factory = {
-      isLogin: isLogin, // проверка авторизации текущего пользователя
       login: login, // авторизация пользователя
-      getGrantedAccess: getGrantedAccess
     };
 
     return factory;
 
-    function getGrantedAccess() {
-      // Return permissions number. 
-      // 7 (111) - full permissions (admin)
-      // 6 (110) - teacher
-      // 4 (100) - student
-      // 0 (000) - not authorized
-    }
 
-    // TODO: использовать метод getGrantedAccess для разделения доступа
-    function isLogin() {
-        //return false; // mock
-        var defered = $q.defer();
-        defered.resolve(true);
-        // if (true) {
-        //   $rootScope.$broadcast(
-        //     'AuthorizationError',
-        //     new AuthorizationError('Current user is not authorized')
-        //   );
-        //   defered.reject();
-        // }
-        return defered.promise;
-    }
+    function login(loginData) {
+        // Получение permissions
+        // ...
+        // Заглушка
+        if (!loginData.permissions) {
+          loginData.permissions = PERMISSIONS.STUDENT;
+        }
+        // Полученные данные с серва
+        var dataFromServer = loginData;
 
-    function login(username, password) {
+        var deferred = $q.defer();
+        if (loginData.permissions != PERMISSIONS.GUEST) {
+          currentUser.setData(dataFromServer);
+          deferred.resolve(dataFromServer);
+        }
+        else {
+          deferred.reject();
+        }
+        
+        switch (loginData.permissions) {
+          case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
+          case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
+          case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
+          case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
+        }
+        
+        return deferred.promise;
+
         // Заглушка на авторизацию
-        if (username == 'student' && password == '123') {
-            return { type: 'student' };
+        // if (loginData.login == '777777' && loginData.password == '123') {
+        //     return { type: 'student' };
+        // }
+        // if (loginData.login == 'admin' && loginData.password == '123') {
+        //     return { type: 'admin' };
+        // }
+        // return { type: 'error' };
+    }
+  }
+})();
+
+(function() {
+    'use strict';
+    angular
+        .module('app.auth')
+        .factory('currentUser', currentUser);
+
+    function currentUser(PermissionService, $q, PERMISSIONS) {
+        var currentPermissions = PERMISSIONS.GUEST;
+        var currentData = {};
+        var factory = {
+            // isLogin: isLogin,
+
+            getPermissions: getPermissions,
+            setPermissions: setPermissions,
+            checkPermissions: checkPermissions,
+
+            setData: setData,
+            clearData: clearData
         }
-        if (username == 'admin' && password == '123') {
-            return { type: 'admin' };
+
+        return factory;
+
+        // Устанавливает данные текущему пользователю
+        function setData(data) {
+            currentData = data;
+            currentPermissions = data.permissions ? data.permissions : 0;
+            // currentData.name = studentData.name;
+            // currentData.surname = studentData.surname;
+            // currentData.student_card = studentData.student_card;
+            // currentData.photo = studentData.photo;
+
+            // currentData.token = studentData.token;
         }
-        return { type: 'error' };
+
+        function clearData() {
+            currentData = {};
+        }
+
+        /*
+           Проверка доступов
+           @param neededPermissions (Array)  необходимые доступы
+           @return (bool) Возможность доступа
+        */
+        function checkPermissions(neededPermissions) {
+            if (neededPermissions) {
+                if (neededPermissions.indexOf(getPermissions()) != -1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Возвращает зарезервированное число для доступов
+        function getPermissions() {
+            return currentPermissions;
+        }
+
+        // Устанавливает текущие доступы
+        function setPermissions(permissions) {
+            currentPermissions = permissions;
+        }
+
+        // TODO: использовать метод getGrantedAccess для разделения доступа
+        function isLogin() {
+            //return false; // mock
+            var defered = $q.defer();
+            defered.resolve(true);
+            // if (true) {
+            //   $rootScope.$broadcast(
+            //     'AuthorizationError',
+            //     new AuthorizationError('Current user is not authorized')
+            //   );
+            //   defered.reject();
+            // }
+            return defered.promise;
+        }
+    }
+})();
+(function() {
+    'use strict';
+    angular
+        .module('app.auth')
+        .factory('PermissionService', PermissionService);
+
+    function PermissionService(PERMISSIONS) {
+        var permissionService = {
+            // getPermissions: getPermissions
+        }
+
+        return permissionService;
+
+        // function getPermissions() {
+            
+        // }
+    }
+})();
+(function(){
+    angular
+        .module('app.auth')
+        .constant('PERMISSIONS', {
+              GUEST: 0,
+            STUDENT: 1,
+            TEACHER: 2,
+              ADMIN: 3,
+        })
+        // .constant('GUEST', 0)
+        // .constant('STUDENT', 1)
+        // .constant('TEACHER', 2)
+        // .constant('ADMIN', 3)
+})();
+(function () {
+  'use strict';
+  angular
+    .module('app.auth')
+    .factory('registerHelper', registerHelper);
+
+  function registerHelper(authHelper, currentUser) {
+    var factory = {
+      register: register
+    };
+
+    return factory;
+
+    function register(user) {
+        // currentUser.setData(user);
+        // ... отправка на сервер и проверка
+        return authHelper.login(user);
     }
   }
 })();
@@ -357,7 +503,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
   'use strict';
   angular
     .module('app.students')
-    .config(function($stateProvider) {
+    .config(function($stateProvider, PERMISSIONS) {
       $stateProvider
         .state('students', {
           url: '/students',
@@ -365,6 +511,11 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
           controllerAs: 'students',
           templateUrl: 'diaryApp/students/students.html',
           abstract: true,
+          data: {
+            permissions: [
+              PERMISSIONS.STUDENT
+            ]
+          }
           // resolve: {
           //   isLogin: function(authHelper) {
           //     return authHelper.isLogin();
@@ -378,19 +529,19 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
           // }
         })
           .state('students.profile', {
-            url: '/profile/:student_id',
+            url: '/profile/',
             controller: 'StudentsProfileController',
             controllerAs: 'profile',
             templateUrl: 'diaryApp/students/profile/profile.html'
           })
           .state('students.marks', {
-            url: '/marks/:student_id',
+            url: '/marks/',
             controller: 'StudentsMarksController',
             controllerAs: 'marks',
             templateUrl: 'diaryApp/students/marks/marks.html'
           })
           .state('students.schedule', {
-            url: '/schedule/:student_id',
+            url: '/schedule/',
             controller: 'StudentsScheduleController',
             controllerAs: 'schedule',
             templateUrl: 'diaryApp/students/schedule/schedule.html'
