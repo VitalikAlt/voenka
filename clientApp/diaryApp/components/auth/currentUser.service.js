@@ -4,7 +4,7 @@
         .module('app.auth')
         .factory('currentUser', currentUser);
 
-    function currentUser(PermissionService, $q, PERMISSIONS) {
+    function currentUser(PermissionService, $q, PERMISSIONS, $cookieStore) {
         var currentPermissions = PERMISSIONS.GUEST;
         var currentData = {};
         var factory = {
@@ -15,15 +15,26 @@
             checkPermissions: checkPermissions,
 
             setData: setData,
-            clearData: clearData
+            clearData: clearData,
+            logout: logout
         }
 
         return factory;
+
+        function logout() {
+            clearData();
+            $cookieStore.remove('token');
+        }
 
         // Устанавливает данные текущему пользователю
         function setData(data) {
             currentData = data;
             currentPermissions = data.permissions ? data.permissions : 0;
+            
+            $cookieStore.put('token', '12345');
+            $cookieStore.put('login', data.login);
+            // $cookieStore.put('photo', '');
+
             // currentData.name = studentData.name;
             // currentData.surname = studentData.surname;
             // currentData.student_card = studentData.student_card;
@@ -42,6 +53,11 @@
            @return (bool) Возможность доступа
         */
         function checkPermissions(neededPermissions) {
+            if (!getPermissions()) {
+                // TODO: Получать permissions с сервера по токену
+                // Заглушка
+                return $cookieStore.get('token');
+            }
             if (neededPermissions) {
                 if (neededPermissions.indexOf(getPermissions()) != -1) {
                     return true;
