@@ -2,9 +2,11 @@
     angular
         .module('app.students')
         .controller('StudentsProfileController',
-            function () {
+            function ($scope) {
                 var vm = this;
+                vm.defaultPhoto = '/assets/images/background.png';
 
+                $scope.student_cover = vm.defaultPhoto;
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
                 var CountYearsForSelect = 10;

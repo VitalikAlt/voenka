@@ -83,17 +83,6 @@ angular.module('app',
                     authHelper.login(formData);
                 }
 
-                // function addStudent(ev) {
-                //     // $state.go('students.add');
-                //     $state.go('students.profile', { student_id: 'temp' });
-                //     //startAddStudentDialog(ev);
-                // }
-
-                // function registerTeacher() {
-                //     $state.go('teachers.add');
-                // }
-
-
                 // Запуск диалогового окна добавления студента
                 function startAddStudentDialog(ev) {
                     var controller = this;
@@ -106,10 +95,10 @@ angular.module('app',
                         clickOutsideToClose: false,
                     })
                     .then(function(newStudent) {
-                        console.log(newStudent);
+                        if (newStudent) {
+                            console.log(newStudent);
                         newStudent.token = '12345';
                         newStudent.permissions = PERMISSIONS.STUDENT;
-                        // $state.go('students.profile');
                         registerHelper.register(newStudent)
                             .then(function() {
                                 $log.log('Register success!');
@@ -117,8 +106,8 @@ angular.module('app',
                             .catch(function() {
                                 $log.log('Registration failed');
                             });
-                        // var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
-                        // $state.go('students.profile', { student_id: newID });
+                        }
+                        
                     }, function() {
                         // закрыто диалоговое окно
                     });
@@ -135,13 +124,10 @@ angular.module('app',
                         targetEvent: ev,
                         clickOutsideToClose: false,
                     })
-                    .then(function(newStudent) {
+                    .then(function(newTeacher) {
                         console.log(newTeacher);
-                        newStudent.token = '12345';
-                        registerHelper.register(newStudent);
-
-                        // var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
-                        // $state.go('teachers.profile', { student_id: newID });
+                        newTeacher.token = '12345';
+                        registerHelper.register(newTeacher);
                     }, function() {
                         // закрыто диалоговое окно
                     });
@@ -352,7 +338,6 @@ angular.module('app',
     return factory;
 
     function register(user) {
-        // currentUser.setData(user);
         // ... отправка на сервер и проверка
         return authHelper.login(user);
     }
@@ -434,6 +419,60 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
         element.addClass('unactive-row');
     }
 }
+(function() {
+    'use strict';
+    angular
+        .module('app.directives')
+        .directive('fileDownload', function($timeout) {
+            return {
+                restrict: 'E',
+                replace: true,
+                scope: {
+                    downloadFile: '=',
+                    preview: '='
+                },
+                templateUrl: 'diaryApp/directives/fileDownload/fileDownload.html',
+                compile: compile
+            }
+        });
+
+        function compile(templateElement, templateAttrs) {
+            return {
+                pre: pre,
+                post: post
+            }
+        }
+
+        function pre(scope, element, attrs) {
+            
+        }
+
+        function post(scope, element, attrs) {
+            var elem = element;
+            var id = attrs.id;
+            var button = element.find('button');
+            var fileChooseElem = element.find('input');
+
+            elem.bind('click', function(e) {
+                this.children['download_input'].click();                            
+            });
+            
+            fileChooseElem.bind('change', function(e) {
+                var newFiles = e.target.files;
+                if (newFiles) {
+                    scope.downloadFile = newFiles[0];
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        scope.$apply(function() {
+                            scope.preview = event.target.result;
+                        });
+                    }
+                    reader.readAsDataURL(newFiles[0]);
+                    
+                }     
+            });
+        }
+})();
 (function(){
     'use strict';
     angular
@@ -446,9 +485,11 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     angular
         .module('app.students')
         .controller('StudentsProfileController',
-            function () {
+            function ($scope) {
                 var vm = this;
+                vm.defaultPhoto = '/assets/images/background.png';
 
+                $scope.student_cover = vm.defaultPhoto;
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
                 var CountYearsForSelect = 10;

@@ -17,17 +17,6 @@
                     authHelper.login(formData);
                 }
 
-                // function addStudent(ev) {
-                //     // $state.go('students.add');
-                //     $state.go('students.profile', { student_id: 'temp' });
-                //     //startAddStudentDialog(ev);
-                // }
-
-                // function registerTeacher() {
-                //     $state.go('teachers.add');
-                // }
-
-
                 // Запуск диалогового окна добавления студента
                 function startAddStudentDialog(ev) {
                     var controller = this;
@@ -40,10 +29,10 @@
                         clickOutsideToClose: false,
                     })
                     .then(function(newStudent) {
-                        console.log(newStudent);
+                        if (newStudent) {
+                            console.log(newStudent);
                         newStudent.token = '12345';
                         newStudent.permissions = PERMISSIONS.STUDENT;
-                        // $state.go('students.profile');
                         registerHelper.register(newStudent)
                             .then(function() {
                                 $log.log('Register success!');
@@ -51,8 +40,8 @@
                             .catch(function() {
                                 $log.log('Registration failed');
                             });
-                        // var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
-                        // $state.go('students.profile', { student_id: newID });
+                        }
+                        
                     }, function() {
                         // закрыто диалоговое окно
                     });
@@ -69,13 +58,10 @@
                         targetEvent: ev,
                         clickOutsideToClose: false,
                     })
-                    .then(function(newStudent) {
+                    .then(function(newTeacher) {
                         console.log(newTeacher);
-                        newStudent.token = '12345';
-                        registerHelper.register(newStudent);
-
-                        // var newID = '1234567'; // TODO: отправка данных на сервак и получение ID
-                        // $state.go('teachers.profile', { student_id: newID });
+                        newTeacher.token = '12345';
+                        registerHelper.register(newTeacher);
                     }, function() {
                         // закрыто диалоговое окно
                     });
