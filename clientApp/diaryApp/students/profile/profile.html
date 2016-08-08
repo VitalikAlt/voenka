@@ -9,21 +9,21 @@
                     <md-input-container flex class="field-container">
                         <input name="name"
                             type="text"
-                            ng-model="student.name"
+                            ng-model="profile.student.name"
                             placeholder="Имя"
                             aria-label="name">
                     </md-input-container>
                     <md-input-container flex class="field-container">
                         <input name="surname"
                             type="text"
-                            ng-model="student.surname"
+                            ng-model="profile.student.surname"
                             placeholder="Фамилия"
                             aria-label="surname">
                     </md-input-container>
                     <md-input-container flex class="field-container">
                         <input name="father_name"
                             type="text"
-                            ng-model="student.fatherName"
+                            ng-model="profile.student.fatherName"
                             placeholder="Отчество"
                             aria-label="father_name">
                     </md-input-container>
@@ -33,7 +33,7 @@
                     <md-input-container flex="50" class="field-container">
                         <input name="student_card_number"
                             type="text"
-                            ng-model="student.student_card_number"
+                            ng-model="profile.student.student_card_number"
                             placeholder="Номер студенческого"
                             aria-label="student_card_number">
                     </md-input-container>
@@ -47,13 +47,13 @@
                     <md-input-container flex="50" class="field-container">
                         <input name="birth_place"
                             type="text"
-                            ng-model="student.birthPlace"
+                            ng-model="profile.student.birthPlace"
                             placeholder="Место рождения"
                             aria-label="birthPlace">
                     </md-input-container>
                     <div class="h_flex_centered field-container" flex>
                         <!--Сделать более удобным выбор года, месяца и дня-->
-                        <md-datepicker ng-model="student.birthDate"
+                        <md-datepicker ng-model="profile.student.birthDate"
                                     md-placeholder="Дата рождения"></md-datepicker>
                     </div>
                     
@@ -62,14 +62,14 @@
                     <md-input-container flex class="field-container">
                         <input name="education"
                             type="text"
-                            ng-model="student.education"
+                            ng-model="profile.student.education"
                             placeholder="Образование"
                             aria-label="education">
                     </md-input-container>
                     <md-input-container flex class="field-container">
                         <input name="military"
                             type="text"
-                            ng-model="student.military"
+                            ng-model="profile.student.military"
                             placeholder="Служба в армии, звание"
                             aria-label="military">
                     </md-input-container>
@@ -78,7 +78,7 @@
                     <md-input-container flex="20" class="field-container">
                         <label>Факультет</label>
                         <md-select flex 
-                                ng-model="student.faculty"
+                                ng-model="profile.student.faculty"
                                 placeholder="Факультет">
                             <md-option ng-value="faculty" ng-repeat="faculty in profile.config.faculties">
                                 {{ faculty }}
@@ -88,7 +88,7 @@
                     <md-input-container flex="30" class="field-container">
                         <label>Год приема</label>
                         <md-select flex 
-                                ng-model="student.start_study_year"
+                                ng-model="profile.student.start_study_year"
                                 placeholder="Год приема">
                             <md-option ng-value="year" ng-repeat="year in profile.years">
                                 {{ year }}
@@ -98,7 +98,7 @@
                     <md-input-container flex class="field-container">
                         <label>Заключение ВВК</label>
                         <md-select flex 
-                                ng-model="student.conclusion"
+                                ng-model="profile.student.conclusion"
                                 placeholder="Заключение ВВК">
                             <md-option ng-value="conclusion" ng-repeat="conclusion in profile.config.conclusions">
                                 {{ conclusion }}
@@ -110,7 +110,7 @@
                     <md-input-container flex class="field-container">
                         <input name="address"
                             type="text"
-                            ng-model="student.address"
+                            ng-model="profile.student.address"
                             placeholder="Адрес студента"
                             aria-label="address">
                     </md-input-container>
@@ -119,7 +119,7 @@
                     <md-input-container flex class="field-container">
                         <input name="parents_address"
                             type="text"
-                            ng-model="student.parents_address"
+                            ng-model="profile.student.parents_address"
                             placeholder="Адрес родителей студента"
                             aria-label="parents_address">
                     </md-input-container>
@@ -143,13 +143,13 @@
             <div class="card_right_column" layout="column" flex="20">
                 <div class="preview_student_photo_container">
                     <img class="student_photo" 
-                         ng-src="{{ student_photo_preview_img }}"
+                         ng-src="{{ profile.student.preview_img }}"
                          alt="Фото студента">
                 </div>
                 
                 <file-download id="download_photo_btn"
                                download_file="profile.student_cover"
-                               preview="student_photo_preview_img"
+                               preview="profile.student.preview_img"
                                class="student_photo green_btn">
                 </file-download>
             </div>

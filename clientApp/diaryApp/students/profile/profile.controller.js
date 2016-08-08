@@ -2,11 +2,15 @@
     angular
         .module('app.students')
         .controller('StudentsProfileController',
-            function ($scope) {
+            function ($scope, CONFIG) {
                 var vm = this;
-                vm.defaultPhoto = '/assets/images/background.png';
+                // Текущий студент. Заглушка
+                vm.student = getStudentData();
 
-                $scope.student_cover = vm.defaultPhoto;
+                if (!vm.student.photo) {
+                    vm.student.preview_img = CONFIG.defaultAvatar;
+                }
+                
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
                 var CountYearsForSelect = 10;
@@ -19,6 +23,11 @@
             }
         ); 
     
+    // TODO: Получение данных студента
+    function getStudentData() {
+        return {};
+    }
+
     var config = {
         faculties: [
             'ИВТФ',
