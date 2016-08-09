@@ -48,7 +48,7 @@ md-input-container .md-select-value span {
 .doc_container {
     padding: 10px;
     align-items: center;
-    width: 150px;
+    width: 200px;
     display: flex;
     justify-content: center;
 }
@@ -71,12 +71,14 @@ md-input-container .md-select-value span {
     background-color: #008f00!important;
 }
 
-.student_photo {
+.student_photo,
+.doc_cover {
     width: 100%;
     max-height: 100%;
 }
 
-.preview_student_photo_container {
+.preview_student_photo_container,
+.doc_cover_container {
     width: 150px;
     height: 200px;
     overflow: hidden;

@@ -128,12 +128,14 @@
                 <div class="documents_block" flex>
                     <h3 class="inner_header inner_h3">Документы</h3>
                     <div class="edited_string" layout="row">
-                        <div class="doc_container" ng-repeat="doc in profile.config.docs" layout="column">
-                            <img ng-src="{{doc.cover}}" alt="{{doc.name}}">
+                        <div class="doc_container" ng-repeat="doc in profile.student.docs" layout="column">
+                            <div class="doc_cover_container">
+                                <img class="doc_cover" ng-src="{{doc.cover}}" alt="{{doc.name}}">
+                            </div>
                             <span class="doc_name">{{doc.name}}</span>
                         </div>
                         <div class="doc_container">
-                            <md-button class="md-fab" aria-label="add_doc"> + </md-button>
+                            <md-button ng-click="profile.startAddDocDialog($event)" class="md-fab" aria-label="add_doc"> + </md-button>
                         </div>
                        
                     </div>
@@ -150,7 +152,8 @@
                 <file-download id="download_photo_btn"
                                download_file="profile.student_cover"
                                preview="profile.student.preview_img"
-                               class="student_photo green_btn">
+                               class="student_photo green_btn"
+                               label_button="Загрузить фото">
                 </file-download>
             </div>
 

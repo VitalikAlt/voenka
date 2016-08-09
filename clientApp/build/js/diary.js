@@ -3,6 +3,10 @@
   angular.module('app.auth', []);
 })();
 (function() {
+    'use strict';
+    angular.module('app.utils', []);
+})();
+(function() {
   'use strict';
   angular
     .module('app.core', [
@@ -19,7 +23,8 @@ angular.module('app',
         'app.core',
         'app.directives',
         'app.auth',
-        'app.students'
+        'app.students',
+        'app.utils'
     ])
 .run(function($http, $cookies, $rootScope, currentUser, $state, $log) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
@@ -107,7 +112,6 @@ angular.module('app',
                                 $log.log('Registration failed');
                             });
                         }
-                        
                     }, function() {
                         // закрыто диалоговое окно
                     });
@@ -364,12 +368,37 @@ function AuthorizationError(message) {
     this.name = 'AuthorizationError';
     this.message = message;
 }
+(function() {
+    angular
+        .module('app.utils')
+        .factory('Utils', function() {
+           var factory = {
+               getPhotoFromFile: getPhotoFromFile
+           };
+           return factory;
+        });
+})();
+
+function getPhotoFromFile(file) {
+    if (file) {
+        // scope.downloadFile = newFiles[0];
+        var reader = new FileReader();
+        var promise = new Promise(function(resolve, reject) {
+            reader.onload = function(event) {
+                resolve(event.target.result);
+            }
+        });
+        reader.readAsDataURL(file);
+        return promise;
+    }  
+}
 (function(){
     'use strict';
     angular
         .module('app.core')
         .constant('CONFIG', {
-            defaultAvatar: '/assets/images/default_avatar.jpg'
+            defaultAvatar: '/assets/images/default_avatar.jpg',
+            docPlaceholderImage: '/assets/images/page_white_get.png'
         });
 })();
 (function(){
@@ -468,15 +497,16 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
         }
 
         function pre(scope, element, attrs) {
-            
+            var button = element.find('button');
+            button.attr('class', button.attr('class') + ' ' + attrs.buttonClass);
+            // button.text(attrs.labelButton);
         }
 
         function post(scope, element, attrs) {
             var elem = element;
             var id = attrs.id;
-            var button = element.find('button');
+            element.find('button').text(attrs.labelButton);
             var fileChooseElem = element.find('input');
-
             elem.bind('click', function(e) {
                 this.children['download_input'].click();                            
             });
@@ -492,7 +522,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         });
                     }
                     reader.readAsDataURL(newFiles[0]);
-                    
                 }     
             });
         }
@@ -509,8 +538,12 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     angular
         .module('app.students')
         .controller('StudentsProfileController',
-            function ($scope, CONFIG) {
+            function ($scope, CONFIG, $mdDialog, Utils) {
                 var vm = this;
+                vm.Utils = Utils;
+                vm.mdDialog = $mdDialog;
+                vm.dialogDone = dialogDone;
+                vm.dialogCancel = dialogCancel;
                 // Текущий студент. Заглушка
                 vm.student = getStudentData();
 
@@ -527,13 +560,54 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
                 // Mock for config from server
                 vm.config = config;
+
+                vm.startAddDocDialog = startAddDocDialog;
+
+                $scope.docPlaceholder = CONFIG.docPlaceholderImage;
+                // Документы пользователя. Заглушка. Будут загружены в методе gteStudentData()
+                vm.student.docs = [];
+
+
+                // TODO: Получение данных студента
+                function getStudentData() {
+                    return {};
+                }
+
+                function startAddDocDialog(ev) {
+                    var controller = this;
+                    controller.mdDialog.show({
+                        controller: 'StudentsProfileController',
+                        controllerAs: 'profile',
+                        templateUrl: 'diaryApp/students/profile/views/addDocDialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: false,
+                    })
+                    .then(function(doc) {
+                        controller.Utils.getPhotoFromFile(doc.file)
+                            .then(function(image) {
+                                $scope.$apply(function(){
+                                    doc.cover = image;
+                                });
+                            });
+                        // получение фото из файла
+                        controller.student.docs.push(doc);
+                    }, function() {
+                        // закрыто диалоговое окно
+                    });
+                }
+
+                function dialogDone(doc) {
+                    this.mdDialog.hide(doc);
+                }
+
+                function dialogCancel() {
+                    this.mdDialog.cancel();
+                }
             }
         ); 
     
-    // TODO: Получение данных студента
-    function getStudentData() {
-        return {};
-    }
+   
 
     var config = {
         faculties: [
@@ -546,16 +620,16 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             "А - годен к военной службе",
             "Б - годен с ограничениями"
         ],
-        docs: [
-            {
-                name: 'Паспорт',
-                cover: '/assets/images/background.png' //url("/assets/images/background.png")
-            },
-            {
-                name: 'СНИЛС',
-                cover: '/assets/images/background.png'
-            },
-        ]
+        // docs: [
+        //     {
+        //         name: 'Паспорт',
+        //         cover: '/assets/images/background.png' //url("/assets/images/background.png")
+        //     },
+        //     {
+        //         name: 'СНИЛС',
+        //         cover: '/assets/images/background.png'
+        //     },
+        // ]
     }
 })();
 (function(){

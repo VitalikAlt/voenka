@@ -41,7 +41,6 @@
                                 $log.log('Registration failed');
                             });
                         }
-                        
                     }, function() {
                         // закрыто диалоговое окно
                     });

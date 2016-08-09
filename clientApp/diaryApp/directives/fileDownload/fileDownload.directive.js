@@ -23,15 +23,16 @@
         }
 
         function pre(scope, element, attrs) {
-            
+            var button = element.find('button');
+            button.attr('class', button.attr('class') + ' ' + attrs.buttonClass);
+            // button.text(attrs.labelButton);
         }
 
         function post(scope, element, attrs) {
             var elem = element;
             var id = attrs.id;
-            var button = element.find('button');
+            element.find('button').text(attrs.labelButton);
             var fileChooseElem = element.find('input');
-
             elem.bind('click', function(e) {
                 this.children['download_input'].click();                            
             });
@@ -47,7 +48,6 @@
                         });
                     }
                     reader.readAsDataURL(newFiles[0]);
-                    
                 }     
             });
         }
