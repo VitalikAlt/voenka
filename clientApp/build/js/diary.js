@@ -621,6 +621,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 }
 
                 vm.startDeleteDocDialog = startDeleteDocDialog;
+                vm.startChangePassDialog = startChangePassDialog;
                 
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
@@ -645,8 +646,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 }
 
                 function startAddDocDialog(ev) {
-                    var controller = this;
-                    controller.mdDialog.show({
+                    $mdDialog.show({
                         controller: 'StudentsProfileController',
                         controllerAs: 'profile',
                         templateUrl: 'diaryApp/students/profile/views/addDocDialog.html',
@@ -655,25 +655,42 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         clickOutsideToClose: false,
                     })
                     .then(function(doc) {
-                        controller.Utils.getPhotoFromFile(doc.file)
+                        Utils.getPhotoFromFile(doc.file)
                             .then(function(image) {
                                 $scope.$apply(function(){
                                     doc.cover = image;
                                 });
                             });
                         // получение фото из файла
-                        controller.student.docs.push(doc);
+                        $scope.profile.student.docs.push(doc);
+                    }, function() {
+                        // закрыто диалоговое окно
+                    });
+                }
+
+                function startChangePassDialog(ev) {
+                    $mdDialog.show({
+                        controller: 'StudentsProfileController',
+                        controllerAs: 'profile',
+                        templateUrl: 'diaryApp/students/profile/views/changePasswordDialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: false,
+                    })
+                    .then(function(pass) {
+                        console.dir(pass);
+                        // смена пароля (проверять внутри диалога до отправки)
                     }, function() {
                         // закрыто диалоговое окно
                     });
                 }
 
                 function dialogDone(doc) {
-                    this.mdDialog.hide(doc);
+                    $mdDialog.hide(doc);
                 }
 
                 function dialogCancel() {
-                    this.mdDialog.cancel();
+                    $mdDialog.cancel();
                 }
                 // Удаление документа
                 function deleteDoc(doc) {
@@ -689,7 +706,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         }
                     }
                 }
-
+                // Открытие диалога удаления
                 function startDeleteDocDialog(ev, doc) {
                     var confirm = 
                         $mdDialog.confirm()
