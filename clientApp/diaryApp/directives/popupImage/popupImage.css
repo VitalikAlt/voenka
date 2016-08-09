@@ -1,0 +1,10 @@
+.popup_image_container {
+    align-content: center;
+    display: flex;
+    justify-content: center;
+}
+
+.popup_image {
+    max-width: 800px;
+    max-height: 600px; 
+}

@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="diaryApp/directives/popupImage/popupImage.css">
+<md-dialog aria-label="add_doc_dialog">
+   <!--<md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{ popupName }}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="popup.closePopup()">
+          <md-icon md-font-library="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>-->
+   <md-dialog-content class="add_doc_dialog_content" layout="column">
+       <div class="popup_image_container">
+           <img class="popup_image" ng-src="{{ popupSrc }}" alt="{{ popupName }}">
+       </div>
+   </md-dialog-content>
+</md-dialog>

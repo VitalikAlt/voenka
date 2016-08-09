@@ -476,7 +476,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     'use strict';
     angular
         .module('app.directives')
-        .directive('fileDownload', function($timeout) {
+        .directive('fileDownload', function($timeout, Utils) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -487,42 +487,111 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 templateUrl: 'diaryApp/directives/fileDownload/fileDownload.html',
                 compile: compile
             }
+
+            function compile(templateElement, templateAttrs) {
+                return {
+                    pre: pre,
+                    post: post
+                }
+            }
+
+            function pre(scope, element, attrs) {
+                var button = element.find('button');
+                button.attr('class', button.attr('class') + ' ' + attrs.buttonClass);
+                // button.text(attrs.labelButton);
+            }
+
+            function post(scope, element, attrs) {
+                var elem = element;
+                var id = attrs.id;
+                element.find('button').text(attrs.labelButton);
+                var fileChooseElem = element.find('input');
+                elem.bind('click', function(e) {
+                    this.children['download_input'].click();                            
+                });
+                
+                fileChooseElem.bind('change', function(e) {
+                    var newFiles = e.target.files;
+                    if (newFiles) {
+                        scope.downloadFile = newFiles[0];
+                        Utils.getPhotoFromFile(scope.downloadFile)
+                            .then(function(image) {
+                                scope.$apply(function(){
+                                    scope.preview = image;
+                                });
+                            });
+                    }     
+                });
+            }
+        });
+})();
+(function() {
+    'use strict';
+    angular
+        .module('app.directives')
+        .controller('PopupImageController', function($scope, $mdDialog) {
+            var vm = this;
+            vm.openPopupImage = openPopupImage;
+            vm.closePopup = closePopup;
+            
+            function openPopupImage(ev, popupSrc, popupName) {
+                $scope.$apply(function() {
+                    $scope.popupSrc  = popupSrc;
+                    $scope.popupName = popupName;
+                });
+                var newScope = $scope.$new();
+                newScope.popupSrc = popupSrc,
+                newScope.popupName = popupName,
+                newScope.closePopup = closePopup
+                $mdDialog.show({
+                    scope: newScope,
+                    templateUrl: 'diaryApp/directives/popupImage/popupImage.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                })
+                .then(function() {},
+                function() {
+                    // закрыто popup окно
+                });
+            }
+
+            function closePopup() {
+                $mdDialog.cancel();
+            } 
+        });
+})();
+(function() {
+    'use strict';
+    angular
+        .module('app.directives')
+        .directive('popupImage', function() {
+             return {
+                restrict: 'A',
+                // templateUrl: 'diaryApp/directives/popup/popup.html',
+                //template: '<div class="popupOpener"></div>',
+                compile: compile,
+                controller: 'PopupImageController',
+                controllerAs: 'popup'
+            };
         });
 
-        function compile(templateElement, templateAttrs) {
+        function compile(templateElem, templateAttrs) {
+            // templateAttrs.$set('ngClick', 'console.log(' + templateAttrs.ngSrc + ')');
             return {
                 pre: pre,
                 post: post
             }
         }
 
-        function pre(scope, element, attrs) {
-            var button = element.find('button');
-            button.attr('class', button.attr('class') + ' ' + attrs.buttonClass);
-            // button.text(attrs.labelButton);
+        function pre(scope, elem, attrs) {
+            var b = attrs;
         }
 
-        function post(scope, element, attrs) {
-            var elem = element;
-            var id = attrs.id;
-            element.find('button').text(attrs.labelButton);
-            var fileChooseElem = element.find('input');
+        function post(scope, elem, attrs, controller) {
+            var a = attrs;
             elem.bind('click', function(e) {
-                this.children['download_input'].click();                            
-            });
-            
-            fileChooseElem.bind('change', function(e) {
-                var newFiles = e.target.files;
-                if (newFiles) {
-                    scope.downloadFile = newFiles[0];
-                    var reader = new FileReader();
-                    reader.onload = function(event) {
-                        scope.$apply(function() {
-                            scope.preview = event.target.result;
-                        });
-                    }
-                    reader.readAsDataURL(newFiles[0]);
-                }     
+                controller.openPopupImage(e, attrs.ngSrc, attrs.alt);
             });
         }
 })();

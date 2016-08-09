@@ -127,10 +127,10 @@
 
                 <div class="documents_block" flex>
                     <h3 class="inner_header inner_h3">Документы</h3>
-                    <div class="edited_string" layout="row">
+                    <div class="edited_string docs_string" layout="row">
                         <div class="doc_container" ng-repeat="doc in profile.student.docs" layout="column">
                             <div class="doc_cover_container">
-                                <img class="doc_cover" ng-src="{{doc.cover}}" alt="{{doc.name}}">
+                                <img popup-image class="doc_cover" ng-src="{{doc.cover}}" alt="{{doc.name}}">
                             </div>
                             <span class="doc_name">{{doc.name}}</span>
                         </div>
@@ -146,7 +146,9 @@
                 <div class="preview_student_photo_container">
                     <img class="student_photo" 
                          ng-src="{{ profile.student.preview_img }}"
-                         alt="Фото студента">
+                         popup-image
+                         alt="Фото студента"
+                         aria-label="student_photo">
                 </div>
                 
                 <file-download id="download_photo_btn"
