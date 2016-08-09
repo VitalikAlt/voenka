@@ -14,6 +14,8 @@
                 if (!vm.student.photo) {
                     vm.student.preview_img = CONFIG.defaultAvatar;
                 }
+
+                vm.startDeleteDocDialog = startDeleteDocDialog;
                 
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
@@ -67,6 +69,36 @@
 
                 function dialogCancel() {
                     this.mdDialog.cancel();
+                }
+                // Удаление документа
+                function deleteDoc(doc) {
+                    var docs = $scope.profile.student.docs;
+                    for (var i = 0; i < docs.length; i++) {
+                        if (docs[i].$$hashKey == doc.$$hashKey) {
+                            // Удаление
+                            docs.splice(i, 1);
+                            for(var j = i; j < docs.length; j++) {
+                                docs[j].num--;
+                            }
+                            return;
+                        }
+                    }
+                }
+
+                function startDeleteDocDialog(ev, doc) {
+                    var confirm = 
+                        $mdDialog.confirm()
+                            .title('Удалить документ "' + doc.name + '"?')
+                            .textContent('Вы не сможете восстановить данный документ. Действительно удалить?')
+                            .ariaLabel('delete_doc_dialog')
+                            .parent(angular.element(document.body))
+                            .targetEvent(ev)
+                            .ok('Удалить')
+                            .cancel('Отмена');
+                    $mdDialog.show(confirm)
+                        .then(function() {
+                            deleteDoc(doc);
+                        });
                 }
             }
         ); 

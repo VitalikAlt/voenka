@@ -129,7 +129,11 @@
                     <h3 class="inner_header inner_h3">Документы</h3>
                     <div class="edited_string docs_string" layout="row">
                         <div class="doc_container" ng-repeat="doc in profile.student.docs" layout="column">
-                            <div class="doc_cover_container">
+                            <div class="doc_cover_container" layout="column">
+                                <md-button class="md-icon-button remove_btn"
+                                           ng-click="profile.startDeleteDocDialog($event, doc)">
+                                    <md-icon md-font-library="material-icons">delete</md-icon>
+                                </md-button>
                                 <img popup-image class="doc_cover" ng-src="{{doc.cover}}" alt="{{doc.name}}">
                             </div>
                             <span class="doc_name">{{doc.name}}</span>

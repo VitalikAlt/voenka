@@ -86,3 +86,24 @@ md-input-container .md-select-value span {
     width: 100%;
     overflow-x: auto;
 }
+
+.doc_cover_container {
+    position: relative;
+}
+
+.remove_btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    display: none;
+}
+
+.remove_btn:hover md-icon{
+    color: red;
+}
+
+.doc_container:hover .remove_btn {
+    display: block;
+}
