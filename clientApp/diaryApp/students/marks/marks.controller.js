@@ -4,16 +4,20 @@
         .module('app.students')
         .controller('StudentsMarksController', function($scope, tableHelper) {
             var vm = this;
-            vm.helper = tableHelper.getInstance();
-            $scope.marks = vm;
+            vm.marksHelper = tableHelper.getInstance();
+            vm.standartsHelper = tableHelper.getInstance();
+            // $scope.marks = vm;
             vm.summary = getSummary();
 
             init();
 
 
             function init() {
-                getTableTitles();
-                getTableList();
+                getTableTitles(vm.marksHelper, config.marks);
+                getTableList(vm.marksHelper, config.marks);
+
+                getTableTitles(vm.standartsHelper, config.standarts);
+                getTableList(vm.standartsHelper, config.standarts);
             }
 
             function getSummary() {
@@ -27,20 +31,20 @@
             }
 
             // Получение заголовков таблицы
-            function getTableTitles() {
+            function getTableTitles(helper, resource) {
                 // получение заголовков
                 // ...
-                var titles = config.titles; // заглушка
+                var titles = resource.titles; // заглушка
                 for (var i = 0; i < titles.length; i++) {
-                    $scope.marks.helper.addTitle(titles[i].name, titles[i].options);
+                    helper.addTitle(titles[i].name, titles[i].options);
                 }
             }
-            function getTableList() {
+            function getTableList(helper, resource) {
                 // получение строк
                 // ...
-                var rows = config.rows; // заглушка
+                var rows = resource.rows; // заглушка
                 for (var i = 0; i < rows.length; i++) {
-                    $scope.marks.helper.addItemRow(rows[i]);
+                    helper.addItemRow(rows[i]);
                 }
             }
             // Получение дат
@@ -101,6 +105,7 @@
         });
 
         var config = {
+            marks: {
                 titles: [
                     { name: 'Название', options: { label: 'nameSubject', show: true } },
                     { name: '1 семестр', options: { label: 'semestr1', show: true } },
@@ -110,5 +115,18 @@
                     { nameSubject: 'ВСП', semestr1: 4, semestr2: 5 },
                     { nameSubject: 'ТСП', semestr1: 5, semestr2: 3 }
                 ]
-            }
+            },
+            standarts: {
+                titles: [
+                    { name: 'Название', options: { label: 'nameStandart', show: true } },
+                    { name: '1 семестр', options: { label: 'semestr1', show: true } },
+                    { name: '2 семестр', options: { label: 'semestr2', show: true } }
+                ],
+                rows: [
+                    { nameStandart: 'Подтягивания', semestr1: 14, semestr2: 15 },
+                    { nameStandart: 'Бег 100м', semestr1: 10.7, semestr2: 11 }
+                ]
+            },
+        }
+                
 })();

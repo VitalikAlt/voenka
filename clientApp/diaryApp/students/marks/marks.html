@@ -12,32 +12,42 @@
             <div class="summary_value"> {{ marks.summary.missed + " (" + marks.summary.percentMissed + "%)" }}</div>
         </div>
         <div class="summary_string" layout="row">
-            <div class="summary_name" flex="20">Посещено часов:</div>
+            <div class="summary_name" flex="20">Посещено занятий:</div>
             <div class="summary_value"> {{ marks.summary.placed }}</div>
         </div>
     </div>
     <div class="marks_container" layout="column">
-        <h3 class="inner_header_h3">По семестрам</h3>
+        <h3 class="inner_header_h3">Учебные специальности</h3>
         <md-table-container>
             <table class="marks_table">
                 <thead>
                     <tr>
-                        <!--<th>Название дисцплины</th>-->
-                        <th ng-repeat="title in marks.helper.getTitles()">{{ title }}</th>
+                        <th ng-repeat="title in marks.marksHelper.getTitles()">{{ title }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="row in marks.helper.getRows()">
+                    <tr ng-repeat="row in marks.marksHelper.getRows()">
                         <td ng-repeat="cell in row"> {{ cell }} </td>
                     </tr>
                 </tbody>
             </table>
         </md-table-container>
-        <!--<div class="actions_block" layout="row" flex>
-            <md-button class="green_btn"
-                aria-label="cancel_btn"> Сброс </md-button>
-            <md-button class="green_btn"
-                aria-label="save_btn"> Сохранить </md-button>
-        </div>-->
+    </div>
+    <div class="standarts_container" layout="column">
+        <h3 class="inner_header_h3">Нормативы</h3>
+        <md-table-container>
+            <table class="marks_table">
+                <thead>
+                    <tr>
+                        <th flex ng-repeat="title in marks.standartsHelper.getTitles()">{{ title }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in marks.standartsHelper.getRows()">
+                        <td ng-repeat="cell in row"> {{ cell }} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
     </div>
 </div>
