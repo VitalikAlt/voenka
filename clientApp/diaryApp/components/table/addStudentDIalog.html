@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="diaryApp/auth/views/dialogStyles.css">
+<md-dialog aria-label="add_student_dialog" class="add_student_dialog">
+   <md-dialog-content layout="column">
+       <h2 class="inner_header">Добавление студента</h2>
+       <div class="student_fields_container" layout="column">
+        <md-input-container>
+            <input name="name"
+                    type="text"
+                    ng-model="newStudent.name"
+                    placeholder="Имя"
+                    aria-label="name"
+                    required>
+        </md-input-container>
+        <md-input-container>
+            <input name="surname"
+                    type="text"
+                    ng-model="newStudent.surname"
+                    placeholder="Фамилия"
+                    aria-label="surname"
+                    required>
+        </md-input-container>
+        <md-input-container>
+            <input name="father_name"
+                    type="text"
+                    ng-model="newStudent.fatherName"
+                    placeholder="Отчество"
+                    aria-label="father_name"
+                    required>
+        </md-input-container>
+        <md-input-container>
+            <input name="student_card_number"
+                    type="text"
+                    ng-model="newStudent.student_card_number"
+                    placeholder="Номер студенческого"
+                    aria-label="student_card_number"
+                    required>
+        </md-input-container>
+        <md-input-container>
+            <input name="password"
+                    type="password"
+                    ng-model="newStudent.password"
+                    placeholder="Пароль"
+                    aria-label="password"
+                    required>
+        </md-input-container>
+       </div>
+      
+   </md-dialog-content>
+   <md-dialog-actions>
+        <span flex></span>
+        <md-button aria-label="doneBtn" ng-click="auth.dialogDone(newStudent)">
+        	Добавить
+        </md-button>
+        <md-button aria-label="cancelBtn" ng-click="auth.dialogCancel()" style="margin-right:20px;">
+            Отмена
+        </md-button>
+   </md-dialog-actions>
+</md-dialog>

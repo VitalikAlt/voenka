@@ -4,6 +4,7 @@ angular.module('app',
         'app.directives',
         'app.auth',
         'app.students',
+        'app.table',
         'app.utils'
     ])
 .run(function($http, $cookies, $rootScope, currentUser, $state, $log) {

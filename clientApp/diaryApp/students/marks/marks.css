@@ -1,0 +1,13 @@
+.marks_table th,
+.marks_table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.summary_string {
+    padding: 10px;
+}
+
+.summary_name {
+    letter-spacing: 1px;
+}
