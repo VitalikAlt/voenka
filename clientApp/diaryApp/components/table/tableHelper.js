@@ -32,7 +32,7 @@
                 this.list.push(row);
                 var displayedRow = [];
                 for (var i = 0; i < this.titles.length; i++) {
-                    displayedRow.push(row[this.titles[i].options.label]);
+                    displayedRow.push(row[this.titles[i].options.label] || '-');
                     // this.displayed.push(row[this.titles[i].options.label]);
                 }
                 this.displayed.push(displayedRow);

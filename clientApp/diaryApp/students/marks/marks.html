@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="marks_container" layout="column">
-        <h3 class="inner_header_h3">Учебные специальности</h3>
+        <h3 class="inner_header_h3">Учебные дисциплины</h3>
         <md-table-container>
             <table class="marks_table">
                 <thead>
@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in marks.marksHelper.getRows()">
-                        <td ng-repeat="cell in row"> {{ cell }} </td>
+                        <td ng-repeat="cell in row track by $index"> {{ cell }} </td>
                     </tr>
                 </tbody>
             </table>
@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in marks.standartsHelper.getRows()">
-                        <td ng-repeat="cell in row"> {{ cell }} </td>
+                        <td ng-repeat="cell in row track by $index"> {{ cell }} </td>
                     </tr>
                 </tbody>
             </table>

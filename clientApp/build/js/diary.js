@@ -408,7 +408,7 @@ function AuthorizationError(message) {
                 this.list.push(row);
                 var displayedRow = [];
                 for (var i = 0; i < this.titles.length; i++) {
-                    displayedRow.push(row[this.titles[i].options.label]);
+                    displayedRow.push(row[this.titles[i].options.label] || '-');
                     // this.displayed.push(row[this.titles[i].options.label]);
                 }
                 this.displayed.push(displayedRow);
@@ -769,7 +769,13 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 titles: [
                     { name: 'Название', options: { label: 'nameSubject', show: true } },
                     { name: '1 семестр', options: { label: 'semestr1', show: true } },
-                    { name: '2 семестр', options: { label: 'semestr2', show: true } }
+                    { name: '2 семестр', options: { label: 'semestr2', show: true } },
+                    { name: '3 семестр', options: { label: 'semestr3', show: true } },
+                    { name: '4 семестр', options: { label: 'semestr4', show: true } },
+                    { name: '5 семестр', options: { label: 'semestr5', show: true } },
+                    { name: '6 семестр', options: { label: 'semestr6', show: true } },
+                    { name: '7 семестр', options: { label: 'semestr7', show: true } },
+                    { name: '8 семестр', options: { label: 'semestr8', show: true } }
                 ],
                 rows: [
                     { nameSubject: 'ВСП', semestr1: 4, semestr2: 5 },
@@ -780,11 +786,18 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 titles: [
                     { name: 'Название', options: { label: 'nameStandart', show: true } },
                     { name: '1 семестр', options: { label: 'semestr1', show: true } },
-                    { name: '2 семестр', options: { label: 'semestr2', show: true } }
+                    { name: '2 семестр', options: { label: 'semestr2', show: true } },
+                    { name: '3 семестр', options: { label: 'semestr3', show: true } },
+                    { name: '4 семестр', options: { label: 'semestr4', show: true } },
+                    { name: '5 семестр', options: { label: 'semestr5', show: true } },
+                    { name: '6 семестр', options: { label: 'semestr6', show: true } },
+                    { name: '7 семестр', options: { label: 'semestr7', show: true } },
+                    { name: '8 семестр', options: { label: 'semestr8', show: true } }
                 ],
                 rows: [
                     { nameStandart: 'Подтягивания', semestr1: 14, semestr2: 15 },
-                    { nameStandart: 'Бег 100м', semestr1: 10.7, semestr2: 11 }
+                    { nameStandart: 'Бег 100 м', semestr1: '10.7 с', semestr2: '11 с' },
+                    { nameStandart: 'Бег 1000 м', semestr1: '3.40 м' }
                 ]
             },
         }

@@ -10,4 +10,10 @@
 
 .summary_name {
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.summary_value {
+    font-size: 1.2em;
 }
