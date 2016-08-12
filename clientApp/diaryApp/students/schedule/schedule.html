@@ -1,4 +1,32 @@
-<div class="students_schedule_container">
+<div class="student_schedule_container">
     <link rel="stylesheet" href="diaryApp/students/schedule/schedule.css">
-    <div>Schedule view</div>
+    <h2 class="inner_header">Расписание занятий</h2>
+    
+    <div class="schedule_container">
+        <div class="calendar">
+            <div class="calendar_titles" layout="row">
+                <div class="title_container" ng-repeat="weekDay in schedule.weekDays" flex>
+                    <span>{{ weekDay }}</span>
+                </div>
+            </div>
+            <div class="calendar_body" layout="column">
+                <div class="calendar_week" ng-repeat="week in schedule.currentPageMonth" layout="row">
+                    <!--<span>{{ day.date.getDate() }}</span>-->
+                    <div class="calendar_day" ng-repeat="day in week" flex>
+                        <div class="date_container">
+                            <span ng-if="day.date">{{ day.date.getDate() }}</span>
+                            <span ng-if="!day.date"> - </span>
+                        </div>
+                        <div class="lessons_container">
+                            <div class="lesson" ng-repeat="lesson in day.data.lessons">
+                                <span>{{ lesson.time }}</span>
+                                <span>{{ lesson.name }}</span>
+                                <span>{{ lesson.room }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

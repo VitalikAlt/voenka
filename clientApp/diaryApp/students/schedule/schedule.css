@@ -1,0 +1,14 @@
+.title_container,
+.calendar_day {
+    text-align: center;
+    padding: 20px;
+}
+
+.calendar_titles {
+    background-color: #094900;
+    color: white;
+}
+
+.lesson {
+    font-size: .7em;
+}
