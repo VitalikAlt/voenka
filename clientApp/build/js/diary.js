@@ -546,6 +546,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             vm.currentMonth = vm.currentDate.getMonth();
             vm.currentYear = vm.currentDate.getFullYear();
             vm.changePeriod = changePeriod;
+            vm.compareDates = compareDates;
 
             vm.weekDays = [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ];
             vm.months = [
@@ -561,9 +562,16 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.currentPageMonth = generateDaysPage(today.getMonth(), today.getFullYear());
             }
 
-            function changePeriod(month, year) {
-                console.log('Period has been changed');
-                // vm.currentPageMonth = generateDaysPage(month, year);
+            function compareDates(date1, date2) {
+                if (date1 && date2) {
+                    return date1.getFullYear() == date2.getFullYear() &&
+                           date1.getMonth() == date2.getMonth() &&
+                           date1.getDate() == date2.getDate();
+                }
+               return false;
+            }
+
+            function changePeriod() {
                 vm.currentPageMonth = generateDaysPage(vm.currentMonth, vm.currentYear);
             }
 
@@ -622,7 +630,8 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 replace: true,
                 link: link,
                 scope: {
-                    getDataByDate: '='
+                    getDataByDate: '=',
+                    onDayClick: '='
                 },
                 templateUrl: 'diaryApp/directives/calendar/calendar.html',
                 controller: 'CalendarController',
@@ -731,8 +740,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
         .directive('popupImage', function() {
              return {
                 restrict: 'A',
-                // templateUrl: 'diaryApp/directives/popup/popup.html',
-                //template: '<div class="popupOpener"></div>',
                 compile: compile,
                 controller: 'PopupImageController',
                 controllerAs: 'popup'
@@ -740,7 +747,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
         });
 
         function compile(templateElem, templateAttrs) {
-            // templateAttrs.$set('ngClick', 'console.log(' + templateAttrs.ngSrc + ')');
             return {
                 pre: pre,
                 post: post
@@ -1052,61 +1058,19 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     'use strict';
     angular
         .module('app.students')
-        .controller('StudentsScheduleController', function() {
+        .controller('StudentsScheduleController', function($scope, $mdDialog) {
             var vm = this;
-
-            // vm.currentPageMonth = [];
-            // vm.currentDate = new Date();
-            // vm.weekDays = [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ]
-            
-            // var countDaysInPage = 35; // 7 x 5  (для календаря)
-            // init();
+            vm.onDayClick = openDayDialog;
 
             vm.getDayData = getDayData;
 
-            // function init() {
-            //     var today = new Date();
-            //     vm.currentPageMonth = generateDaysPage(today.getMonth(), today.getFullYear());
-            // }
-
-            // // Получить последний день месяца
-            // function getLastDayInMonth(month, year) {
-            //     return (new Date(year, month + 1, 0));
-            // }
-
-            // // Сгенерировать страницу календаря
-            // function generateDaysPage(month, year) {
-            //     var startMonthDay = new Date(year, month, 1).getDay();
-            //     // var endMonthDay = getLastDayInMonth(month, year).getDay();
-            //     var endMonthDay = getLastDayInMonth(month, year).getDate();
-
-            //     var monthDays = [];
-            //     var weekDays = [];
-
-            //     for (var i = 0; i < countDaysInPage; i++) {
-            //         if (i < startMonthDay || i > endMonthDay) {
-            //             weekDays.push({});
-            //         }
-            //         else {
-            //             weekDays.push({
-            //                 date: new Date(year, month, i), // текушая дата
-            //                 data: getDayData(new Date(year, month, i)) // информация текущего дня
-            //             });
-            //         }
-            //         if ((i + 1) % 7 == 0) {
-            //             monthDays.push(weekDays);
-            //             weekDays = [];
-            //         }
-            //     }
-            //     monthDays.push(weekDays);
-            //     return monthDays;
-            // }
-
             function getDayData(date) {
                 // Получение инфы по текущей дате
+                // ...
                 var data = {};
                 var curDate = date.getDate();
-                if (curDate % 9 == 0) 
+                // заглушка и тестовые данные
+                if (curDate % 7 == 0) 
                     data = {
                         lessons: [
                             { name: "Практика", time: "11:00", room: "В513" },
@@ -1115,6 +1079,29 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         ]
                     }
                 return data;
+            }
+
+            function onDayClick(dayData) {
+                // console.dir(dayData);
+            }
+
+            function openDayDialog(ev, dayData) {
+                var newScope = $scope.$new();
+                newScope.dayData = dayData;
+                $mdDialog.show({
+                        scope: newScope,
+                        controller: 'StudentsScheduleController',
+                        controllerAs: 'schedule',
+                        templateUrl: 'diaryApp/students/schedule/views/dayDialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: true,
+                    })
+                    .then(function() {
+                        // console.dir(dayData);
+                    }, function() {
+                        // закрыто диалоговое окно
+                    });
             }
         });
 })();

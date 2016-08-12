@@ -5,8 +5,6 @@
         .directive('popupImage', function() {
              return {
                 restrict: 'A',
-                // templateUrl: 'diaryApp/directives/popup/popup.html',
-                //template: '<div class="popupOpener"></div>',
                 compile: compile,
                 controller: 'PopupImageController',
                 controllerAs: 'popup'
@@ -14,7 +12,6 @@
         });
 
         function compile(templateElem, templateAttrs) {
-            // templateAttrs.$set('ngClick', 'console.log(' + templateAttrs.ngSrc + ')');
             return {
                 pre: pre,
                 post: post

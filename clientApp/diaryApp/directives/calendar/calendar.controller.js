@@ -9,6 +9,7 @@
             vm.currentMonth = vm.currentDate.getMonth();
             vm.currentYear = vm.currentDate.getFullYear();
             vm.changePeriod = changePeriod;
+            vm.compareDates = compareDates;
 
             vm.weekDays = [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ];
             vm.months = [
@@ -24,9 +25,16 @@
                 vm.currentPageMonth = generateDaysPage(today.getMonth(), today.getFullYear());
             }
 
-            function changePeriod(month, year) {
-                console.log('Period has been changed');
-                // vm.currentPageMonth = generateDaysPage(month, year);
+            function compareDates(date1, date2) {
+                if (date1 && date2) {
+                    return date1.getFullYear() == date2.getFullYear() &&
+                           date1.getMonth() == date2.getMonth() &&
+                           date1.getDate() == date2.getDate();
+                }
+               return false;
+            }
+
+            function changePeriod() {
                 vm.currentPageMonth = generateDaysPage(vm.currentMonth, vm.currentYear);
             }
 

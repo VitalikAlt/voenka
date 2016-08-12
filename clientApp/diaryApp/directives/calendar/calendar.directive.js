@@ -8,7 +8,8 @@
                 replace: true,
                 link: link,
                 scope: {
-                    getDataByDate: '='
+                    getDataByDate: '=',
+                    onDayClick: '='
                 },
                 templateUrl: 'diaryApp/directives/calendar/calendar.html',
                 controller: 'CalendarController',

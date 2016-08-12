@@ -35,3 +35,16 @@
     color: #108200;
     margin-top: 5px;
 }
+
+.calendar_day.today {
+    background-color: rgb(9, 73, 0);
+    color: white;
+}
+
+.calendar_day.today:hover {
+    background-color: rgba(9, 73, 0, .8);
+}
+
+.today .lesson {
+    color: white;
+}

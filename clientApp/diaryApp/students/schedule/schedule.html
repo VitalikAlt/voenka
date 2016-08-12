@@ -3,29 +3,7 @@
     <h2 class="inner_header">Расписание занятий</h2>
     
     <div class="schedule_container">
-        <calendar get-data-by-date="schedule.getDayData"></calendar>
-        <!--<div class="calendar">
-            <div class="calendar_titles" layout="row">
-                <div class="title_container" ng-repeat="weekDay in schedule.weekDays" flex>
-                    <span>{{ weekDay }}</span>
-                </div>
-            </div>
-            <div class="calendar_body" layout="column">
-                <div class="calendar_week" ng-repeat="week in schedule.currentPageMonth" layout="row">
-                    <div class="calendar_day" ng-repeat="day in week" flex>
-                        <div class="date_container">
-                            <span class="date_label" ng-if="day.date">{{ day.date.getDate() }}</span>
-                            <span class="date_label" ng-if="!day.date"> - </span>
-                        </div>
-                        <div class="lessons_container">
-                            <div class="lesson" ng-repeat="lesson in day.data.lessons">
-                                <span>{{ lesson.time + " (" + lesson.room + ")"}}</span><br>
-                                <span>{{ lesson.name }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+        <calendar get-data-by-date="schedule.getDayData"
+                  on-day-click="schedule.onDayClick"></calendar>
     </div>
 </div>
