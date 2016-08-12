@@ -1,5 +1,22 @@
 <div class="calendar">
     <link rel="stylesheet" href="diaryApp/directives/calendar/calendar.css">
+    <div class="period_block" layout="row">
+        <md-select ng-model="calendar.currentMonth"
+                   placeholder="Месяц"
+                   ng-change="calendar.changePeriod()">
+            <md-option ng-value="$index" ng-repeat="month in calendar.months">
+                {{ month }}
+            </md-option>
+        </md-select>
+        <md-select ng-model="calendar.currentYear"
+                   placeholder="Год"
+                   ng-change="calendar.changePeriod()">
+            <md-option ng-value="year" ng-repeat="year in calendar.years">
+                {{ year }}
+            </md-option>
+        </md-select>
+    </div>
+    
     <div class="calendar_titles" layout="row">
         <div class="title_container" ng-repeat="weekDay in calendar.weekDays" flex>
             <span>{{ weekDay }}</span>
@@ -10,7 +27,7 @@
             <div class="calendar_day" ng-repeat="day in week" flex>
                 <div class="date_container">
                     <span class="date_label" ng-if="day.date">{{ day.date.getDate() }}</span>
-                    <span class="date_label" ng-if="!day.date"> - </span>
+                    <span class="date_label" ng-if="!day.date">  </span>
                 </div>
                 <div class="lessons_container">
                     <div class="lesson" ng-repeat="lesson in day.data.lessons">

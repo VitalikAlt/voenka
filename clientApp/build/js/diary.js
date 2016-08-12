@@ -543,7 +543,15 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             var vm = this;
             vm.currentPageMonth = [];
             vm.currentDate = new Date();
+            vm.currentMonth = vm.currentDate.getMonth();
+            vm.currentYear = vm.currentDate.getFullYear();
+            vm.changePeriod = changePeriod;
+
             vm.weekDays = [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ];
+            vm.months = [
+                'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'
+            ];
+            vm.years = getYears();
 
             var countDaysInPage = 35;
             init();
@@ -551,6 +559,17 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             function init() {
                 var today = new Date();
                 vm.currentPageMonth = generateDaysPage(today.getMonth(), today.getFullYear());
+            }
+
+            function changePeriod(month, year) {
+                console.log('Period has been changed');
+                // vm.currentPageMonth = generateDaysPage(month, year);
+                vm.currentPageMonth = generateDaysPage(vm.currentMonth, vm.currentYear);
+            }
+
+            function getYears() {
+                var currentYear = new Date().getFullYear();
+                return [ currentYear - 1, currentYear, currentYear + 1];
             }
 
              // Получить последний день месяца
@@ -567,20 +586,26 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 var monthDays = [];
                 var weekDays = [];
 
-                for (var i = 0; i < countDaysInPage; i++) {
-                    if (i < startMonthDay || i > endMonthDay) {
+                for (var i = 0; i < startMonthDay + endMonthDay; i++) {
+                    // Дата с учетом сдвига
+                    var offsetDate = i - startMonthDay + 1;
+                    if (i < startMonthDay || offsetDate > endMonthDay) {
                         weekDays.push({});
                     }
                     else {
                         weekDays.push({
-                            date: new Date(year, month, i), // текушая дата
-                            data: $scope.getDataByDate(new Date(year, month, i)) // информация текущего дня
+                            date: new Date(year, month, offsetDate), // текушая дата
+                            data: $scope.getDataByDate(new Date(year, month, offsetDate)) // информация текущего дня
                         });
                     }
-                    if ((i + 1) % 7 == 0) {
+                    // Добавление недели
+                    if (weekDays.length == 7) {
                         monthDays.push(weekDays);
                         weekDays = [];
                     }
+                }
+                for (var i = weekDays.length; i < 7; i++) {
+                    weekDays.push({});
                 }
                 monthDays.push(weekDays);
                 return monthDays;
