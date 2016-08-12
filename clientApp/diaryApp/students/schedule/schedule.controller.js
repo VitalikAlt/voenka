@@ -5,50 +5,52 @@
         .controller('StudentsScheduleController', function() {
             var vm = this;
 
-            vm.currentPageMonth = [];
-            vm.currentDate = new Date();
-            vm.weekDays = [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ]
+            // vm.currentPageMonth = [];
+            // vm.currentDate = new Date();
+            // vm.weekDays = [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ]
             
-            var countDaysInPage = 35; // 7 x 5  (для календаря)
-            init();
+            // var countDaysInPage = 35; // 7 x 5  (для календаря)
+            // init();
 
-            function init() {
-                var today = new Date();
-                vm.currentPageMonth = generateDaysPage(today.getMonth(), today.getFullYear());
-            }
+            vm.getDayData = getDayData;
 
-            // Получить последний день месяца
-            function getLastDayInMonth(month, year) {
-                return (new Date(year, month + 1, 0));
-            }
+            // function init() {
+            //     var today = new Date();
+            //     vm.currentPageMonth = generateDaysPage(today.getMonth(), today.getFullYear());
+            // }
 
-            // Сгенерировать страницу календаря
-            function generateDaysPage(month, year) {
-                var startMonthDay = new Date(year, month, 1).getDay();
-                // var endMonthDay = getLastDayInMonth(month, year).getDay();
-                var endMonthDay = getLastDayInMonth(month, year).getDate();
+            // // Получить последний день месяца
+            // function getLastDayInMonth(month, year) {
+            //     return (new Date(year, month + 1, 0));
+            // }
 
-                var monthDays = [];
-                var weekDays = [];
+            // // Сгенерировать страницу календаря
+            // function generateDaysPage(month, year) {
+            //     var startMonthDay = new Date(year, month, 1).getDay();
+            //     // var endMonthDay = getLastDayInMonth(month, year).getDay();
+            //     var endMonthDay = getLastDayInMonth(month, year).getDate();
 
-                for (var i = 0; i < countDaysInPage; i++) {
-                    if (i < startMonthDay || i > endMonthDay) {
-                        weekDays.push({});
-                    }
-                    else {
-                        weekDays.push({
-                            date: new Date(year, month, i), // текушая дата
-                            data: getDayData(new Date(year, month, i)) // информация текущего дня
-                        });
-                    }
-                    if ((i + 1) % 7 == 0) {
-                        monthDays.push(weekDays);
-                        weekDays = [];
-                    }
-                }
-                monthDays.push(weekDays);
-                return monthDays;
-            }
+            //     var monthDays = [];
+            //     var weekDays = [];
+
+            //     for (var i = 0; i < countDaysInPage; i++) {
+            //         if (i < startMonthDay || i > endMonthDay) {
+            //             weekDays.push({});
+            //         }
+            //         else {
+            //             weekDays.push({
+            //                 date: new Date(year, month, i), // текушая дата
+            //                 data: getDayData(new Date(year, month, i)) // информация текущего дня
+            //             });
+            //         }
+            //         if ((i + 1) % 7 == 0) {
+            //             monthDays.push(weekDays);
+            //             weekDays = [];
+            //         }
+            //     }
+            //     monthDays.push(weekDays);
+            //     return monthDays;
+            // }
 
             function getDayData(date) {
                 // Получение инфы по текущей дате
