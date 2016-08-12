@@ -14,14 +14,14 @@
                     <!--<span>{{ day.date.getDate() }}</span>-->
                     <div class="calendar_day" ng-repeat="day in week" flex>
                         <div class="date_container">
-                            <span ng-if="day.date">{{ day.date.getDate() }}</span>
-                            <span ng-if="!day.date"> - </span>
+                            <span class="date_label" ng-if="day.date">{{ day.date.getDate() }}</span>
+                            <span class="date_label" ng-if="!day.date"> - </span>
                         </div>
                         <div class="lessons_container">
                             <div class="lesson" ng-repeat="lesson in day.data.lessons">
-                                <span>{{ lesson.time }}</span>
+                                <span>{{ lesson.time + " (" + lesson.room + ")"}}</span><br>
                                 <span>{{ lesson.name }}</span>
-                                <span>{{ lesson.room }}</span>
+                                <!--<span>{{ " (" + lesson.room + ")" }}</span>-->
                             </div>
                         </div>
                     </div>

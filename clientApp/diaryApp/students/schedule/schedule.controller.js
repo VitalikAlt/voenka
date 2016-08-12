@@ -57,8 +57,9 @@
                 if (curDate % 9 == 0) 
                     data = {
                         lessons: [
-                            { name: "ТСП", time: "15:00", room: "В513" },
-                            { name: "ТСП", time: "15:00", room: "В513" }
+                            { name: "Практика", time: "11:00", room: "В513" },
+                            { name: "ТСП", time: "13:00", room: "В513" },
+                            { name: "Техническая подготовка", time: "15:00", room: "В513" }
                         ]
                     }
                 return data;
