@@ -4,10 +4,11 @@ angular.module('app',
         'app.directives',
         'app.auth',
         'app.students',
+        'app.teachers',
         'app.table',
         'app.utils'
     ])
-.run(function($http, $cookies, $rootScope, currentUser, $state, $log) {
+.run(function($http, $cookies, $rootScope, currentUser, $state, $log, authHelper) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 
@@ -25,7 +26,8 @@ angular.module('app',
         $rootScope.$on('$stateChangeStart',
          function(evt, next, current) {
              if (next.data && !currentUser.checkPermissions(next.data.permissions)) {
-                 $state.go('auth');
+                //  $state.go('auth');
+                 authHelper.noPermissionsRedirect(currentUser.getPermissions());
                  evt.preventDefault();
              }
             //  if (next.name == 'auth') return;

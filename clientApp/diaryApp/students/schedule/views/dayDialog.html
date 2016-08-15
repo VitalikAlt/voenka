@@ -7,9 +7,19 @@
        <div class="day_data_content" layout="column">
             <div class="dialog_schedule_container">
                 <!--{{dayData}}-->
-                <div class="dialog_lesson" ng-repeat="lesson in dayData.data.lessons">
+                <div ng-if="dayData.data.lessons" class="dialog_lesson" ng-repeat="lesson in dayData.data.lessons">
                     <span>{{ lesson.time }}</span>
                     <span>{{ lesson.name }}</span>
+                    <span>{{ " (" + lesson.room + ")" }}</span>
+                </div>
+                <div ng-if="!dayData.data.lessons" class="dialog_lesson">
+                    <span>Нет занятий!</span>
+                </div>
+                <div class="day_notes">
+                    <md-input-container>
+                        <label>Заметки на день:</label>
+                        <textarea ng-model="dayData.notes" columns="1"></textarea>
+                    </md-input-container>
                 </div>
             </div>
        </div>

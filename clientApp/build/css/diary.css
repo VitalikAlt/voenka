@@ -42,3 +42,50 @@
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+
+md-content.nested_block {
+    margin: 20px 20px 20px 320px;
+}
+
+/* Меню */
+.menu-row {
+    width: 100%!important;
+    padding: 10px;
+    margin-left: 0;
+    color: #1E2129;
+}
+
+.menu-label {
+    width: 100%;
+    letter-spacing: 2px;
+    font-weight: 300;
+    letter-spacing: .2em;
+    font-size: 1.3em;    
+}
+
+.menu-header-label {
+    width: 100%;
+    letter-spacing: 2px;
+    font-weight: 300;
+    letter-spacing: .2em;
+    font-size: 1.3em; 
+    text-align: right;
+    padding: 20px;
+    background: rgb(9, 73, 0);
+}
+
+.active-row {
+    background-color: rgb(9, 73, 0)!important;
+    color: white;
+}
+
+.active-row:hover {
+    background-color: rgb(15, 118, 0)!important;
+}
+
+md-sidenav {
+    position: fixed!important;
+    height: 100vh;
+    width: 300px;
+}
+/* Конец Меню */

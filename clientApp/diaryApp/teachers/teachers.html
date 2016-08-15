@@ -1,4 +1,4 @@
-<div class="students_view_container" layout="row" flex>
+<div class="teachers_view_container" layout="row" flex>
     <md-sidenav flex
                 md-is-open="true"
                 layout="column"
@@ -9,17 +9,17 @@
             <div class="menu-header-label">Меню</div>
         </md-toolbar>
         <md-content flex id="content" flex role="navigation">
-            <md-button ui-sref="students.profile" id="students.profile" class="menu-row" badge-menu layout="row" > 
+            <md-button ui-sref="teachers.profile" id="teachers.profile" class="menu-row" badge-menu layout="row" > 
                 <span class="menu-label">Профиль</span>
                 <!--<md-icon md-font-library="material-icons">desktop_windows</md-icon>-->
             </md-button>
-            <md-button ui-sref="students.marks" id="students.marks" class="menu-row" badge-menu layout="row" > 
-                <span class="menu-label">Успеваемость</span>
+            <md-button ui-sref="teachers.diary" id="teachers.diary" class="menu-row" badge-menu layout="row" > 
+                <span class="menu-label">Журнал</span>
             </md-button>
-            <md-button ui-sref="students.schedule" id="students.schedule" class="menu-row" badge-menu layout="row" > 
+            <md-button ui-sref="teachers.schedule" id="teachers.schedule" class="menu-row" badge-menu layout="row" > 
                 <span class="menu-label">Расписание</span>
             </md-button>
-            <md-button ng-click="students.logout()" ui-sref="auth" id="logout" class="menu-row" badge-menu layout="row" > 
+            <md-button ng-click="teachers.logout()" ui-sref="auth" id="logout" class="menu-row" badge-menu layout="row" > 
                 <span class="menu-label">Выход</span>
             </md-button>
         </md-content>
@@ -30,5 +30,5 @@
                 class="ui-view nested_block"
                 md-whiteframe="4">
     </md-content>
-    <!--<ui-view class="nested_students_block" flex></ui-view>-->
+    <!--<ui-view class="nested_block" flex></ui-view>-->
 </div>

@@ -7,6 +7,7 @@
   function authHelper($state, $q, PERMISSIONS, currentUser) {
     var factory = {
       login: login, // авторизация пользователя
+      noPermissionsRedirect: redirectToStartByPermission
     };
 
     return factory;
@@ -15,6 +16,11 @@
     function login(loginData) {
         // Получение permissions
         // ...
+// test data
+if (loginData.login == 'teacher') loginData.permissions = PERMISSIONS.TEACHER;
+if (loginData.login == 'student') loginData.permissions = PERMISSIONS.STUDENT;
+
+
         // Заглушка
         if (!loginData.permissions) {
           loginData.permissions = PERMISSIONS.STUDENT;
@@ -31,12 +37,13 @@
           deferred.reject();
         }
         
-        switch (loginData.permissions) {
-          case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
-          case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
-          case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
-          case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
-        }
+        redirectToStartByPermission(loginData.permissions);
+        // switch (loginData.permissions) {
+        //   case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
+        //   case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
+        //   case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
+        //   case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
+        // }
         
         return deferred.promise;
 
@@ -48,6 +55,15 @@
         //     return { type: 'admin' };
         // }
         // return { type: 'error' };
+    }
+
+    function redirectToStartByPermission(permission) {
+        switch (permission) {
+          case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
+          case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
+          case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
+          case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
+        }
     }
   }
 })();

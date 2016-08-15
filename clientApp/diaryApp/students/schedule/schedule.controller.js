@@ -25,11 +25,9 @@
                 return data;
             }
 
-            function onDayClick(dayData) {
-                // console.dir(dayData);
-            }
-
             function openDayDialog(ev, dayData) {
+                if (!dayData.data) return;
+
                 var newScope = $scope.$new();
                 newScope.dayData = dayData;
                 $mdDialog.show({

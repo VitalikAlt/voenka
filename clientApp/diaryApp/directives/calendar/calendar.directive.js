@@ -2,7 +2,7 @@
     'use strict';
     angular
         .module('app.directives')
-        .directive('calendar', function() {
+        .directive('calendar', function($window) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -17,7 +17,12 @@
             }
 
             function link(scope, elem, attrs, controller) {
-
+                angular.element($window).bind('scroll', function() {
+                    if (window.pageYOffset >= 10) {
+                        console.log('fire');
+                        // angular.element();
+                    }
+                })
             }
            
         });

@@ -29,10 +29,11 @@ angular.module('app',
         'app.directives',
         'app.auth',
         'app.students',
+        'app.teachers',
         'app.table',
         'app.utils'
     ])
-.run(function($http, $cookies, $rootScope, currentUser, $state, $log) {
+.run(function($http, $cookies, $rootScope, currentUser, $state, $log, authHelper) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 
@@ -50,7 +51,8 @@ angular.module('app',
         $rootScope.$on('$stateChangeStart',
          function(evt, next, current) {
              if (next.data && !currentUser.checkPermissions(next.data.permissions)) {
-                 $state.go('auth');
+                //  $state.go('auth');
+                 authHelper.noPermissionsRedirect(currentUser.getPermissions());
                  evt.preventDefault();
              }
             //  if (next.name == 'auth') return;
@@ -75,6 +77,11 @@ angular.module('app',
     angular.module('app.students', []);
 })();
 
+(function() {
+    'use strict';
+    angular
+        .module('app.teachers', []);
+})();
 (function(){
     angular
         .module('app.auth')
@@ -160,13 +167,18 @@ angular.module('app',
   'use strict';
   angular
     .module('app.auth')
-    .config(function($stateProvider) {
+    .config(function($stateProvider, PERMISSIONS) {
       $stateProvider
         .state('auth', {
           url: '/auth',
           controller: 'AuthController',
           controllerAs: 'auth',
-          templateUrl: 'diaryApp/auth/auth.html'
+          templateUrl: 'diaryApp/auth/auth.html',
+          data: {
+            permissions: [
+              PERMISSIONS.GUEST
+            ]
+          }
         });
     });
 })();
@@ -179,6 +191,7 @@ angular.module('app',
   function authHelper($state, $q, PERMISSIONS, currentUser) {
     var factory = {
       login: login, // авторизация пользователя
+      noPermissionsRedirect: redirectToStartByPermission
     };
 
     return factory;
@@ -187,6 +200,11 @@ angular.module('app',
     function login(loginData) {
         // Получение permissions
         // ...
+// test data
+if (loginData.login == 'teacher') loginData.permissions = PERMISSIONS.TEACHER;
+if (loginData.login == 'student') loginData.permissions = PERMISSIONS.STUDENT;
+
+
         // Заглушка
         if (!loginData.permissions) {
           loginData.permissions = PERMISSIONS.STUDENT;
@@ -203,12 +221,13 @@ angular.module('app',
           deferred.reject();
         }
         
-        switch (loginData.permissions) {
-          case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
-          case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
-          case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
-          case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
-        }
+        redirectToStartByPermission(loginData.permissions);
+        // switch (loginData.permissions) {
+        //   case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
+        //   case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
+        //   case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
+        //   case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
+        // }
         
         return deferred.promise;
 
@@ -220,6 +239,15 @@ angular.module('app',
         //     return { type: 'admin' };
         // }
         // return { type: 'error' };
+    }
+
+    function redirectToStartByPermission(permission) {
+        switch (permission) {
+          case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
+          case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
+          case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
+          case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
+        }
     }
   }
 })();
@@ -624,7 +652,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     'use strict';
     angular
         .module('app.directives')
-        .directive('calendar', function() {
+        .directive('calendar', function($window) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -639,7 +667,12 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             }
 
             function link(scope, elem, attrs, controller) {
-
+                angular.element($window).bind('scroll', function() {
+                    if (window.pageYOffset >= 10) {
+                        console.log('fire');
+                        // angular.element();
+                    }
+                })
             }
            
         });
@@ -1081,11 +1114,9 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 return data;
             }
 
-            function onDayClick(dayData) {
-                // console.dir(dayData);
-            }
-
             function openDayDialog(ev, dayData) {
+                if (!dayData.data) return;
+
                 var newScope = $scope.$new();
                 newScope.dayData = dayData;
                 $mdDialog.show({
@@ -1166,4 +1197,79 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             templateUrl: 'diaryApp/students/schedule/schedule.html'
           });
     });
+})();
+(function() {
+    angular
+        .module('app.students')
+        .controller('TeachersDiaryController', function() {
+            
+        })
+})();
+(function() {
+    'use strict';
+    angular
+        .module('app.teachers')
+        .controller('TeachersProfileController', function() {
+
+        });
+})();
+(function() {
+    'use strict';
+    angular
+        .module('app.teachers')
+        .controller('TeachersScheduleController', function() {
+
+        });
+})();
+(function() {
+    'use strict';
+    angular
+        .module('app.teachers')
+        .controller('TeachersController', function(currentUser) {
+            var vm = this;
+
+            vm.logout = logout;
+
+            function logout() {
+                currentUser.logout();
+            }
+        });
+})();
+(function() {
+    'use strict';
+    angular
+        .module('app.teachers')
+        .config(function($stateProvider, PERMISSIONS) {
+            $stateProvider
+                .state('teachers', {
+                    url: '/teachers',
+                    controller: 'TeachersController',
+                    controllerAs: 'teachers',
+                    templateUrl: 'diaryApp/teachers/teachers.html',
+                    abstract: true,
+                    data: {
+                        permissions: [
+                            PERMISSIONS.TEACHER
+                        ]
+                    }
+                })
+                .state('teachers.profile', {
+                    url: '/profile/',
+                    controller: 'TeachersProfileController',
+                    controllerAs: 'profile',
+                    templateUrl: 'diaryApp/teachers/profile/profile.html'
+                })
+                .state('teachers.diary', {
+                    url: '/diary/',
+                    controller: 'TeachersDiaryController',
+                    controllerAs: 'diary',
+                    templateUrl: 'diaryApp/teachers/diary/diary.html'
+                })
+                .state('teachers.schedule', {
+                    url: '/schedule/',
+                    controller: 'TeachersScheduleController',
+                    controllerAs: 'schedule',
+                    templateUrl: 'diaryApp/teachers/schedule/schedule.html'
+                })
+        });
 })();
