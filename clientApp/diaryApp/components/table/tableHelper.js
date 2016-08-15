@@ -48,6 +48,15 @@
                 return this.displayed;
             }
 
+            Helper.prototype.clearList = function() {
+                this.list = [];
+                this.displayed = [];
+            }
+
+            Helper.prototype.clearHeaders = function() {
+                this.titles = [];
+            }
+
             return {
                 getInstance: function(queryOptions) {
                     return new Helper(queryOptions);

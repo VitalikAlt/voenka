@@ -17,7 +17,6 @@
             ];
             vm.years = getYears();
 
-            var countDaysInPage = 35;
             init();
 
             function init() {

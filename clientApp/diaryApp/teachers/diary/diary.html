@@ -2,5 +2,48 @@
     <link rel="stylesheet" href="diaryApp/teachers/diary/diary.css">
     <h2 class="inner_header">Журнал успеваемости</h2>
     
-    <ui-view></ui-view>
+    <div class="diary_container">
+        <div class="select_params_container" layout="row">
+            <md-select ng-model="diary.currentTroop"
+                    placeholder="Взвод"
+                    ng-change="diary.changeParams($event)">
+                <md-option ng-selected="$index==0" ng-value="troop" ng-repeat="troop in diary.data.troops">
+                    {{ troop.name }}
+                </md-option>
+            </md-select>
+            <md-select ng-model="diary.currentSubject"
+                    placeholder="Предмет"
+                    ng-change="diary.changeParams($event)">
+                <md-option ng-selected="$index==0" ng-value="subject" ng-repeat="subject in diary.currentTroop.subjects">
+                    {{ subject.name }}
+                </md-option>
+            </md-select>
+        </div>
+        <!--<div class="table_diary_container">
+            <div class="table_headers_row" layout="row">
+                <div class="header_cell" ng-repeat="header in diary.currentSubject.headers">
+                    {{ header.name }}
+                </div>
+            </div>
+            <div class="table_body_container">
+                <div class="table_body_row" ng-repeat="student in diary.currentTroop.students">
+
+                </div>
+            </div>
+        </div>-->
+        <md-table-container class="diary_table_container">
+            <table class="diary_table">
+                <thead>
+                    <tr>
+                        <th ng-repeat="title in diary.diaryHelper.getTitles()">{{ title }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in diary.diaryHelper.getRows()">
+                        <td ng-repeat="cell in row track by $index"> {{ cell }} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </div>
 </div>
