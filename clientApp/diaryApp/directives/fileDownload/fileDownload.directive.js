@@ -8,7 +8,8 @@
                 replace: true,
                 scope: {
                     downloadFile: '=',
-                    preview: '='
+                    preview: '=',
+                    onLoad: '='
                 },
                 templateUrl: 'diaryApp/directives/fileDownload/fileDownload.html',
                 compile: compile
@@ -44,10 +45,14 @@
                             .then(function(image) {
                                 scope.$apply(function(){
                                     scope.preview = image;
+                                    // Вызов колбэка. Передача в аргументах: {0} - файл, {1} - картинка
+                                    if (typeof(scope.onLoad) == 'function') scope.onLoad(scope.downloadFile, scope.preview);
                                 });
                             });
                     }     
                 });
+
+
             }
         });
 })();

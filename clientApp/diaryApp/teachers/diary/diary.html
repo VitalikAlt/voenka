@@ -19,28 +19,37 @@
                 </md-option>
             </md-select>
         </div>
-        <!--<div class="table_diary_container">
-            <div class="table_headers_row" layout="row">
-                <div class="header_cell" ng-repeat="header in diary.currentSubject.headers">
-                    {{ header.name }}
-                </div>
-            </div>
-            <div class="table_body_container">
-                <div class="table_body_row" ng-repeat="student in diary.currentTroop.students">
-
-                </div>
-            </div>
-        </div>-->
         <md-table-container class="diary_table_container">
             <table class="diary_table">
                 <thead>
                     <tr>
-                        <th ng-repeat="title in diary.diaryHelper.getTitles()">{{ title }}</th>
+                        <th flex ng-repeat="title in diary.diaryHelper.getTitles()">{{ title }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in diary.diaryHelper.getRows()">
-                        <td ng-repeat="cell in row track by $index"> {{ cell }} </td>
+                        <td flex ng-repeat="cell in row track by $index">
+                             <md-checkbox class="placed_in"
+                                          ng-if="cell.options.isDiaryDay" 
+                                          ng-model="cell.value.presence"
+                                          aria-label="presenceCheckbox"
+                                          ng-change="diary.changePresence(cell)"></md-checkbox>
+                             <span ng-if="!cell.options.editable">{{ cell.value }}</span>
+                             <md-input-container ng-if="cell.options.editable && cell.value.presence">
+                                <input type="number"
+                                       max="5"
+                                       min="0"
+                                       step="0.1"
+                                       class="marks_field"
+                                       ng-model="cell.value.marks"
+                                       ng-disabled="!cell.value.presence"
+                                       aria-label="marks_field">
+                             </md-input-container>
+                             <md-button class="reason_absence_btn"
+                                        aria-label="reason_absence"
+                                        ng-click="diary.openReasonDialog($event, row[0].value, cell.options.titleName)"
+                                        ng-if="cell.options.editable && !cell.value.presence"> Причина </md-button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

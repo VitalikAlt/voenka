@@ -15,7 +15,7 @@
                 var newScope = $scope.$new();
                 newScope.popupSrc = popupSrc,
                 newScope.popupName = popupName,
-                newScope.closePopup = closePopup
+                newScope.closePopup = closePopup;
                 $mdDialog.show({
                     scope: newScope,
                     templateUrl: 'diaryApp/directives/popupImage/popupImage.html',
@@ -27,6 +27,7 @@
                 function() {
                     // закрыто popup окно
                 });
+               
             }
 
             function closePopup() {

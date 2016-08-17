@@ -1,0 +1,23 @@
+.diary_table {
+    width: 100%;
+    text-align: center;
+}
+
+    .diary_table th {
+        padding: 10px;
+    }
+
+.placed_in.md-checked .md-icon,
+.placed_in.md-checkbox.md-default-theme.md-checked .md-ink-ripple,
+.placed_in.md-checkbox.md-checked .md-ink-ripple {
+    background-color: #094900;
+    background-color: #094900;
+}
+
+.marks_field {
+    max-width: 100px;
+}
+
+.reason_absence_btn {
+    margin: 0;
+}

@@ -1,14 +1,23 @@
 (function() {
     angular
         .module('app.students')
-        .controller('TeachersDiaryController', function(tableHelper) {
+        .controller('TeachersDiaryController', function($scope, tableHelper, $mdDialog, PopupService) {
             var vm = this;
 
             vm.data = testData;
             vm.diaryHelper = tableHelper.getInstance();
             vm.changeParams = changeParams;
+            vm.changePresence = changePresence;
+            vm.openReasonDialog = openReasonDialog;
 
-            
+            vm.dialogCancel = dialogCancel;
+            vm.dialogDone = dialogDone;
+            vm.onDocLoad = onDocLoad;
+
+            vm.showPopupImage = showPopupImage;
+
+            vm.day = {};
+            vm.day.docs = [];
 
             init();
 
@@ -42,6 +51,56 @@
                 getTableTitles(vm.diaryHelper, vm.currentSubject.titles);
                 getStudentsMarks(vm.diaryHelper, vm.currentTroop.students);
             }
+
+            // Обработка изменения присутствия студента на занятии
+            function changePresence(cell) {
+                cell.value.marks = cell.value.presence ? cell.value.marks : '';
+            }
+
+            function onDocLoad(doc, photo) {
+                // Utils.getPhotoFromFile(doc.file)
+                //         .then(function(image) {
+                //             $scope.$apply(function(){
+                //                 doc.cover = image;
+                //             });
+                //         });
+                var newDoc = {};
+                newDoc.file = doc;
+                newDoc.cover = photo;
+                $scope.diary.day.docs.push(newDoc);
+            }
+
+            function showPopupImage(image) {
+                PopupService.showPopup(image);
+            }
+
+            function openReasonDialog(ev, student, date) {
+                var newScope = $scope.$new();
+                newScope.student = student;
+                newScope.date = date;
+                $mdDialog.show({
+                        scope: newScope,
+                        controller: 'TeachersDiaryController',
+                        controllerAs: 'diary',
+                        templateUrl: 'diaryApp/teachers/diary/views/reasonDialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: false,
+                    })
+                    .then(function(reasonObj) {
+                        
+                    }, function() {
+                        // закрыто диалоговое окно
+                    });
+            }
+
+            function dialogCancel() {
+                $mdDialog.cancel();
+            }
+
+            function dialogDone(reasonDialog) {
+                $mdDialog.hide(reasonDialog);
+            }
         });
     // тестовые данные    
     var testData = {
@@ -53,20 +112,20 @@
                         name: 'ВСП',
                         label: 'vsp',
                         titles: [ 
-                            { name: 'Название', options: { label: 'studentName', show: true } },
-                            { name: '01.09.2016', options: { label: 'date01092016', show: true } },
-                            { name: '02.09.2016', options: { label: 'date02092016', show: true } },
-                            { name: '03.09.2016', options: { label: 'date03092016', show: true } },
+                            { name: 'Название', options: { label: 'studentName', isDiaryDay: false, editable: false } },
+                            { name: '01.09.2016', options: { label: 'date01092016', isDiaryDay: true, editable: true } },
+                            { name: '02.09.2016', options: { label: 'date02092016', isDiaryDay: true, editable: true } },
+                            { name: '03.09.2016', options: { label: 'date03092016', isDiaryDay: true, editable: true } },
                         ]
                     }, 
                     { 
                         name: 'ТСП',
                         label: 'tsp',
                         titles: [ 
-                            { name: 'Название', options: { label: 'studentName', show: true } },
-                            { name: '01.09.2016', options: { label: 'date01092016', show: true } },
-                            { name: '02.09.2016', options: { label: 'date02092016', show: true } },
-                            { name: '03.09.2016', options: { label: 'date03092016', show: true } },
+                            { name: 'Название', options: { label: 'studentName', isDiaryDay: false, editable: false } },
+                            { name: '01.09.2016', options: { label: 'date01092016', isDiaryDay: true, editable: true } },
+                            { name: '02.09.2016', options: { label: 'date02092016', isDiaryDay: true, editable: true } },
+                            { name: '03.09.2016', options: { label: 'date03092016', isDiaryDay: true, editable: true } },
                         ]
                     } 
                 ],
@@ -74,27 +133,27 @@
                     {
                         studentName: 'Иванов И. И.',
                         vsp: {
-                            date01092016: 3,
-                            date02092016: 3,
-                            date03092016: 3 
+                            date01092016: { marks: 3, presence: true },
+                            date02092016: { marks: '', presence: false },
+                            date03092016: { marks: 3, presence: true } 
                         },
                         tsp: {
-                            date01092016: 4,
-                            date02092016: 'н',
-                            date03092016: 5 
+                            date01092016: { marks: 4, presence: true },
+                            date02092016: { marks: 5, presence: true },
+                            date03092016: { marks: 4, presence: true } 
                         },
                     },
                     {
                         studentName: 'Петров И. И.',
                         vsp: {
-                            date01092016: 5,
-                            date02092016: 'н',
-                            date03092016: 'н'
+                            date01092016: { marks: 4, presence: true },
+                            date02092016: { marks: 5, presence: true },
+                            date03092016: { marks: 4, presence: true }
                         },
                         tsp: {
-                            date01092016: 2,
-                            date02092016: 5,
-                            date03092016: 3 
+                            date01092016: { marks: '', presence: false },
+                            date02092016: { marks: 5, presence: true },
+                            date03092016: { marks: 4, presence: true }
                         },
                     },
                 ] 
