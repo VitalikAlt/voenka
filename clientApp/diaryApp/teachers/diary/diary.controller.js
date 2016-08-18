@@ -8,6 +8,7 @@
             vm.diaryHelper = tableHelper.getInstance();
             vm.changeParams = changeParams;
             vm.changePresence = changePresence;
+            vm.getStudentInfo = getStudentInfo;
             vm.openReasonDialog = openReasonDialog;
 
             vm.dialogCancel = dialogCancel;
@@ -33,11 +34,40 @@
                 }
             }
 
+            function getStudentById(studentId, collection) {
+                for (var i = 0; i < collection.length; i++) {
+                    if (collection[i].student.id == studentId) return collection[i];
+                }
+                return false;
+            }
+
+            function getStudentInfo(ev, cell) {
+                console.dir(cell);
+                var newScope = $scope.$new();
+                var currentStudent = getStudentById(cell.value.id, vm.currentTroop.students);
+                newScope.student = currentStudent // записать данные студента
+
+                $mdDialog.show({
+                        scope: newScope,
+                        controller: 'TeachersDiaryController',
+                        controllerAs: 'diary',
+                        templateUrl: 'diaryApp/teachers/diary/views/studentInfo.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: true,
+                    })
+                    .then(function(studentData) {
+                        
+                    }, function() {
+                        // закрыто диалоговое окно
+                    });
+            }
+
             function getStudentsMarks(helper, students) {
                 // var rows = students[vm.currentSubject.label];
                 for (var i = 0; i < students.length; i++) {
                     var row = students[i][vm.currentSubject.label];
-                    row.studentName = students[i].studentName;
+                    row.student = students[i].student;
                     helper.addItemRow(row);
                 }
             }
@@ -112,7 +142,7 @@
                         name: 'ВСП',
                         label: 'vsp',
                         titles: [ 
-                            { name: 'Название', options: { label: 'studentName', isDiaryDay: false, editable: false } },
+                            { name: 'Студент', options: { label: 'student', isDiaryDay: false, editable: false } },
                             { name: '01.09.2016', options: { label: 'date01092016', isDiaryDay: true, editable: true } },
                             { name: '02.09.2016', options: { label: 'date02092016', isDiaryDay: true, editable: true } },
                             { name: '03.09.2016', options: { label: 'date03092016', isDiaryDay: true, editable: true } },
@@ -122,7 +152,7 @@
                         name: 'ТСП',
                         label: 'tsp',
                         titles: [ 
-                            { name: 'Название', options: { label: 'studentName', isDiaryDay: false, editable: false } },
+                            { name: 'Студент', options: { label: 'student', isDiaryDay: false, editable: false } },
                             { name: '01.09.2016', options: { label: 'date01092016', isDiaryDay: true, editable: true } },
                             { name: '02.09.2016', options: { label: 'date02092016', isDiaryDay: true, editable: true } },
                             { name: '03.09.2016', options: { label: 'date03092016', isDiaryDay: true, editable: true } },
@@ -131,7 +161,7 @@
                 ],
                 students: [
                     {
-                        studentName: 'Иванов И. И.',
+                        student: { name: 'Иванов И. И.', id: 111 },
                         vsp: {
                             date01092016: { marks: 3, presence: true },
                             date02092016: { marks: '', presence: false },
@@ -142,9 +172,27 @@
                             date02092016: { marks: 5, presence: true },
                             date03092016: { marks: 4, presence: true } 
                         },
+
+                        data: {
+                            name: 'Иван',
+                            surname: 'Иванов',
+                            fatherName: 'Иванович',
+                            birthDate: '01.01.1994',
+                            birthPlace: 'Иваново',
+                            faculty: 'ТЭФ',
+                            troop: 1,
+                            address: 'г. Иваново, ул. Пушкина, д. 1',
+                            parentsAddress: 'г. Иваново, ул. Пушкина, д. 1',
+                            conclusion: 'А - годен к военной службе',
+                            start_study_year: 2016,
+                            military: 'не служил, не участвовал',
+                            education: 'Лицей №21 г. Иваново',
+
+                            image: '/assets/images/default_avatar.jpg'
+                        }
                     },
                     {
-                        studentName: 'Петров И. И.',
+                        student: { name: 'Петров И. И.', id: 112 },
                         vsp: {
                             date01092016: { marks: 4, presence: true },
                             date02092016: { marks: 5, presence: true },
@@ -155,6 +203,24 @@
                             date02092016: { marks: 5, presence: true },
                             date03092016: { marks: 4, presence: true }
                         },
+
+                        data: {
+                            name: 'Иван',
+                            surname: 'Петров',
+                            fatherName: 'Иванович',
+                            birthDate: '02.02.1993',
+                            birthPlace: 'Иваново',
+                            faculty: 'ТЭФ',
+                            troop: 1,
+                            address: 'г. Иваново, ул. Пушкина, д. 1',
+                            parentsAddress: 'г. Иваново, ул. Пушкина, д. 1',
+                            conclusion: 'А - годен к военной службе',
+                            start_study_year: 2016,
+                            military: 'не служил, не участвовал',
+                            education: 'Лицей №67 г. Иваново',
+
+                            image: '/assets/images/default_avatar.jpg'
+                        }
                     },
                 ] 
             },

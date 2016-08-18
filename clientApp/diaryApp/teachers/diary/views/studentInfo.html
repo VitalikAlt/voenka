@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="diaryApp/teachers/diary/views/studentInfo.css">
+<md-dialog aria-label="student_info_dialog">
+   <md-dialog-content class="dialog_content" layout="column">
+       <h2 class="inner_header">Карточка студента</h2>
+       <div class="student_info_container" layout="row">
+           <div class="left_column">
+                <div class="info_string" layout="row">
+                    <div class="option">
+                        <span class="name_option">Фамилия: </span>
+                        <span class="value_option">{{ student.data.surname }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Имя: </span>
+                        <span class="value_option">{{ student.data.name }}</span>
+                    </div>
+                    <div class="option" >
+                        <span class="name_option">Отчество: </span>
+                        <span class="value_option">{{ student.data.fatherName }}</span>
+                    </div>
+                </div>
+
+                <div class="info_string">
+                    <div class="option">
+                        <span class="name_option">Место рождения: </span>
+                        <span class="value_option">{{ student.data.birthPlace }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Дата рождения: </span>
+                        <span class="value_option">{{ student.data.birthDate }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Факультет: </span>
+                        <span class="value_option">{{ student.data.faculty }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Взвод: </span>
+                        <span class="value_option">{{ student.data.troop }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Адрес: </span>
+                        <span class="value_option">{{ student.data.address }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Адрес родителей: </span>
+                        <span class="value_option">{{ student.data.parentsAddress }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Заключение ВВК: </span>
+                        <span class="value_option">{{ student.data.conclusion }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Год поступления на ВК: </span>
+                        <span class="value_option">{{ student.data.start_study_year }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Служба в арми, участие в боевых действиях: </span>
+                        <span class="value_option">{{ student.data.military }}</span>
+                    </div>
+                    <div class="option">
+                        <span class="name_option">Образование: </span>
+                        <span class="value_option">{{ student.data.education }}</span>
+                    </div>
+                </div>
+           </div>
+           <div class="right_column">
+               <img ng-src="{{ student.data.image }}" alt="">
+           </div>
+       </div>
+
+   </md-dialog-content>
+   <md-dialog-actions>
+        <span flex></span>
+        <md-button aria-label="doneBtn" ng-click="diary.dialogDone(student)">
+        	Сохранить
+        </md-button>
+        <md-button aria-label="cancelBtn" ng-click="diary.dialogCancel()">
+            Отмена
+        </md-button>
+   </md-dialog-actions>
+</md-dialog>

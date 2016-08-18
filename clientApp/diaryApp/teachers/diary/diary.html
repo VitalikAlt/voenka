@@ -34,7 +34,8 @@
                                           ng-model="cell.value.presence"
                                           aria-label="presenceCheckbox"
                                           ng-change="diary.changePresence(cell)"></md-checkbox>
-                             <span ng-if="!cell.options.editable">{{ cell.value }}</span>
+                             <!--<span ng-if="!cell.options.editable">{{ cell.value }}</span>-->
+                             <md-button ng-if="!cell.options.editable" ng-click="diary.getStudentInfo($event, cell)" aria-label="student_name_btn"> {{ cell.value.name }} </md-button>
                              <md-input-container ng-if="cell.options.editable && cell.value.presence">
                                 <input type="number"
                                        max="5"
