@@ -4,7 +4,7 @@
         .module('app.auth')
         .factory('currentUser', currentUser);
 
-    function currentUser(PermissionService, $q, PERMISSIONS, $cookieStore) {
+    function currentUser($q, PERMISSIONS, $cookieStore) {
         var currentPermissions = PERMISSIONS.GUEST;
         var currentData = {};
         var factory = {
@@ -54,21 +54,22 @@
            @return (bool) Возможность доступа
         */
         function checkPermissions(neededPermissions) {
+            if (neededPermissions.length) {
+                if (neededPermissions.indexOf(getPermissions()) != -1) {
+                    return true;
+                }
+            }
             if (!getPermissions()) {
                 // TODO: Получать permissions с сервера по токену
                 // Заглушка
                 return $cookieStore.get('token');
-            }
-            if (neededPermissions) {
-                if (neededPermissions.indexOf(getPermissions()) != -1) {
-                    return true;
-                }
             }
             return false;
         }
 
         // Возвращает зарезервированное число для доступов
         function getPermissions() {
+            currentPermissions = currentPermissions || PERMISSIONS.GUEST;
             return currentPermissions;
         }
 

@@ -15,3 +15,8 @@
     font-size: 1.1em;
     letter-spacing: 1px;
 }
+
+.student_photo {
+    width: 150px;
+    height: 150px;
+}

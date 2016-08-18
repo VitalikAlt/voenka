@@ -1,9 +1,18 @@
 <link rel="stylesheet" href="diaryApp/teachers/diary/views/reasonDialog.css">
 <md-dialog aria-label="add_doc_dialog">
+   <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 class="inner_header">Причина отсутствия</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="diary.dialogCancel()">
+          <md-icon md-font-library="material-icons">close</md-icon>
+        </md-button>
+      </div>
+   </md-toolbar> 
    <md-dialog-content class="dialog_content" layout="column">
-       <h2 class="inner_header">Причина отсутствия</h2>
+       <!--<h2 class="inner_header">Причина отсутствия</h2>-->
        <div class="info_block">
-           <span class="reason_head_label">{{student}}</span><br>
+           <span class="reason_head_label">{{student.name}}</span><br>
            <span class="reason_head_label">{{date}}</span>
        </div>
        

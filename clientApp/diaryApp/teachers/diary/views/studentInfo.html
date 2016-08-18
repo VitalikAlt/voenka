@@ -1,7 +1,16 @@
 <link rel="stylesheet" href="diaryApp/teachers/diary/views/studentInfo.css">
 <md-dialog aria-label="student_info_dialog">
+   <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 class="inner_header">Карточка студента</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="diary.dialogCancel()">
+          <md-icon md-font-library="material-icons">close</md-icon>
+        </md-button>
+      </div>
+   </md-toolbar>
    <md-dialog-content class="dialog_content" layout="column">
-       <h2 class="inner_header">Карточка студента</h2>
+       <!--<h2 class="inner_header">Карточка студента</h2>-->
        <div class="student_info_container" layout="row">
            <div class="left_column">
                 <div class="info_string" layout="row">
@@ -63,7 +72,7 @@
                 </div>
            </div>
            <div class="right_column">
-               <img ng-src="{{ student.data.image }}" alt="">
+               <img class="student_photo" ng-src="{{ student.data.image }}" alt="">
            </div>
        </div>
 
