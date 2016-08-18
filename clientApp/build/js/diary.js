@@ -299,6 +299,7 @@ if (loginData.login == 'student') loginData.permissions = PERMISSIONS.STUDENT;
 
         function clearData() {
             currentData = {};
+            setPermissions(PERMISSIONS.GUEST);
         }
 
         /*
@@ -500,34 +501,15 @@ function getPhotoFromFile(file) {
     'use strict';
     angular
         .module('app.utils')
-        .factory('PopupService', function() {
-            var show = false;
-
+        .factory('PopupService', function($rootScope, $compile) {
             return {
-                showPopup: showPopup,
-                // hidePopup: hidePopup,
-                // tooglePopup: tooglePopup
+                showPopup: showPopup
             }
 
             function showPopup(image){
-                var selector = "'#popup_image'";
-                angular.element(document.body).append(
-                    '<div id="popup_image" onclick="document.querySelector('+ selector +').remove();" class="popup_container">' +
-                    '    <link rel="stylesheet" href="diaryApp/components/utils/popup/popup.css">' +
-                    '    <img class="popup_image" src="' + image + '">' +
-                    '</div>');
-                show = true;
+                var element = '<popup-image image-src="' + image + '"></popup-image>';
+                angular.element(document.body).append($compile(element)($rootScope));
             }
-
-            // function hidePopup() {
-            //     document.querySelector('#popup_image').remove();
-            //     show = false;
-            // }
-
-            // function tooglePopup(image) {
-            //     if (show) hidePopup;
-            //     else showPopup(image);
-            // }
         });
 })();
 (function(){
@@ -734,7 +716,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 scope: {
                     downloadFile: '=',
                     preview: '=',
-                    onLoad: '='
+                    onFileLoad: '='
                 },
                 templateUrl: 'diaryApp/directives/fileDownload/fileDownload.html',
                 compile: compile
@@ -771,7 +753,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                                 scope.$apply(function(){
                                     scope.preview = image;
                                     // Вызов колбэка. Передача в аргументах: {0} - файл, {1} - картинка
-                                    if (typeof(scope.onLoad) == 'function') scope.onLoad(scope.downloadFile, scope.preview);
+                                    if (typeof(scope.onFileLoad) == 'function') scope.onFileLoad(scope.downloadFile, scope.preview);
                                 });
                             });
                     }     
@@ -785,37 +767,29 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     'use strict';
     angular
         .module('app.directives')
-        .controller('PopupImageController', function($scope, $mdDialog) {
+        .controller('PopupImageController', function($scope, $timeout, $mdDialog) {
             var vm = this;
-            vm.openPopupImage = openPopupImage;
             vm.closePopup = closePopup;
-            
-            function openPopupImage(ev, popupSrc, popupName) {
-                $scope.$apply(function() {
-                    $scope.popupSrc  = popupSrc;
-                    $scope.popupName = popupName;
-                });
-                var newScope = $scope.$new();
-                newScope.popupSrc = popupSrc,
-                newScope.popupName = popupName,
-                newScope.closePopup = closePopup;
-                $mdDialog.show({
-                    scope: newScope,
-                    templateUrl: 'diaryApp/directives/popupImage/popupImage.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                })
-                .then(function() {},
-                function() {
-                    // закрыто popup окно
-                });
-               
-            }
+            vm.show = show;
+            vm.isShow = false;
+
+            // init();
 
             function closePopup() {
-                $mdDialog.cancel();
-            } 
+                document.querySelector('#popup_image').remove();
+            }
+
+            function show() {
+                vm.isShow = true;
+            }
+
+            // function init() {
+            //     // Задержка для загрузки стилей
+            //     $timeout(function(){
+            //         isShow = true;
+            //     }, 100)
+            // }
+
         });
 })();
 (function() {
@@ -824,27 +798,22 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
         .module('app.directives')
         .directive('popupImage', function() {
              return {
-                restrict: 'A',
-                compile: compile,
+                restrict: 'E',
+                link: link,
+                replace: true,
                 controller: 'PopupImageController',
-                controllerAs: 'popup'
+                controllerAs: 'popup',
+                templateUrl: 'diaryApp/directives/popupImage/popupImage.html',
+                scope: {
+                    imageSrc: '@'
+                }
             };
         });
 
-        function compile(templateElem, templateAttrs) {
-            
-            return {
-                pre: pre,
-                post: post
-            }
-        }
-
-        function pre(scope, elem, attrs) {
-        }
-
-        function post(scope, elem, attrs, controller) {
+        function link(scope, elem, attrs, controller) {
             elem.bind('click', function(e) {
-                controller.openPopupImage(e, attrs.ngSrc, attrs.alt);
+                //controller.openPopupImage(e, attrs.ngSrc, attrs.alt);
+                controller.closePopup();
             });
         }
 })();
@@ -995,7 +964,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     angular
         .module('app.students')
         .controller('StudentsProfileController',
-            function ($scope, CONFIG, $mdDialog, Utils) {
+            function ($scope, CONFIG, $mdDialog, Utils, PopupService) {
                 var vm = this;
                 vm.Utils = Utils;
                 vm.mdDialog = $mdDialog;
@@ -1003,6 +972,8 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.dialogCancel = dialogCancel;
                 // Текущий студент. Заглушка
                 vm.student = getStudentData();
+
+                vm.showPopupImage = showPopupImage;
 
                 if (!vm.student.photo) {
                     vm.student.preview_img = CONFIG.defaultAvatar;
@@ -1031,6 +1002,10 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 // TODO: Получение данных студента
                 function getStudentData() {
                     return {};
+                }
+
+                function showPopupImage(image) {
+                    PopupService.showPopup(image);
                 }
 
                 function startAddDocDialog(ev) {

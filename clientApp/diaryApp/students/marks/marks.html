@@ -27,7 +27,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in marks.marksHelper.getRows()">
-                        <td ng-repeat="cell in row track by $index"> {{ cell }} </td>
+                        <td ng-repeat="cell in row track by $index"> {{ cell.value || "-" }} </td>
                     </tr>
                 </tbody>
             </table>
@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="row in marks.standartsHelper.getRows()">
-                        <td ng-repeat="cell in row track by $index"> {{ cell }} </td>
+                        <td ng-repeat="cell in row track by $index"> {{ cell.value || "-" }} </td>
                     </tr>
                 </tbody>
             </table>

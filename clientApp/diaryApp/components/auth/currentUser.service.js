@@ -45,6 +45,7 @@
 
         function clearData() {
             currentData = {};
+            setPermissions(PERMISSIONS.GUEST);
         }
 
         /*

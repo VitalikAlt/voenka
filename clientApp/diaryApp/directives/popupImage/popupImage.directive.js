@@ -4,27 +4,22 @@
         .module('app.directives')
         .directive('popupImage', function() {
              return {
-                restrict: 'A',
-                compile: compile,
+                restrict: 'E',
+                link: link,
+                replace: true,
                 controller: 'PopupImageController',
-                controllerAs: 'popup'
+                controllerAs: 'popup',
+                templateUrl: 'diaryApp/directives/popupImage/popupImage.html',
+                scope: {
+                    imageSrc: '@'
+                }
             };
         });
 
-        function compile(templateElem, templateAttrs) {
-            
-            return {
-                pre: pre,
-                post: post
-            }
-        }
-
-        function pre(scope, elem, attrs) {
-        }
-
-        function post(scope, elem, attrs, controller) {
+        function link(scope, elem, attrs, controller) {
             elem.bind('click', function(e) {
-                controller.openPopupImage(e, attrs.ngSrc, attrs.alt);
+                //controller.openPopupImage(e, attrs.ngSrc, attrs.alt);
+                controller.closePopup();
             });
         }
 })();

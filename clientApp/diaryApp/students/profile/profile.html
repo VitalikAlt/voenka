@@ -135,7 +135,10 @@
                                            ng-click="profile.startDeleteDocDialog($event, doc)">
                                     <md-icon md-font-library="material-icons">delete</md-icon>
                                 </md-button>
-                                <img popup-image class="doc_cover" ng-src="{{doc.cover}}" alt="{{doc.name}}">
+                                <img  ng-click="profile.showPopupImage(doc.cover)"
+                                      class="doc_cover"
+                                      ng-src="{{doc.cover}}" 
+                                      alt="{{doc.name}}">
                             </div>
                             <span class="doc_name">{{doc.name}}</span>
                         </div>
@@ -151,7 +154,7 @@
                 <div class="preview_student_photo_container">
                     <img class="student_photo" 
                          ng-src="{{ profile.student.preview_img }}"
-                         popup-image
+                         ng-click="profile.showPopupImage(profile.student.preview_img)"
                          alt="Фото студента"
                          aria-label="student_photo">
                 </div>

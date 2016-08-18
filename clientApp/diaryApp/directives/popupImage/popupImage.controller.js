@@ -2,36 +2,28 @@
     'use strict';
     angular
         .module('app.directives')
-        .controller('PopupImageController', function($scope, $mdDialog) {
+        .controller('PopupImageController', function($scope, $timeout, $mdDialog) {
             var vm = this;
-            vm.openPopupImage = openPopupImage;
             vm.closePopup = closePopup;
-            
-            function openPopupImage(ev, popupSrc, popupName) {
-                $scope.$apply(function() {
-                    $scope.popupSrc  = popupSrc;
-                    $scope.popupName = popupName;
-                });
-                var newScope = $scope.$new();
-                newScope.popupSrc = popupSrc,
-                newScope.popupName = popupName,
-                newScope.closePopup = closePopup;
-                $mdDialog.show({
-                    scope: newScope,
-                    templateUrl: 'diaryApp/directives/popupImage/popupImage.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                })
-                .then(function() {},
-                function() {
-                    // закрыто popup окно
-                });
-               
-            }
+            vm.show = show;
+            vm.isShow = false;
+
+            // init();
 
             function closePopup() {
-                $mdDialog.cancel();
-            } 
+                document.querySelector('#popup_image').remove();
+            }
+
+            function show() {
+                vm.isShow = true;
+            }
+
+            // function init() {
+            //     // Задержка для загрузки стилей
+            //     $timeout(function(){
+            //         isShow = true;
+            //     }, 100)
+            // }
+
         });
 })();

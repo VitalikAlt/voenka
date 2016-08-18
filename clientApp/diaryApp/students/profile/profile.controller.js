@@ -2,7 +2,7 @@
     angular
         .module('app.students')
         .controller('StudentsProfileController',
-            function ($scope, CONFIG, $mdDialog, Utils) {
+            function ($scope, CONFIG, $mdDialog, Utils, PopupService) {
                 var vm = this;
                 vm.Utils = Utils;
                 vm.mdDialog = $mdDialog;
@@ -10,6 +10,8 @@
                 vm.dialogCancel = dialogCancel;
                 // Текущий студент. Заглушка
                 vm.student = getStudentData();
+
+                vm.showPopupImage = showPopupImage;
 
                 if (!vm.student.photo) {
                     vm.student.preview_img = CONFIG.defaultAvatar;
@@ -38,6 +40,10 @@
                 // TODO: Получение данных студента
                 function getStudentData() {
                     return {};
+                }
+
+                function showPopupImage(image) {
+                    PopupService.showPopup(image);
                 }
 
                 function startAddDocDialog(ev) {
