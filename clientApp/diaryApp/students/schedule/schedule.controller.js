@@ -7,6 +7,7 @@
             vm.onDayClick = openDayDialog;
 
             vm.getDayData = getDayData;
+            vm.dialogCancel = dialogCancel;
 
             function getDayData(date) {
                 // Получение инфы по текущей дате
@@ -17,9 +18,9 @@
                 if (curDate % 7 == 0) 
                     data = {
                         lessons: [
-                            { name: "Практика", time: "11:00", room: "В513" },
-                            { name: "ТСП", time: "13:00", room: "В513" },
-                            { name: "Техническая подготовка", time: "15:00", room: "В513" }
+                            { name: "Практика", time: "11:00", room: "В513", teacher: "Герасев В.Е." },
+                            { name: "ТСП", time: "13:00", room: "В513", teacher: "Герасев В.Е." },
+                            { name: "Техническая подготовка", time: "15:00", room: "В513", teacher: "Герасев В.Е." }
                         ]
                     }
                 return data;
@@ -44,6 +45,10 @@
                     }, function() {
                         // закрыто диалоговое окно
                     });
+            }
+
+            function dialogCancel() {
+                $mdDialog.cancel();
             }
         });
 })();

@@ -1,7 +1,16 @@
 <link rel="stylesheet" href="diaryApp/auth/views/dialogStyles.css">
-<md-dialog aria-label="add_student_dialog" class="add_student_dialog">
-   <md-dialog-content layout="column">
-       <h2 class="inner_header">Добавление преподавателя</h2>
+<md-dialog aria-label="add_student_dialog" class="add_dialog">
+   <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 class="inner_header">Добавление преподавателя</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="auth.dialogCancel()">
+          <md-icon md-font-library="material-icons">close</md-icon>
+        </md-button>
+      </div>
+   </md-toolbar>
+   <md-dialog-content class="add_dialog_content" layout="column">
+       <!--<h2 class="inner_header">Добавление преподавателя</h2>-->
        <div class="student_fields_container" layout="column">
         <md-input-container>
             <input name="login"

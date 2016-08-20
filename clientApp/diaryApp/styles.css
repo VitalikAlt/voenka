@@ -89,3 +89,16 @@ md-sidenav {
     width: 300px;
 }
 /* Конец Меню */
+
+md-dialog md-toolbar:not(.md-menu-toolbar) {
+    /*color: white;
+    background-color: #153610;*/
+
+    color: black;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+}
+
+md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
+    color: black;
+}

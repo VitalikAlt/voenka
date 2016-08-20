@@ -1,18 +1,18 @@
-.add_student_dialog {
-    padding: 50px 50px 0 50px;
+.add_dialog_content {
+    padding: 20px;
 }
 
-.add_student_dialog md-input-container label,
-.add_student_dialog md-input-container.md-input-has-value label{
+.add_dialog md-input-container label,
+.add_dialog md-input-container.md-input-has-value label{
     color: #5e5e5e!important;
 }
 
-.add_student_dialog md-input-container .md-input{
+.add_dialog md-input-container .md-input{
     border-color: rgba(0, 0, 0, 0.33);
     color: rgba(0, 0, 0, 0.7);
 }
 
-.add_student_dialog md-input-container {
+.add_dialog md-input-container {
     margin: 0;
 }
 

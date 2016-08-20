@@ -1,0 +1,30 @@
+.add_doc_dialog_content {
+    padding: 20px;
+}
+
+.doc_add_container {
+    display: flex;
+    align-items: center;
+}
+
+.doc_preview_container {
+    min-height: 50px;
+    min-width: 50px;
+    max-width: 200px;
+    max-height: 300px;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.doc_photo {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.add_doc_row {
+    align-content: center;
+    justify-content: center;
+    display: flex;
+}

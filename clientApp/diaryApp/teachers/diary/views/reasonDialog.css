@@ -44,5 +44,8 @@
 
 .reason_head_label {
     letter-spacing: 2px;
-    font-size: 1.1em;
+    font-size: 1.3em;
+    padding: 5px;
+    display: block;
+    text-align: center;
 }

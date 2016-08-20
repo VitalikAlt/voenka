@@ -1,0 +1,167 @@
+[33mcommit e333e2dc1a8fe7703deae89323543d8b0ae0c3a1[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Thu Aug 18 17:15:43 2016 +0300
+
+    Fixed redirecting errors, code refactoring
+
+[33mcommit fd03e410de8274d80be840be6a7d18d7c37d0cf9[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Thu Aug 18 13:33:43 2016 +0300
+
+    Added view for display students info from teacher diary
+
+[33mcommit d875f104297b9fdc279b354b6af8402d3f236883[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Thu Aug 18 11:38:41 2016 +0300
+
+    Edited popup service
+
+[33mcommit 0e96baa21b83df8e1ca352deec33626611b4fdf8[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Wed Aug 17 16:32:26 2016 +0300
+
+    Added diary for teachers and popup service
+
+[33mcommit 762bb24a682b863295dbc0c8ed5f4fcbb5908746[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Mon Aug 15 13:23:01 2016 +0300
+
+    Builded structure for teachers diary table
+
+[33mcommit 743c3f2b1b81dd784ac465310661139125472b61[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Mon Aug 15 11:18:36 2016 +0300
+
+    Added teachers page structure and edited auth redirecting
+
+[33mcommit d10a4cc36774ab1e0d568460110476ba5df25b5c[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Fri Aug 12 13:18:49 2016 +0300
+
+    Added dialog window for display calendar day info
+
+[33mcommit ababb6dd9f60e397ce0a0a9281917cb917af7f9d[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Fri Aug 12 11:49:57 2016 +0300
+
+    Edited logic of calendar days, added period choice
+
+[33mcommit 2a69709287557c4701845e0606c367526e4c3f59[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Fri Aug 12 10:34:27 2016 +0300
+
+    Calendar is translated to directive
+
+[33mcommit 3f97343db505164a514d27fb8ab5bf20f1fc55ea[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Fri Aug 12 10:02:57 2016 +0300
+
+    Edited styles of calendar
+
+[33mcommit 7141b6114dddcc033273a85125067ff27870c966[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Fri Aug 12 09:17:29 2016 +0300
+
+    Created calendar with test data
+
+[33mcommit 51c9d5619286d09357823eed01d3fd520494320a[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Thu Aug 11 13:51:52 2016 +0300
+
+    Added test data for marks and standarts
+
+[33mcommit d4acd49c3813441e48ce82dab8ea7e52cdaabf82[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Thu Aug 11 13:17:03 2016 +0300
+
+    Added Standarts section to Marks page
+
+[33mcommit 08b7a54441de08ba5a931cbf26f10c1fde91187e[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Thu Aug 11 12:48:12 2016 +0300
+
+    Added structure to marks pages
+
+[33mcommit fbca541aac1ef11d615d7feec068478eac0ed18f[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Tue Aug 9 16:39:57 2016 +0300
+
+    Change pass dialog added
+
+[33mcommit e65ee065931765649baf213d5a852d42336bd011[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Tue Aug 9 13:19:50 2016 +0300
+
+    Removing documents
+
+[33mcommit 3edc2da8f5a412e9a7692244f4d135584d888caf[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Tue Aug 9 12:26:17 2016 +0300
+
+    Added popup image win
+
+[33mcommit fa21152d108de87a3a4d7422adb4350c34f2f1db[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Tue Aug 9 08:37:11 2016 +0300
+
+    Adding docs done
+
+[33mcommit 73c5cc513b0a05aae3e4ef6ff3d758d1626612b9[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Mon Aug 8 13:22:40 2016 +0300
+
+    Added default avatar
+
+[33mcommit 4009e0025a95a8ea820adbba1186dce098194585[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Mon Aug 8 12:59:43 2016 +0300
+
+    Added logout and cookies
+
+[33mcommit 5035b65db57f2ec795a2c4ed495d81482b6939b1[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Mon Aug 8 12:29:33 2016 +0300
+
+    Created directive for file downloading
+
+[33mcommit 7d69ab2076d4c8c28c579c551116285663403caf[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Sat Aug 6 11:39:50 2016 +0300
+
+    Refactoring authorization logic, added registration
+
+[33mcommit 4cf8dfa0c3f2766276c583ba09b38c5c5a58bac8[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Fri Aug 5 18:01:39 2016 +0300
+
+    Added document block in profile state
+
+[33mcommit 4b1c198270a57418960497bfa3a09fc0de85ead5[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Fri Aug 5 17:13:52 2016 +0300
+
+    Added directive for highlighting menu rows, refactoring names of files, added wrapper for all Students states
+
+[33mcommit cd227604b264786cae0bc192fdd1bb32ba345123[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Fri Aug 5 11:52:59 2016 +0300
+
+    Added simple auth check
+
+[33mcommit f0e39c8d2b82261da35dd55de517e310cbc6ceba[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Thu Aug 4 12:38:01 2016 +0300
+
+    Code refactoring and added material icons
+
+[33mcommit f8e8c72eed1bc7da49a4274bab196bdd76a26534[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Wed Aug 3 13:36:21 2016 +0300
+
+    Added form for student adding
+
+[33mcommit c1acc3fe9bdf8e9e9d470cc81dad265feb1aef95[m
+Author: Mikhail Mikhalev <Mikhail Mikhalev>
+Date:   Wed Aug 3 11:44:16 2016 +0300
+
+    Structure
