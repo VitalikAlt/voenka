@@ -115,7 +115,7 @@ angular.module('app',
                     .then(function(newStudent) {
                         if (newStudent) {
                             console.log(newStudent);
-                        newStudent.token = '12345';
+                        newStudent.token = 'student';
                         newStudent.permissions = PERMISSIONS.STUDENT;
                         registerHelper.register(newStudent)
                             .then(function() {
@@ -143,7 +143,7 @@ angular.module('app',
                     })
                     .then(function(newTeacher) {
                         console.log(newTeacher);
-                        newTeacher.token = '12345';
+                        newTeacher.token = 'teacher';
                         registerHelper.register(newTeacher);
                     }, function() {
                         // закрыто диалоговое окно
@@ -204,11 +204,22 @@ angular.module('app',
 if (loginData.login == 'teacher') loginData.permissions = PERMISSIONS.TEACHER;
 if (loginData.login == 'student') loginData.permissions = PERMISSIONS.STUDENT;
 
-
-        // Заглушка
-        if (!loginData.permissions) {
-          loginData.permissions = PERMISSIONS.STUDENT;
-        }
+        // Заглушка установка токена. Будет подтягиваться с серва
+          var token = '';
+          switch (loginData.permissions) {
+              case PERMISSIONS.STUDENT: {
+                  loginData.token = 'student';
+                  break;
+              }
+              case PERMISSIONS.TEACHER: {
+                  loginData.token = 'teacher';
+                  break;
+              }
+              case PERMISSIONS.ADMIN: {
+                  loginData.token = 'admin';
+                  break;
+              }
+          }
         // Полученные данные с серва
         var dataFromServer = loginData;
 
@@ -285,24 +296,8 @@ if (loginData.login == 'student') loginData.permissions = PERMISSIONS.STUDENT;
         function setData(data) {
             User.currentData = data;
             setPermissions(data.permissions || 0);
-
-            // Заглушка установка токена. Будет подтягиваться с серва
-            var token = '';
-            switch (User.currentPermissions) {
-                case PERMISSIONS.STUDENT: {
-                    token = 'student';
-                    break;
-                }
-                case PERMISSIONS.TEACHER: {
-                    token = 'teacher';
-                    break;
-                }
-                case PERMISSIONS.ADMIN: {
-                    token = 'admin';
-                    break;
-                }
-            }
-            $cookieStore.put('token', token);
+            
+            $cookieStore.put('token', data.token);
             $cookieStore.put('login', data.login);
         }
 
@@ -320,7 +315,6 @@ if (loginData.login == 'student') loginData.permissions = PERMISSIONS.STUDENT;
             if (!getPermissions()) {
                 // TODO: Получать permissions с сервера по токену
                 // Заглушка
-                // return $cookieStore.get('token');
                 switch ($cookieStore.get('token')) {
                     case 'student': {
                         setPermissions(PERMISSIONS.STUDENT);

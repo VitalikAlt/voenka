@@ -31,24 +31,8 @@
         function setData(data) {
             User.currentData = data;
             setPermissions(data.permissions || 0);
-
-            // Заглушка установка токена. Будет подтягиваться с серва
-            var token = '';
-            switch (User.currentPermissions) {
-                case PERMISSIONS.STUDENT: {
-                    token = 'student';
-                    break;
-                }
-                case PERMISSIONS.TEACHER: {
-                    token = 'teacher';
-                    break;
-                }
-                case PERMISSIONS.ADMIN: {
-                    token = 'admin';
-                    break;
-                }
-            }
-            $cookieStore.put('token', token);
+            
+            $cookieStore.put('token', data.token);
             $cookieStore.put('login', data.login);
         }
 
@@ -66,7 +50,6 @@
             if (!getPermissions()) {
                 // TODO: Получать permissions с сервера по токену
                 // Заглушка
-                // return $cookieStore.get('token');
                 switch ($cookieStore.get('token')) {
                     case 'student': {
                         setPermissions(PERMISSIONS.STUDENT);

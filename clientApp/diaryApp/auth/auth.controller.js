@@ -31,7 +31,7 @@
                     .then(function(newStudent) {
                         if (newStudent) {
                             console.log(newStudent);
-                        newStudent.token = '12345';
+                        newStudent.token = 'student';
                         newStudent.permissions = PERMISSIONS.STUDENT;
                         registerHelper.register(newStudent)
                             .then(function() {
@@ -59,7 +59,7 @@
                     })
                     .then(function(newTeacher) {
                         console.log(newTeacher);
-                        newTeacher.token = '12345';
+                        newTeacher.token = 'teacher';
                         registerHelper.register(newTeacher);
                     }, function() {
                         // закрыто диалоговое окно

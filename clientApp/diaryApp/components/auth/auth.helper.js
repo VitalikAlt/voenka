@@ -20,11 +20,22 @@
 if (loginData.login == 'teacher') loginData.permissions = PERMISSIONS.TEACHER;
 if (loginData.login == 'student') loginData.permissions = PERMISSIONS.STUDENT;
 
-
-        // Заглушка
-        if (!loginData.permissions) {
-          loginData.permissions = PERMISSIONS.STUDENT;
-        }
+        // Заглушка установка токена. Будет подтягиваться с серва
+          var token = '';
+          switch (loginData.permissions) {
+              case PERMISSIONS.STUDENT: {
+                  loginData.token = 'student';
+                  break;
+              }
+              case PERMISSIONS.TEACHER: {
+                  loginData.token = 'teacher';
+                  break;
+              }
+              case PERMISSIONS.ADMIN: {
+                  loginData.token = 'admin';
+                  break;
+              }
+          }
         // Полученные данные с серва
         var dataFromServer = loginData;
 
