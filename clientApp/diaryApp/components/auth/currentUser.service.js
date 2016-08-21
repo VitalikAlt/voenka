@@ -5,8 +5,9 @@
         .factory('currentUser', currentUser);
 
     function currentUser($q, PERMISSIONS, $cookieStore) {
-        var currentPermissions = PERMISSIONS.GUEST;
-        var currentData = {};
+        var User = this;
+        User.currentPermissions = PERMISSIONS.GUEST;
+        User.currentData = {};
         var factory = {
             // isLogin: isLogin,
 
@@ -28,23 +29,31 @@
 
         // Устанавливает данные текущему пользователю
         function setData(data) {
-            currentData = data;
-            currentPermissions = data.permissions ? data.permissions : 0;
-            
-            $cookieStore.put('token', '12345');
+            User.currentData = data;
+            setPermissions(data.permissions || 0);
+
+            // Заглушка установка токена. Будет подтягиваться с серва
+            var token = '';
+            switch (User.currentPermissions) {
+                case PERMISSIONS.STUDENT: {
+                    token = 'student';
+                    break;
+                }
+                case PERMISSIONS.TEACHER: {
+                    token = 'teacher';
+                    break;
+                }
+                case PERMISSIONS.ADMIN: {
+                    token = 'admin';
+                    break;
+                }
+            }
+            $cookieStore.put('token', token);
             $cookieStore.put('login', data.login);
-            // $cookieStore.put('photo', '');
-
-            // currentData.name = studentData.name;
-            // currentData.surname = studentData.surname;
-            // currentData.student_card = studentData.student_card;
-            // currentData.photo = studentData.photo;
-
-            // currentData.token = studentData.token;
         }
 
         function clearData() {
-            currentData = {};
+            User.currentData = {};
             setPermissions(PERMISSIONS.GUEST);
         }
 
@@ -54,28 +63,42 @@
            @return (bool) Возможность доступа
         */
         function checkPermissions(neededPermissions) {
+            if (!getPermissions()) {
+                // TODO: Получать permissions с сервера по токену
+                // Заглушка
+                // return $cookieStore.get('token');
+                switch ($cookieStore.get('token')) {
+                    case 'student': {
+                        setPermissions(PERMISSIONS.STUDENT);
+                        break;
+                    }
+                    case 'teacher': {
+                        setPermissions(PERMISSIONS.TEACHER);
+                        break;
+                    }
+                    case 'admin': {
+                        setPermissions(PERMISSIONS.ADMIN);
+                        break;
+                    }
+                }
+            }
             if (neededPermissions.length) {
                 if (neededPermissions.indexOf(getPermissions()) != -1) {
                     return true;
                 }
-            }
-            if (!getPermissions()) {
-                // TODO: Получать permissions с сервера по токену
-                // Заглушка
-                return $cookieStore.get('token');
             }
             return false;
         }
 
         // Возвращает зарезервированное число для доступов
         function getPermissions() {
-            currentPermissions = currentPermissions || PERMISSIONS.GUEST;
-            return currentPermissions;
+            User.currentPermissions = User.currentPermissions || PERMISSIONS.GUEST;
+            return User.currentPermissions;
         }
 
         // Устанавливает текущие доступы
         function setPermissions(permissions) {
-            currentPermissions = permissions;
+            User.currentPermissions = permissions;
         }
 
         // TODO: использовать метод getGrantedAccess для разделения доступа

@@ -13,9 +13,9 @@
                 // Получение инфы по текущей дате
                 // ...
                 var data = {};
-                var curDate = date.getDate();
+                var curDay = date.getDay();
                 // заглушка и тестовые данные
-                if (curDate % 7 == 0) 
+                if (curDay && curDay % 5 == 0) 
                     data = {
                         lessons: [
                             { name: "Практика", time: "11:00", room: "В513", teacher: "Герасев В.Е." },

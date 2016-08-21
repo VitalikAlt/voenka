@@ -1,7 +1,7 @@
 (function() {
     angular
         .module('app')
-        .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+        .config(function ($stateProvider, $urlRouterProvider, $locationProvider, PERMISSIONS) {
             'use strict';
             $locationProvider.html5Mode({
                 enabled: true,
@@ -15,7 +15,11 @@
                     template: '<div>main</div>',
                     controller: 'appController',
                     controllerAs: 'main',
-                    // redirectTo: 'auth',
+                    data: {
+                        permissions: [
+                            PERMISSIONS.ADMIN
+                        ]
+                    }
                 })
                 .state('page404', {
                     url: '/404_page_not_found',
