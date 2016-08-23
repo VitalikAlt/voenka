@@ -1627,6 +1627,14 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     'use strict';
     angular
         .module('app.teachers')
+        .controller('TeachersReportsController', function() {
+
+        });
+})();
+(function() {
+    'use strict';
+    angular
+        .module('app.teachers')
         .controller('TeachersScheduleController', function($scope, $mdDialog) {
             var vm = this;
             vm.onDayClick = openDayDialog;
@@ -1726,6 +1734,12 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     controller: 'TeachersScheduleController',
                     controllerAs: 'schedule',
                     templateUrl: 'diaryApp/teachers/schedule/schedule.html'
+                })
+                .state('teachers.reports', {
+                    url: '/reports/',
+                    controller: 'TeachersReportsController',
+                    controllerAs: 'reports',
+                    templateUrl: 'diaryApp/teachers/reports/reports.html'
                 })
         });
 })();

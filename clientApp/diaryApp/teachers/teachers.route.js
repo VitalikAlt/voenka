@@ -34,5 +34,11 @@
                     controllerAs: 'schedule',
                     templateUrl: 'diaryApp/teachers/schedule/schedule.html'
                 })
+                .state('teachers.reports', {
+                    url: '/reports/',
+                    controller: 'TeachersReportsController',
+                    controllerAs: 'reports',
+                    templateUrl: 'diaryApp/teachers/reports/reports.html'
+                })
         });
 })();
