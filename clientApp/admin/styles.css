@@ -1,0 +1,14 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+li {text-decoration: none;}
+.main {
+    background: url("/assets/images/background.png");
+    margin-bottom: auto;
+    width:50%;
+}
+.auth {
+    margin-top:30%;
+    background-color: rgba(77, 77, 77, 0.74902);
+}
