@@ -994,6 +994,11 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 // Текущий студент. Заглушка
                 vm.student = getStudentData();
 
+                function s1() {
+                    console.log('1');
+                    console.log(vm.student);
+                }
+
                 vm.showPopupImage = showPopupImage;
 
                 if (!vm.student.photo) {
@@ -1005,7 +1010,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
-                var CountYearsForSelect = 10;
+                var CountYearsForSelect = 10;  // количество лет для выбора
                 for (var year = currentYear; year > currentYear - CountYearsForSelect; year--) {
                     vm.years.push(year);
                 }
@@ -1022,10 +1027,25 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
                 // TODO: Получение данных студента
                 function getStudentData() {
-                    return {};
+                    return {
+                        name: '1',
+                        surname: '2',
+                        fatherName: '3',
+                        student_card_number: '123',
+                        birthPlace: 'sad',
+                        education: 'ds',
+                        military: 's',
+                        address: 'sad',
+                        parents_address: 'sda',
+                        faculty: 'ФЭУ',
+                        conclusion: 'Б - годен с ограничениями',
+                        start_study_year: '2015',
+                        birthDate: 16/11/1996
+                    };
                 }
 
                 function showPopupImage(image) {
+                    console.log('1');
                     PopupService.showPopup(image);
                 }
 
