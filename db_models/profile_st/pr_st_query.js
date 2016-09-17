@@ -1,7 +1,7 @@
 /**
- * Created by Виталий on 15.09.2016.
+ * Created by Виталий on 17.09.2016.
  */
-var Users = require('./Permissions').UsersModel;
+var Users = require('./Profile_st').Profile_stModel;
 
 var getTableList = function(callback, err) {
     return Users.find(function (err, data) {
@@ -13,14 +13,15 @@ var getTableList = function(callback, err) {
     });
 };
 
-var getPermission = function(aLogin, aPassword, callback, err) {
+var getProfile = function(aStudentID, callback, err) {
     return Users.find(function (err, data) {
         if (!err) {
             var status = false;
             data.forEach(function(usr) {
-                if (aLogin == usr.Login && aPassword == usr.Password) {
+                console.log(usr.student_id);
+                if (usr.student_id == aStudentID) {
                     status = true;
-                    return callback(usr.Permission);
+                    return callback(usr);
                 }
             });
             if (!status) {
@@ -35,9 +36,20 @@ var getPermission = function(aLogin, aPassword, callback, err) {
 var addData = function(aData, callback, err) {
 
     var article = new Users({
-        Login: aData.login,
-        Password: aData.password,
-        Permission: aData.permission
+        student_id: aData.student_id,
+        name: aData.name,
+        surname: aData.surname,
+        fatherName: aData.fatherName,
+        student_card_number: aData.student_card_number,
+        birthPlace: aData.birthPlace,
+        education: aData.education,
+        military: aData.military,
+        address: aData.address,
+        parents_address: aData.parents_address,
+        faculty: aData.faculty,
+        conclusion: aData.conclusion,
+        start_study_year: aData.start_study_year,
+        birthDate: aData.birthDate,
     });
 
     article.save(function (err) {
@@ -69,7 +81,18 @@ var getElementById = function(aId, callback, err) {
     });
 };
 
+var removeAll = function(callback, error) {
+    return Users.remove({}, function(err, succes) {
+        if(!err) {
+            return callback(succes);
+        } else {
+            return error(err);
+        }
+    });
+}
+
 module.exports.getTableList = getTableList;
-module.exports.getPermission = getPermission;
+module.exports.getProfile = getProfile;
 module.exports.addData = addData;
 module.exports.getElementById = getElementById;
+module.exports.removeAll = removeAll;

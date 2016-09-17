@@ -200,9 +200,10 @@ angular.module('app',
     function login(loginData) {
         // Получение данных permission
         // ...
-        var s = $http.get('/api/articles', {params: {login: loginData.login, password: loginData.password}})
+        var s = $http.get('/api/permissions', {params: {login: loginData.login, password: loginData.password}})
             .success(function (data) {
-                switch (data) {
+                currentUser.setID(data.ID);
+                switch (data.permission) {
                     case 'student':
                     {
                         loginData.permissions = PERMISSIONS.STUDENT;
@@ -290,9 +291,12 @@ angular.module('app',
         var User = this;
         User.currentPermissions = PERMISSIONS.GUEST;
         User.currentData = {};
+        User.ID = '';
         var factory = {
             // isLogin: isLogin,
-
+            
+            getID: getID,
+            setID: setID,
             getPermissions: getPermissions,
             setPermissions: setPermissions,
             checkPermissions: checkPermissions,
@@ -365,7 +369,15 @@ angular.module('app',
         function setPermissions(permissions) {
             User.currentPermissions = permissions;
         }
-
+    
+        function setID(ID) {
+            User.ID = ID;
+        }
+        
+        function getID() {
+            return User.ID;
+        }
+        
         // TODO: использовать метод getGrantedAccess для разделения доступа
         function isLogin() {
             //return false; // mock
@@ -985,14 +997,40 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     angular
         .module('app.students')
         .controller('StudentsProfileController',
-            function ($scope, CONFIG, $mdDialog, Utils, PopupService) {
+            function ($scope, CONFIG, $mdDialog, Utils, PopupService, currentUser, $http) {
                 var vm = this;
                 vm.Utils = Utils;
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
                 // Текущий студент. Заглушка
-                vm.student = getStudentData();
+                var s = $http.get('/api/profile_st', {params: {ID: currentUser.getID()}})
+                    .success(function (data) {
+                        vm.student = getStudentData();
+                        function getStudentData() {
+                            return {
+                                name: currentUser.getID(),
+                                surname: data.surname,
+                                fatherName: '3',
+                                student_card_number: '123',
+                                birthPlace: 'sad',
+                                education: 'ds',
+                                military: 's',
+                                address: 'sad',
+                                parents_address: 'sda',
+                                faculty: 'ФЭУ',
+                                conclusion: 'Б - годен с ограничениями',
+                                start_study_year: '2015',
+                                birthDate: new Date(1996, 10, 16)
+                            };
+                        }
+
+                        if (!vm.student.photo) {
+                            vm.student.preview_img = CONFIG.defaultAvatar;
+                        }
+                        vm.student.docs = [];
+                    })
+
 
                 function s1() {
                     console.log('1');
@@ -1001,13 +1039,9 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
                 vm.showPopupImage = showPopupImage;
 
-                if (!vm.student.photo) {
-                    vm.student.preview_img = CONFIG.defaultAvatar;
-                }
-
                 vm.startDeleteDocDialog = startDeleteDocDialog;
                 vm.startChangePassDialog = startChangePassDialog;
-                
+
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
                 var CountYearsForSelect = 10;  // количество лет для выбора
@@ -1022,27 +1056,10 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
                 $scope.docPlaceholder = CONFIG.docPlaceholderImage;
                 // Документы пользователя. Заглушка. Будут загружены в методе gteStudentData()
-                vm.student.docs = [];
 
 
-                // TODO: Получение данных студента
-                function getStudentData() {
-                    return {
-                        name: '1',
-                        surname: '2',
-                        fatherName: '3',
-                        student_card_number: '123',
-                        birthPlace: 'sad',
-                        education: 'ds',
-                        military: 's',
-                        address: 'sad',
-                        parents_address: 'sda',
-                        faculty: 'ФЭУ',
-                        conclusion: 'Б - годен с ограничениями',
-                        start_study_year: '2015',
-                        birthDate: 16/11/1996
-                    };
-                }
+
+                // TODO: Получение данных студента ------ готов
 
                 function showPopupImage(image) {
                     console.log('1');
@@ -1112,7 +1129,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 }
                 // Открытие диалога удаления
                 function startDeleteDocDialog(ev, doc) {
-                    var confirm = 
+                    var confirm =
                         $mdDialog.confirm()
                             .title('Удалить документ "' + doc.name + '"?')
                             .textContent('Вы не сможете восстановить данный документ. Действительно удалить?')
@@ -1127,9 +1144,9 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         });
                 }
             }
-        ); 
-    
-   
+        );
+
+
 
     var config = {
         faculties: [
@@ -1151,7 +1168,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
         //         name: 'СНИЛС',
         //         cover: '/assets/images/background.png'
         //     },
-        // ]
+        //
     }
 })();
 (function(){
@@ -1561,7 +1578,19 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
                 // TODO: Получение данных студента
                 function getTeacherData() {
-                    return {};
+                    return {
+                        name: '1',
+                        surname: '2',
+                        fatherName: '3',
+                        teacher_passport: 'das',
+                        birthPlace: 'dsa',
+                        education: '123',
+                        military: 'sda',
+                        appointment:'sfd',
+                        address: 'das',
+                        start_year: '2016',
+                        birthDate: new Date(1996, 10, 16)
+                    };
                 }
 
                 function showPopupImage(image) {
