@@ -1,14 +1,15 @@
 'use strict';
-var express    = require("express");
-var app        = express();
-var body       = require('body-parser');
-var path       = require('path');
-var permissions = require('./db_models/Permissions/permissions_query');
-var profile_st = require('./db_models/Profile_st/pr_st_query');
-var profile_tc = require('./db_models/Profile_tc/pr_tc_query');
+var express     = require("express");
+var app         = express();
+var body        = require('body-parser');
+var path        = require('path');
+var permissions = require('./db_models/permissions/permissions_query');
+var profile_st  = require('./db_models/Profile_st/pr_st_query');
+var profile_tc  = require('./db_models/profile_tc/pr_tc_query');
+var progress    = require('./db_models/progress/progress_query');
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
-//========================== Permissions ==========================================================================
+//========================== permissions ==========================================================================
 app.get('/api/permissions', function(req, res) {
     permissions.getPermission(req.query.login, req.query.password, function(data) {
         res.send(data);
@@ -85,6 +86,31 @@ app.get('/api/remove1', function(req, res) {
     })
 })
 //=================================================================================================================
+
+//====================== Progress =================================================================================
+app.get('/api/progress', function(req, res) {
+    progress.getProgress(req.query.student_id, function(data) {
+        res.send(data);
+    });
+});
+
+app.post('/api/progress', function(req, res) {
+    progress.addData(req.query, function(data) {
+        res.send(data);
+    });
+});
+app.get('/api/table2', function(req, res) {
+    progress.getTableList(function(data) {
+        res.send(data);
+    })
+});
+app.post('/api/update', function(req, res) {
+    progress.updateData(req.query, function(data) {
+        res.send(data);
+    })
+})
+//=================================================================================================================
+
 
 app.post('/auth/admin/connect', function(req, res) {
     console.log(req.query.password);

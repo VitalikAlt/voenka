@@ -854,12 +854,11 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     'use strict';
     angular
         .module('app.students')
-        .controller('StudentsMarksController', function($scope, tableHelper) {
+        .controller('StudentsMarksController', function($scope, tableHelper, $http, currentUser) {
             var vm = this;
             vm.marksHelper = tableHelper.getInstance();
             vm.standartsHelper = tableHelper.getInstance();
             // $scope.marks = vm;
-            vm.summary = getSummary();
 
             init();
 
@@ -872,15 +871,19 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 getTableList(vm.standartsHelper, config.standarts);
             }
 
-            function getSummary() {
-                var summary = {
-                    average: 4.3, // Средний балл
-                    missed: 13, // Количество пропусков
-                    placed: 60 // Кол-во присутствий на парах
-                };
-                summary.percentMissed = (summary.missed / (summary.missed + summary.placed) * 100).toFixed(1);
-                return summary;
-            }
+            $http.get('/api/progress', {params: {student_id: currentUser.getID()}})
+                .success(function (data) {
+                    vm.summary = getSummary();
+                    function getSummary() {
+                        var summary = {
+                            average: 4.3, // Средний балл
+                            missed: 13, // Количество пропусков
+                            placed: 60 // Кол-во присутствий на парах
+                        };
+                        summary.percentMissed = (summary.missed / (summary.missed + summary.placed) * 100).toFixed(1);
+                        return summary;
+                    }
+                });
 
             // Получение заголовков таблицы
             function getTableTitles(helper, resource) {
@@ -1548,7 +1551,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
-                var s = $http.get('/api/Profile_tc', {params: {ID: currentUser.getID()}})
+                var s = $http.get('/api/profile_tc', {params: {ID: currentUser.getID()}})
                  .success(function (data) {
                      vm.teacher = getTeacherData();
                      function getTeacherData() {

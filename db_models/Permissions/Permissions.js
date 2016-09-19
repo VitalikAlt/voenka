@@ -3,7 +3,7 @@
  */
 var mongoose    = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/permissions');
+mongoose.connect('mongodb://192.168.1.101:27017/permissions');
 var db = mongoose.connection;
 
 var Permissions = mongoose.Schema;
@@ -14,6 +14,6 @@ var Users = new Permissions({
     Permission: { type: String, required: true}
 });
 
-var UsersModel = mongoose.model('Users', Users);
+var UsersModel = mongoose.model('Progress', Users);
 
 module.exports.UsersModel = UsersModel;

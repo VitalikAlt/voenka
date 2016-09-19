@@ -1503,11 +1503,11 @@ function $UrlMatcherFactory() {
    * // Defines a custom type that gets a value from a service,
    * // where each service gets different types of values from
    * // a backend API:
-   * $urlMatcherFactoryProvider.type('dbObject', {}, function(Users, Posts) {
+   * $urlMatcherFactoryProvider.type('dbObject', {}, function(Progress, Posts) {
    *
    *   // Matches up services to URL parameter names
    *   var services = {
-   *     user: Users,
+   *     user: Progress,
    *     post: Posts
    *   };
    *
@@ -1542,7 +1542,7 @@ function $UrlMatcherFactory() {
    *   url: "/{user:dbObject}",
    *   controller: function($scope, $stateParams) {
    *     // $stateParams.user will now be an object returned from
-   *     // the Users service
+   *     // the Progress service
    *   },
    *   // ...
    * });
