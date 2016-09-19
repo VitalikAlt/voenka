@@ -1,7 +1,10 @@
 /**
+ * Created by Виталий on 19.09.2016.
+ */
+/**
  * Created by Виталий on 17.09.2016.
  */
-var Users = require('./Profile_st').Profile_stModel;
+var Users = require('./Profile_tc').Profile_tcModel;
 
 var getTableList = function(callback, err) {
     return Users.find(function (err, data) {
@@ -13,8 +16,8 @@ var getTableList = function(callback, err) {
     });
 };
 
-var getProfile = function(aStudentID, callback, err) {
-    return Users.find( {student_id: aStudentID}, function (err, data) {
+var getProfile = function(aTeacherID, callback, err) {
+    return Users.find( {teacher_id: aTeacherID}, function (err, data) {
         if (!err) {
             return callback(data[0]);
         } else {
@@ -26,20 +29,18 @@ var getProfile = function(aStudentID, callback, err) {
 var addData = function(aData, callback, err) {
 
     var article = new Users({
-        student_id: aData.student_id,
+        teacher_id: aData.teacher_id,
         name: aData.name,
         surname: aData.surname,
         fatherName: aData.fatherName,
-        student_card_number: aData.student_card_number,
+        teacher_passport: aData.student_card_number,
         birthPlace: aData.birthPlace,
         education: aData.education,
         military: aData.military,
         address: aData.address,
-        parents_address: aData.parents_address,
-        faculty: aData.faculty,
-        conclusion: aData.conclusion,
-        start_study_year: aData.start_study_year,
-        birthDate: aData.birthDate,
+        appointment: aData.appointment,
+        start_year: aData.start_year,
+        birthDate: aData.birthDate
     });
 
     article.save(function (err) {

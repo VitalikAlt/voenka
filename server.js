@@ -4,7 +4,8 @@ var app        = express();
 var body       = require('body-parser');
 var path       = require('path');
 var permissions = require('./db_models/Permissions/permissions_query');
-var profile_st = require('./db_models/profile_st/pr_st_query');
+var profile_st = require('./db_models/Profile_st/pr_st_query');
+var profile_tc = require('./db_models/Profile_tc/pr_tc_query');
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
 //========================== Permissions ==========================================================================
@@ -38,13 +39,13 @@ app.get('/api/t', function(req,res) {
 
 
 //====================== Student_profile ==========================================================================
-app.get('/api/profile_st', function(req, res) {
+app.get('/api/Profile_st', function(req, res) {
     profile_st.getProfile(req.query.ID, function(data) {
         res.send(data);
     });
 });
 
-app.post('/api/profile_st', function(req, res) {
+app.post('/api/Profile_st', function(req, res) {
     profile_st.addData(req.query, function(data) {
         res.send(data);
     });
@@ -56,6 +57,30 @@ app.get('/api/table', function(req, res) {
 });
 app.get('/api/remove', function(req, res) {
     profile_st.removeAll(function(data) {
+        res.send(data);
+    })
+})
+//=================================================================================================================
+
+//====================== Teacher_profile ==========================================================================
+app.get('/api/profile_tc', function(req, res) {
+    profile_tc.getProfile(req.query.ID, function(data) {
+        res.send(data);
+    });
+});
+
+app.post('/api/profile_tc', function(req, res) {
+    profile_tc.addData(req.query, function(data) {
+        res.send(data);
+    });
+});
+app.get('/api/table1', function(req, res) {
+    profile_tc.getTableList(function(data) {
+        res.send(data);
+    })
+});
+app.get('/api/remove1', function(req, res) {
+    profile_tc.removeAll(function(data) {
         res.send(data);
     })
 })

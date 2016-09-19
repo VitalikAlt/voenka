@@ -1004,9 +1004,10 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
                 // Текущий студент. Заглушка
-                var s = $http.get('/api/profile_st', {params: {ID: currentUser.getID()}})
+                var s = $http.get('/api/Profile_st', {params: {ID: currentUser.getID()}})
                     .success(function (data) {
                         vm.student = getStudentData();
+                        console.log('1');
                         function getStudentData() {
                             return {
                                 name: currentUser.getID(),
@@ -1031,8 +1032,8 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         vm.student.docs = [];
                     })
 
-
-                function s1() {
+                vm.s1 = s2;
+                function s2() {
                     console.log('1');
                     console.log(vm.student);
                 }
@@ -1541,24 +1542,42 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     angular
         .module('app.teachers')
         .controller('TeachersProfileController',
-             function ($scope, CONFIG, $mdDialog, Utils, PopupService) {
+             function ($scope, CONFIG, $mdDialog, Utils, PopupService, $http, currentUser) {
                 var vm = this;
                 vm.Utils = Utils;
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
-                // Текущий препод. Заглушка
-                vm.teacher = getTeacherData();
+                var s = $http.get('/api/Profile_tc', {params: {ID: currentUser.getID()}})
+                 .success(function (data) {
+                     vm.teacher = getTeacherData();
+                     function getTeacherData() {
+                         return {
+                             name: data.name,
+                             surname: '2',
+                             fatherName: '3',
+                             teacher_passport: 'das',
+                             birthPlace: 'dsa',
+                             education: '123',
+                             military: 'sda',
+                             appointment: 'sfd',
+                             address: 'das',
+                             start_year: '2016',
+                             birthDate: new Date(1996, 10, 16)
+                         };
+                     }
+                     if (!vm.teacher.photo) {
+                         vm.teacher.preview_img = CONFIG.defaultAvatar;
+                     }
+                     vm.teacher.docs = [];
+                 });
+
 
                 vm.showPopupImage = showPopupImage;
 
-                if (!vm.teacher.photo) {
-                    vm.teacher.preview_img = CONFIG.defaultAvatar;
-                }
-
                 vm.startDeleteDocDialog = startDeleteDocDialog;
                 vm.startChangePassDialog = startChangePassDialog;
-                
+
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
                 var CountYearsForSelect = 50;
@@ -1573,25 +1592,9 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
                 $scope.docPlaceholder = CONFIG.docPlaceholderImage;
                 // Документы пользователя. Заглушка. Будут загружены в методе gteTeacherData()
-                vm.teacher.docs = [];
 
 
                 // TODO: Получение данных студента
-                function getTeacherData() {
-                    return {
-                        name: '1',
-                        surname: '2',
-                        fatherName: '3',
-                        teacher_passport: 'das',
-                        birthPlace: 'dsa',
-                        education: '123',
-                        military: 'sda',
-                        appointment:'sfd',
-                        address: 'das',
-                        start_year: '2016',
-                        birthDate: new Date(1996, 10, 16)
-                    };
-                }
 
                 function showPopupImage(image) {
                     PopupService.showPopup(image);
@@ -1660,7 +1663,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 }
                 // Открытие диалога удаления
                 function startDeleteDocDialog(ev, doc) {
-                    var confirm = 
+                    var confirm =
                         $mdDialog.confirm()
                             .title('Удалить документ "' + doc.name + '"?')
                             .textContent('Вы не сможете восстановить данный документ. Действительно удалить?')
