@@ -10,8 +10,8 @@ var Discipline = require('./Student_disciplines').Discipline_stModel;
 //удалить предмет у студента \/
 //изменить предмет у студента \/
 
-var getTableList = function(callback, err) {
-    return Discipline.find(function (err, data) {
+var getTableList = function(aData, callback, err) {
+    return Discipline.find({student_id: aData.student_id}, function (err, data) {
         if (!err) {
             return callback(data);
         } else {

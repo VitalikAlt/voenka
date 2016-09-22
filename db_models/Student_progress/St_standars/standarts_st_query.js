@@ -10,7 +10,17 @@ var Standarts_st = require('./Student_standarts').Standarts_stModel;
 //удалить норматив у студента ( за все семестры? (сейчас) ) \/
 //изменить норматив у студента \/
 
-var getTableList = function(aData, callback, err) {
+var getTableList = function(callback, err) {
+    return Standarts_st.find(function (err, data) {
+        if (!err) {
+            return callback(data);
+        } else {
+            return err(500);
+        }
+    });
+};
+
+var get = function(aData, callback, err) {
     return Standarts_st.find({student_id: aData.student_id}, function (err, data) {
         if (!err) {
             return callback(data);
@@ -66,6 +76,7 @@ var updateData = function(aData, callback, error) {
 };
 
 module.exports.getTableList = getTableList;
+module.exports.get = get;
 module.exports.addData = addData;
 module.exports.remove = remove;
 module.exports.updateData = updateData;

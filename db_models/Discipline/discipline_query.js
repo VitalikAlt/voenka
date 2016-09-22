@@ -10,10 +10,10 @@ var Discipline = require('./Discipline').DisciplineModel;
 //удалить дисциплину \/ \/
 //изменить преподавателя дисциплины \/ \/
 
-var getTableList = function (callback, err) {
-    return Discipline.find(function (err, data) {
+var getName = function (aData, callback, err) {
+    return Discipline.find({_id: aData.discipline_id}, function (err, data) {
         if (!err) {
-            return callback(data);
+            return callback(data[0].discipline_name);
         } else {
             return err(500);
         }
@@ -63,7 +63,7 @@ var updateData = function(aData, callback, error) {
     });
 };
 
-module.exports.getTableList = getTableList;
+module.exports.getName = getName;
 module.exports.addData = addData;
 module.exports.remove = remove;
 module.exports.updateData = updateData;

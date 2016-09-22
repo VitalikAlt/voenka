@@ -20,6 +20,16 @@ var getTableList = function(callback, err) {
     });
 };
 
+var get = function(aData, callback, err) {
+    return Standarts.find({_id: aData.standart_id}, function (err, data) {
+        if (!err) {
+            return callback(data[0].standart_name);
+        } else {
+            return err(500);
+        }
+    });
+};
+
 var addData = function(aData, callback, err) {
 
     var article = new Standarts({
@@ -63,6 +73,7 @@ var updateData = function(aData, callback, error) {
 };
 
 module.exports.getTableList = getTableList;
+module.exports.get = get;
 module.exports.addData = addData;
 module.exports.remove = remove;
 module.exports.updateData = updateData;

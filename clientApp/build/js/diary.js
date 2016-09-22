@@ -908,65 +908,73 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 }
             }
             function getTableList(helper, resource) {
-                // получение строк
-                // ...
-                var rows = resource.rows; // заглушка
-                for (var i = 0; i < rows.length; i++) {
-                    helper.addItemRow(rows[i]);
+                var rows = [];
+                if (resource === config.marks) {
+                    $http.get('/db/st_discipline/get', {params: {student_id: currentUser.getID()}})
+                        .success(function(data) {
+                            var discipline_count = 0;
+                            data.forEach(function (discipline) {
+                                $http.get('/db/discipline/get', {params: {discipline_id: discipline.discipline_id}})
+                                    .success(function(name) {
+                                        $http.get('/db/marks/get', {params: {student_discipline_id: discipline._id}})
+                                            .success(function(res) {
+                                                var v_semestr1, v_semestr2;
+                                                res.forEach(function (term) {
+                                                    if (term.term == 1) {
+                                                        v_semestr1 = term.mark;
+                                                    } else {
+                                                        v_semestr2 = term.mark;
+                                                    }
+                                                });
+                                                rows.push({ nameSubject: name, semestr1: v_semestr1, semestr2: v_semestr2});
+                                                discipline_count++;
+                                                if (data.length === discipline_count) {
+                                                    console.log(rows);
+                                                    for (var i = 0; i < rows.length; i++) {
+                                                        helper.addItemRow(rows[i]);
+                                                    }
+                                                }
+                                            });
+                                    });
+                            });
+                        });
+                } else {
+                    $http.get('/db/Standarts_st/get', {params: {student_id: currentUser.getID()}})
+                        .success(function(data) {
+                            var discipline_count = 0;
+                            console.log(data);
+                            data.forEach(function (standart) {
+                                $http.get('/db/Standarts/get', {params: {standart_id: data.standart_id}})
+                                    .success(function(name) {
+                                        console.log(name);
+                                        // $http.get('/db/marks/get', {params: {student_discipline_id: discipline._id}})
+                                        //     .success(function(res) {
+                                        //         var v_semestr1, v_semestr2;
+                                        //         res.forEach(function (term) {
+                                        //             if (term.term == 1) {
+                                        //                 v_semestr1 = term.mark;
+                                        //             } else {
+                                        //                 v_semestr2 = term.mark;
+                                        //             }
+                                        //         });
+                                        //         rows.push({ nameSubject: name, semestr1: v_semestr1, semestr2: v_semestr2});
+                                        //         discipline_count++;
+                                        //         if (data.length === discipline_count) {
+                                        //             console.log(rows);
+                                        //             for (var i = 0; i < rows.length; i++) {
+                                        //                 helper.addItemRow(rows[i]);
+                                        //             }
+                                        //         }
+                                        //     });
+                                    });
+                            });
+                        });
+                    rows = resource.rows;
+                    for (var i = 0; i < rows.length; i++) {
+                        helper.addItemRow(rows[i]);
+                    }
                 }
             }
-            // Получение дат
-            // function getDates() {
-            //     return [];
-            // }
-            // // Получение предметов
-            // function getSubjects() {
-            //     return [];
-            // }
-
-            // function getShedule() {
-            //     return {
-            //         lessons: [
-            //             {
-            //                 name: 'subject name',
-            //                 room: 'cabinet',
-            //                 date: '01.01.2016',
-            //                 teacher: 'teacher name',
-            //                 mark: 4,
-            //                 notes: ''
-            //             }
-            //         ]
-            //     }
-            // }
-
-            // // Получение общего массива оценок
-            // function getMarks() {
-            //     // return {
-            //     //     semestr: [
-            //     //         {
-            //     //             name: '1 семестр',
-            //     //             marks: [
-            //     //                 {
-            //     //                     date: '01.01.2016',
-            //     //                     place: true, // присутствие
-            //     //                     mark: 4,
-            //     //                     note: ''
-            //     //                 }
-            //     //             ]
-            //     //         }
-            //     //     ]
-            //     // }
-            //     return {
-            //         marks: {
-            //             semestr: '1 семестр',
-            //             date: '',
-            //             hasPlace: true,
-            //             mark: 4,
-            //             note: ''
-            //         }
-            //         // normativs: {}
-            //     }
-            // }
         });
 
          // Тестовый конфиг. имитация данных
@@ -1019,7 +1027,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
-                var s = $http.get('/Profile_st/get', {params: {ID: currentUser.getID()}})
+                $http.get('/Profile_st/get', {params: {ID: currentUser.getID()}})
                     .success(function (data) {
                         vm.student = getStudentData();
                         function getStudentData() {
@@ -1045,7 +1053,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                                 faculty: data.faculty,
                                 conclusion: data.conclusion,
                                 start_study_year: data.start_study_year,
-                                // data.birthDate
                             };
                         }
                         if (!vm.student.photo) {
@@ -1053,10 +1060,11 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         }
                         vm.student.docs = [];
                         vm.student.birthDate = new Date(data.birthDate);
-                    })
+                    });
 
-                vm.s1 = s2;
-                function s2() {
+                vm.saveData = saveData;
+                vm.clear = clear;
+                function saveData() {
                     $http.get('/Profile_st/update', {params: {
                         student_id: currentUser.getID(),
 
@@ -1089,6 +1097,10 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     })
                     console.log()
                     console.log(vm.student);
+                }
+
+                function clear() {
+                    vm.student = {};
                 }
 
                 vm.showPopupImage = showPopupImage;

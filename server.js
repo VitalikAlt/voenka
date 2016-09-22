@@ -132,8 +132,8 @@ app.post('/api/update', function(req, res) {
 
 //====================== Discipline =================================================================================
 //test
-app.get('/db/discipline/table', function(req, res) {
-    discipline.getTableList(function(data) {
+app.get('/db/discipline/get', function(req, res) {
+    discipline.getName(req.query, function(data) {
         res.send(data);
     });
 });
@@ -156,8 +156,8 @@ app.post('/db/discipline/update', function(req, res) {
 
 //====================== St_discipline =================================================================================
 //test
-app.get('/db/st_discipline/table', function(req, res) {
-    st_discipline.getTableList(function(data) {
+app.get('/db/st_discipline/get', function(req, res) {
+    st_discipline.getTableList(req.query, function (data) {
         res.send(data);
     });
 });
@@ -180,6 +180,11 @@ app.post('/db/st_discipline/update', function(req, res) {
 
 //====================== Marks =================================================================================
 //test
+app.get('/db/marks/get', function(req, res) {
+    marks.get(req.query, function(data) {
+        res.send(data);
+    })
+});
 app.get('/db/marks/table', function(req, res) {
     marks.getTableList(function(data) {
         res.send(data);
@@ -209,6 +214,11 @@ app.get('/db/Standarts/table', function(req, res) {
         res.send(data);
     })
 });
+app.get('/db/Standarts/get', function(req, res) {
+    Standarts.get(req.query, function(data) {
+        res.send(data);
+    })
+});
 app.post('/db/Standarts/add', function(req, res) {
     Standarts.addData(req.query, function(data) {
         res.send(data);
@@ -233,12 +243,17 @@ app.get('/db/Standarts_st/table', function(req, res) {
         res.send(data);
     })
 });
+app.get('/db/Standarts_st/get', function(req, res) {
+    Standarts_st.get(req.query, function (data) {
+        res.send(data);
+    })
+});
 app.post('/db/Standarts_st/add', function(req, res) {
     Standarts_st.addData(req.query, function(data) {
         res.send(data);
     });
 });
-app.post('/db/Standarts_st/remove', function(req, res) {
+app.get('/db/Standarts_st/remove', function(req, res) {
     Standarts_st.remove(req.query.ID, function(data) {
         res.send(data);
     });
