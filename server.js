@@ -15,13 +15,13 @@ var Standarts_st       = require('./db_models/Student_progress/St_standars/stand
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
 //========================== permissions ==========================================================================
-app.get('/api/permissions', function(req, res) {
+app.get('/permissions/get', function(req, res) {
     permissions.getPermission(req.query.login, req.query.password, function(data) {
         res.send(data);
     });
 });
 
-app.post('/api/permissions', function(req, res) {
+app.get('/permissions/add', function(req, res) {
     permissions.addData(req.query, function(data) {
         res.send(data);
     });
@@ -45,27 +45,32 @@ app.get('/api/t', function(req,res) {
 
 
 //====================== Student_profile ==========================================================================
-app.get('/api/Profile_st', function(req, res) {
+app.get('/Profile_st/get', function(req, res) {
     profile_st.getProfile(req.query.ID, function(data) {
         res.send(data);
     });
 });
 
-app.post('/api/Profile_st', function(req, res) {
+app.get('/Profile_st/add', function(req, res) {
     profile_st.addData(req.query, function(data) {
         res.send(data);
     });
 });
-app.get('/api/table', function(req, res) {
+app.get('/Profile_st/table', function(req, res) {
     profile_st.getTableList(function(data) {
         res.send(data);
     })
 });
-app.get('/api/remove', function(req, res) {
+app.get('/Profile_st/remove', function(req, res) {
     profile_st.removeAll(function(data) {
         res.send(data);
     })
-})
+});
+app.get('/Profile_st/update', function(req, res) {
+    profile_st.updateData(req.query, function(data) {
+        res.send(data);
+    })
+});
 //=================================================================================================================
 
 //====================== Teacher_profile ==========================================================================

@@ -86,7 +86,7 @@ angular.module('app',
     angular
         .module('app.auth')
         .controller('AuthController',
-            function (authHelper, $log, $state, $mdDialog, currentUser, registerHelper, PERMISSIONS) {
+            function (authHelper, $log, $state, $mdDialog, currentUser, registerHelper, PERMISSIONS, $http) {
                 var vm = this;
 
                 vm.authorize = authorize;
@@ -153,7 +153,19 @@ angular.module('app',
                 // Обработка подтверждения действия и закрытия диалогового окна
                 // objFromDialog (Object) - объект изменений
                 function dialogDone(objFromDialog) {
-                    this.mdDialog.hide(objFromDialog);
+                    $http.get('/permissions/add', {params: {login: objFromDialog.login, password: objFromDialog.password, permission: "student"}})
+                        .success(function (data) {
+                            $http.get('/permissions/get', {params: {login: objFromDialog.login, password: objFromDialog.password}})
+                                .success(function (Student_ID) {
+                                    $http.get('/Profile_st/add', {params: {student_id: Student_ID.ID}})
+                                        .success(function (data) {
+                                            console.log(data);
+                                        });
+                                    console.log(Student_ID);
+                                });
+                        });
+                    //this.mdDialog.hide(objFromDialog);
+                    this.mdDialog.cancel();
                 }
 
                 // Нажатие отмены (закрыть)
@@ -200,7 +212,7 @@ angular.module('app',
     function login(loginData) {
         // Получение данных permission
         // ...
-        var s = $http.get('/api/permissions', {params: {login: loginData.login, password: loginData.password}})
+        var s = $http.get('/permissions/get', {params: {login: loginData.login, password: loginData.password}})
             .success(function (data) {
                 currentUser.setID(data.ID);
                 switch (data.permission) {
@@ -1007,27 +1019,38 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
                 // Текущий студент. Заглушка
-                var s = $http.get('/api/Profile_st', {params: {ID: currentUser.getID()}})
+                var s = $http.get('/Profile_st/get', {params: {ID: currentUser.getID()}})
                     .success(function (data) {
                         vm.student = getStudentData();
                         console.log('1');
                         function getStudentData() {
                             return {
+                                group: data.group,
                                 name: data.name,
                                 surname: data.surname,
                                 fatherName: data.fatherName,
                                 student_card_number: data.student_card_number,
+
+                                student_propis_number: data.student_propis_number,
+                                student_military_number: data.student_military_number,
+                                contract_data: data.contract_data,
+                                parents_data: data.parents_data,
+                                public_work: data.public_work,
+                                family_status: data.family_status,
+
                                 birthPlace: data.birthPlace,
-                                education: 'ds',
-                                military: 's',
-                                address: 'sad',
-                                parents_address: 'sda',
-                                faculty: 'ФЭУ',
-                                conclusion: 'Б - годен с ограничениями',
-                                start_study_year: '2015',
-                                birthDate: new Date(1996, 10, 16)
+                                education: data.education,
+                                military: data.military,
+                                address: data.address,
+                                parents_address: data.parents_address,
+                                faculty: data.faculty,
+                                conclusion: data.conclusion,
+                                start_study_year: data.start_study_year,
+                                // data.birthDate
                             };
                         }
+
+                        vm.student.birthDate = new Date (data.birthDate.substr(0,10));
 
                         if (!vm.student.photo) {
                             vm.student.preview_img = CONFIG.defaultAvatar;
@@ -1037,6 +1060,37 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
                 vm.s1 = s2;
                 function s2() {
+                    $http.get('/Profile_st/update', {params: {
+                        student_id: currentUser.getID(),
+
+                        group: vm.student.group,
+
+                        name: vm.student.name,
+                        surname: vm.student.surname,
+                        fatherName: vm.student.fatherName,
+                        student_card_number: vm.student.student_card_number,
+
+                        student_propis_number: vm.student.student_propis_number,
+                        student_military_number: vm.student.student_military_number,
+                        contract_data: vm.student.contract_data,
+                        parents_data: vm.student.parents_data,
+                        public_work: vm.student.public_work,
+                        family_status: vm.student.family_status,
+
+                        birthPlace: vm.student.birthPlace,
+                        education: vm.student.education,
+                        military: vm.student.military,
+                        address: vm.student.address,
+                        parents_address: vm.student.parents_address,
+                        faculty: vm.student.faculty,
+                        conclusion: vm.student.conclusion,
+                        start_study_year: vm.student.start_study_year,
+                        birthDate: vm.student.birthDate
+                    }})
+                        .success(function (data) {
+                        console.log(data);
+                    })
+                    console.log()
                     console.log(vm.student);
                 }
 

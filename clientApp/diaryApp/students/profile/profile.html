@@ -7,6 +7,13 @@
             <div class="card_left_column" flex="80">
                 <div class="edited_string">
                     <md-input-container flex class="field-container">
+                        <input name="group"
+                               type="text"
+                               ng-model="profile.student.group"
+                               placeholder="Группа"
+                               aria-label="name">
+                    </md-input-container>
+                    <md-input-container flex class="field-container">
                         <input name="name"
                             type="text"
                             ng-model="profile.student.name"
@@ -37,6 +44,20 @@
                             placeholder="Номер студенческого"
                             aria-label="student_card_number">
                     </md-input-container>
+                    <md-input-container flex="50" class="field-container">
+                        <input name="student_propis_number"
+                               type="text"
+                               ng-model="profile.student.student_propis_number"
+                               placeholder="Номер прописного свидетельства"
+                               aria-label="student_card_number">
+                    </md-input-container>
+                    <md-input-container flex="50" class="field-container">
+                        <input name="student_military_number"
+                               type="text"
+                               ng-model="profile.student.student_military_number"
+                               placeholder="Номер военного билета"
+                               aria-label="student_card_number">
+                    </md-input-container>
                     <div class="h_flex_centered field-container" flex>
                         <md-button id="change_pass_btn"
                                 ng-click="profile.startChangePassDialog($event)"
@@ -45,6 +66,13 @@
                     </div>
                 </div>
                 <div class="edited_string">
+                    <md-input-container flex="50" class="field-container">
+                        <input name="contract_data"
+                               type="text"
+                               ng-model="profile.student.contract_data"
+                               placeholder="Дата, номер приказа ректора о заключении контракта"
+                               aria-label="birthPlace">
+                    </md-input-container>
                     <md-input-container flex="50" class="field-container">
                         <input name="birth_place"
                             type="text"
@@ -109,6 +137,31 @@
                 </div>
                 <div class="edited_string">
                     <md-input-container flex class="field-container">
+                        <input name="parents_data"
+                               type="text"
+                               ng-model="profile.student.parents_data"
+                               placeholder="Ф.И.О. родителей, место работы, должность"
+                               aria-label="address">
+                    </md-input-container>
+                </div>
+                <div class="edited_string">
+                    <md-input-container flex class="field-container">
+                        <input name="public_work"
+                               type="text"
+                               ng-model="profile.student.public_work"
+                               placeholder="Общественная работа"
+                               aria-label="address">
+                    </md-input-container>
+                    <md-input-container flex class="field-container">
+                        <input name="family_status"
+                               type="text"
+                               ng-model="profile.student.family_status"
+                               placeholder="Семейное положение"
+                               aria-label="address">
+                    </md-input-container>
+                </div>
+                <div class="edited_string">
+                    <md-input-container flex class="field-container">
                         <input name="address"
                             type="text"
                             ng-model="profile.student.address"
@@ -125,7 +178,15 @@
                             aria-label="parents_address">
                     </md-input-container>
                 </div>
-
+                <div class="edited_string">
+                    <md-input-container flex class="field-container">
+                        <input name="parents_address"
+                               type="text"
+                               ng-model="profile.student.parents_address"
+                               placeholder="Адрес родителей студента, номер телефона"
+                               aria-label="parents_address">
+                    </md-input-container>
+                </div>
                 <div class="documents_block" flex>
                     <h3 class="inner_header inner_h3">Документы</h3>
                     <div class="edited_string docs_string" layout="row">

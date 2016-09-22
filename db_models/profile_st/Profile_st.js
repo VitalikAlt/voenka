@@ -10,11 +10,22 @@ var profile_st = mongoose.Schema;
 
 var Profile = new profile_st({
     student_id: { type: String, required: true },
-    name: { type: String, required: true},
-    surname: { type: String, required: true},
-    fatherName: { type: String, required: true},
-    student_card_number: { type: String, required: true},
-    birthPlace: { type: String, required: true},
+
+    group: { type: String, required: false},
+
+    name: { type: String, required: false},
+    surname: { type: String, required: false},
+    fatherName: { type: String, required: false},
+    student_card_number: { type: String, required: false},
+
+    student_propis_number: { type: String, required: false},
+    student_military_number: { type: String, required: false},
+    contract_data: { type: String, required: false},
+    parents_data: { type: String, required: false},
+    public_work: { type: String, required: false},
+    family_status: { type: String, required: false},
+
+    birthPlace: { type: String, required: false},
     education: { type: String, required: false},
     military: { type: String, required: false},
     address: { type: String, required: false},

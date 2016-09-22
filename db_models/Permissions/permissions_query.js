@@ -73,7 +73,18 @@ var getElementById = function(aId, callback, err) {
     });
 };
 
+var remove = function(aData, callback, error) {
+    return Users.remove({Login: aData.login}, function(err, succes) {
+        if(!err) {
+            return callback(succes);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 module.exports.getTableList = getTableList;
 module.exports.getPermission = getPermission;
 module.exports.addData = addData;
 module.exports.getElementById = getElementById;
+module.exports.remove = remove;
