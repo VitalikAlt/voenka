@@ -374,7 +374,7 @@ MdNavBarController.prototype.onKeydown = function(e) {
       break;
     case keyCodes.SPACE:
     case keyCodes.ENTER:
-      // timeout to avoid a "digest already in progress" console error
+      // timeout to avoid a "digest already in Progress" console error
       this._$timeout(function() {
         focusedTab.getButtonEl().click();
       });

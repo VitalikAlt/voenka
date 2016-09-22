@@ -1443,7 +1443,7 @@ MdPanelRef.prototype._animateOpen = function() {
   this.addClass('md-panel-is-showing');
   var animationConfig = this._config['animation'];
   if (!animationConfig) {
-    // Promise is in progress, return it.
+    // Promise is in Progress, return it.
     this.addClass('_md-panel-shown');
     return this._$q.when(this);
   }

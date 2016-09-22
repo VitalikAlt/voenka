@@ -170,16 +170,16 @@ function SelectDirective($mdSelect, $mdUtil, $mdTheming, $mdAria, $compile, $par
     }
 
 
-    // Add progress spinner for md-options-loading
+    // Add Progress spinner for md-options-loading
     if (attr.mdOnOpen) {
 
-      // Show progress indicator while loading async
+      // Show Progress indicator while loading async
       // Use ng-hide for `display:none` so the indicator does not interfere with the options list
       element
         .find('md-content')
         .prepend(angular.element(
           '<div>' +
-          ' <md-progress-circular md-mode="indeterminate" ng-if="!$$loadingAsyncDone" md-diameter="25px"></md-progress-circular>' +
+          ' <md-Progress-circular md-mode="indeterminate" ng-if="!$$loadingAsyncDone" md-diameter="25px"></md-Progress-circular>' +
           '</div>'
         ));
 
@@ -1413,12 +1413,12 @@ function SelectProvider($$interimElementProvider) {
           // Otherwise - if we are not loading async - center around the first optionNode
         } else if (optionNodes.length) {
           centeredNode = optionNodes[0];
-          // In case there are no options, center on whatever's in there... (eg progress indicator)
+          // In case there are no options, center on whatever's in there... (eg Progress indicator)
         } else {
           centeredNode = contentNode.firstElementChild || contentNode;
         }
       } else {
-        // If loading, center on progress indicator
+        // If loading, center on Progress indicator
         centeredNode = contentNode.firstElementChild || contentNode;
       }
 

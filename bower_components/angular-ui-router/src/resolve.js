@@ -124,7 +124,7 @@ function $Resolve(  $q,    $injector) {
       }
 
       // Merge parent values if the parent has already resolved, or merge
-      // parent promises and wait if the parent resolve is still in progress.
+      // parent promises and wait if the parent resolve is still in Progress.
       extend(promises, parent.$$promises);
       if (parent.$$values) {
         merged = merge(values, omit(parent.$$values, invocableKeys));

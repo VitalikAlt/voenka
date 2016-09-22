@@ -871,16 +871,16 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 getTableList(vm.standartsHelper, config.standarts);
             }
 
-            $http.get('/api/progress', {params: {student_id: currentUser.getID()}})
+            $http.get('/api/Progress', {params: {student_id: currentUser.getID()}})
                 .success(function (data) {
                     vm.summary = getSummary();
                     function getSummary() {
                         var summary = {
-                            average: 4.3, // Средний балл
-                            missed: 13, // Количество пропусков
-                            placed: 60 // Кол-во присутствий на парах
+                            average: data.average_point, // Средний балл
+                            missed: data.skippings, // Количество пропусков
+                            placed: data.visitings // Кол-во присутствий на парах
                         };
-                        summary.percentMissed = (summary.missed / (summary.missed + summary.placed) * 100).toFixed(1);
+                        summary.percentMissed = (summary.missed / (Number(summary.missed) + Number(summary.placed)) * 100).toFixed(1);
                         return summary;
                     }
                 });
@@ -1013,11 +1013,11 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         console.log('1');
                         function getStudentData() {
                             return {
-                                name: currentUser.getID(),
+                                name: data.name,
                                 surname: data.surname,
-                                fatherName: '3',
-                                student_card_number: '123',
-                                birthPlace: 'sad',
+                                fatherName: data.fatherName,
+                                student_card_number: data.student_card_number,
+                                birthPlace: data.birthPlace,
                                 education: 'ds',
                                 military: 's',
                                 address: 'sad',
@@ -1037,7 +1037,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
                 vm.s1 = s2;
                 function s2() {
-                    console.log('1');
                     console.log(vm.student);
                 }
 

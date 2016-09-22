@@ -71,8 +71,8 @@ function MdProgressCircularDirective($mdTheming, $mdUtil, $log) {
     restrict: 'E',
     scope : true,
     template:
-        // The progress 'circle' is composed of two half-circles: the left side and the right
-        // side. Each side has CSS applied to 'fill-in' the half-circle to the appropriate progress.
+        // The Progress 'circle' is composed of two half-circles: the left side and the right
+        // side. Each side has CSS applied to 'fill-in' the half-circle to the appropriate Progress.
         '<div class="md-scale-wrapper">' +
           '<div class="md-spinner-wrapper">' +
             '<div class="md-inner">' +
@@ -91,7 +91,7 @@ function MdProgressCircularDirective($mdTheming, $mdUtil, $log) {
 
   function compile(tElement) {
     // The javascript in this file is mainly responsible for setting the correct aria attributes.
-    // The animation of the progress spinner is done entirely with just CSS.
+    // The animation of the Progress spinner is done entirely with just CSS.
     tElement.attr('aria-valuemin', 0);
     tElement.attr('aria-valuemax', 100);
     tElement.attr('role', 'progressbar');
@@ -142,7 +142,7 @@ function MdProgressCircularDirective($mdTheming, $mdUtil, $log) {
     }
 
     /**
-     * Update size/scaling of the progress indicator
+     * Update size/scaling of the Progress indicator
      * Watch the "value" and "md-mode" attributes
      */
     function updateScale() {
@@ -210,7 +210,7 @@ function MdProgressCircularDirective($mdTheming, $mdUtil, $log) {
     }
 
     /**
-     * We will scale the progress circle based on the default diameter.
+     * We will scale the Progress circle based on the default diameter.
      *
      * Determine the diameter percentage (defaults to 100%)
      * May be express as float, percentage, or integer

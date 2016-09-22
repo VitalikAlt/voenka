@@ -693,7 +693,7 @@ function MdAutocompleteCtrl ($scope, $element, $mdUtil, $mdConstant, $mdTheming,
       ctrl.matches = matches;
       ctrl.hidden  = shouldHide();
 
-      // If loading is in progress, then we'll end the progress. This is needed for example,
+      // If loading is in Progress, then we'll end the Progress. This is needed for example,
       // when the `clear` button was clicked, because there we always show the loading process, to prevent flashing.
       if (ctrl.loading) setLoading(false);
 
@@ -980,10 +980,10 @@ function MdAutocomplete () {
             ng-class="{ \'md-whiteframe-z1\': !floatingLabel, \'md-menu-showing\': !$mdAutocompleteCtrl.hidden }"\
             role="listbox">\
           ' + getInputElement() + '\
-          <md-progress-linear\
+          <md-Progress-linear\
               class="' + (attr.mdFloatingLabel ? 'md-inline' : '') + '"\
               ng-if="$mdAutocompleteCtrl.loadingIsVisible()"\
-              md-mode="indeterminate"></md-progress-linear>\
+              md-mode="indeterminate"></md-Progress-linear>\
           <md-virtual-repeat-container\
               md-auto-shrink\
               md-auto-shrink-min="1"\

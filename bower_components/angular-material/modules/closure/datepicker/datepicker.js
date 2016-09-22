@@ -479,7 +479,7 @@ goog.require('ng.material.core');
       return this.$q.when();
     }
 
-    // If trying to show an invalid date or a transition is in progress, do nothing.
+    // If trying to show an invalid date or a transition is in Progress, do nothing.
     if (!this.dateUtil.isValidDate(date) || this.isMonthTransitionInProgress) {
       return this.$q.when();
     }

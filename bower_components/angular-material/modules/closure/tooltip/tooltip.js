@@ -230,7 +230,7 @@ function MdTooltipDirective($timeout, $window, $$rAF, $document, $mdUtil, $mdThe
 
         if (autohide || mouseActive || ($document[0].activeElement !== parent[0]) ) {
 
-          // When a show timeout is currently in progress, then we have to cancel it.
+          // When a show timeout is currently in Progress, then we have to cancel it.
           // Otherwise the tooltip will remain showing without focus or hover.
           if (showTimeout) {
             $timeout.cancel(showTimeout);
