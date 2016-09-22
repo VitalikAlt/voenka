@@ -2,8 +2,8 @@
  * Created by Виталий on 15.09.2016.
  */
 var mongoose    = require('mongoose');
-
-mongoose.connect('mongodb://localhost:27017/permissions');
+// вот это
+mongoose.connect('mongodb://192.168.1.100:27017/permissions');
 var db = mongoose.connection;
 
 var Permissions = mongoose.Schema;

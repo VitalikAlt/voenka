@@ -160,6 +160,7 @@ angular.module('app',
                                     $http.get('/Profile_st/add', {params: {student_id: Student_ID.ID}})
                                         .success(function (data) {
                                             console.log(data);
+                                            $log.log('Register success!');
                                         });
                                     console.log(Student_ID);
                                 });
@@ -1018,11 +1019,9 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
-                // Текущий студент. Заглушка
                 var s = $http.get('/Profile_st/get', {params: {ID: currentUser.getID()}})
                     .success(function (data) {
                         vm.student = getStudentData();
-                        console.log('1');
                         function getStudentData() {
                             return {
                                 group: data.group,
@@ -1049,13 +1048,11 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                                 // data.birthDate
                             };
                         }
-
-                        vm.student.birthDate = new Date (data.birthDate.substr(0,10));
-
                         if (!vm.student.photo) {
                             vm.student.preview_img = CONFIG.defaultAvatar;
                         }
                         vm.student.docs = [];
+                        vm.student.birthDate = new Date(data.birthDate);
                     })
 
                 vm.s1 = s2;
@@ -1119,7 +1116,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 // TODO: Получение данных студента ------ готов
 
                 function showPopupImage(image) {
-                    console.log('1');
                     PopupService.showPopup(image);
                 }
 
@@ -1156,6 +1152,14 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         clickOutsideToClose: false,
                     })
                     .then(function(pass) {
+                        if (pass.new === pass.new_confirm) {
+                            $http.get('/permissions/changePass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
+                                .success(function(res) {
+                                    console.log(res);
+                                });
+                        } else {
+                            console.log('Not change');
+                        }
                         console.dir(pass);
                         // смена пароля (проверять внутри диалога до отправки)
                     }, function() {

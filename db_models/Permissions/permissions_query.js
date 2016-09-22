@@ -83,8 +83,19 @@ var remove = function(aData, callback, error) {
     });
 };
 
+var changePass = function(aData, callback, error) {
+    return Users.update( {_id: aData._id, Password: aData.password}, {Password: aData.new_password}, function (err) {
+        if (!err) {
+            return callback(true);
+        } else {
+            return error(false);
+        }
+    });
+};
+
 module.exports.getTableList = getTableList;
 module.exports.getPermission = getPermission;
 module.exports.addData = addData;
 module.exports.getElementById = getElementById;
 module.exports.remove = remove;
+module.exports.changePass = changePass;

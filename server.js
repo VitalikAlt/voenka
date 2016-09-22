@@ -38,7 +38,15 @@ app.get('/api/t', function(req,res) {
     permissions.getTableList(function(data) {
         res.send(data);
     })
-})
+});
+app.get('/permissions/changePass', function(req,res) {
+    console.log(req.query);
+    permissions.changePass(req.query, function (data) {
+        res.send(data);
+    }, function (err) {
+        console.log('s');
+    })
+});
 // student - 57da839dc9b8671924909235
 // teacher - 57da83c4c9b8671924909236
 //=================================================================================================================
