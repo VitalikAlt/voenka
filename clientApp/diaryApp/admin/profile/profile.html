@@ -123,12 +123,6 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <a title="Удалить">
-                                            <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
-                                                 ng-click="removeTeacher($index)">
-                                        </a>
-                                    </td>
-                                    <td>
                                         <a title="Изменить логин и пароль">
                                             <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
                                                  ng-click="changePassword($event)">
@@ -136,7 +130,13 @@
                                     </td>
                                     <td>
                                         <a title="Изменить профиль">
-                                            <img class="img_edit" src="/diaryApp/admin/img/Edit.png" ng-click="showProfile()">
+                                            <img class="img_edit" src="/diaryApp/admin/img/Edit.png" ng-click="showTeacherProfile($index)">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a title="Удалить">
+                                            <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
+                                                 ng-click="removeTeacher($index)">
                                         </a>
                                     </td>
                                 </tr>

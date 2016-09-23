@@ -370,6 +370,21 @@ angular.module('app',
                     currentUser.setID(Id);
                 });
             }
+            $scope.showTeacherProfile = function (idTeacher) {
+                var Id = currentUser.getID();
+                currentUser.setID($scope.data_tc[idTeacher].id);
+                $mdDialog.show({
+                    controller: 'StudentsProfileController',
+                    controllerAs: 'profile',
+                    templateUrl: 'diaryApp/students/profile/profile.html',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: false,
+                }).then(function() {
+                    console.log(1);
+                }, function () {
+                    currentUser.setID(Id);
+                });
+            }
 
             $scope.addDiscipline = function (ev) {
                 var self = this;
@@ -427,6 +442,26 @@ angular.module('app',
                 }, function(err) {
                     console.log(err);
                 });*/
+            }
+            $scope.remakeDiscGroup = function (idDisc) {
+                var self = this;
+                controller.mdDialog.show({
+                    controller: 'StudentsProfileController',
+                    controllerAs: 'profile',
+                    templateUrl: 'diaryApp/admin/discipline/views/remakeDiscGroup.html',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: false
+                })
+            }
+            $scope.addGroup = function (idDisc) {
+                var self = this;
+                controller.mdDialog.show({
+                    controller: 'StudentsProfileController',
+                    controllerAs: 'profile',
+                    templateUrl: 'diaryApp/admin/discipline/views/newCourseGroup.html',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: false
+                })
             }
 
 
@@ -985,7 +1020,7 @@ function getPhotoFromFile(file) {
                 })
                 .state('admin.group', {
                     url: '/group/',
-                    controller: 'AdminGroupController',
+                    controller: 'AdminProfileController',
                     controllerAs: 'admin',
                     templateUrl: 'diaryApp/admin/group/group.html'
                 })

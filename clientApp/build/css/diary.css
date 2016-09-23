@@ -161,6 +161,7 @@ md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
 }
 
 .table_student input{
+    width: 100%;
     border:solid 1px lightgray;
     border-radius: 2px;
 }
