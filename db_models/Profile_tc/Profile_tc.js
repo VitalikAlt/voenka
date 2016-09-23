@@ -3,7 +3,7 @@
  */
 var mongoose    = require('mongoose');
 
-// mongoose.connect('mongodb://localhost:27017/profile_tc');
+// mongoose.connect('mongodb://localhost:27017/Profile_tc');
 // var db = mongoose.connection;
 
 var profile_tc = mongoose.Schema;

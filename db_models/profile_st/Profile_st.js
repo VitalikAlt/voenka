@@ -3,7 +3,7 @@
  */
 var mongoose    = require('mongoose');
 
-//mongoose.connect('mongodb://localhost:27017/permissions');
+//mongoose.connect('mongodb://localhost:27017/Permissions');
 //var db = mongoose.connection;
 
 var profile_st = mongoose.Schema;

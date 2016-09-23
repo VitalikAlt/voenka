@@ -14,7 +14,7 @@
 
 
     function login(loginData) {
-        // Получение permissions
+        // Получение Permissions
         // ...
 // test data
 if (loginData.login == 'teacher') loginData.permissions = PERMISSIONS.TEACHER;
@@ -49,7 +49,7 @@ if (loginData.login == 'student') loginData.permissions = PERMISSIONS.STUDENT;
         }
         
         redirectToStartByPermission(loginData.permissions);
-        // switch (loginData.permissions) {
+        // switch (loginData.Permissions) {
         //   case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
         //   case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
         //   case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }

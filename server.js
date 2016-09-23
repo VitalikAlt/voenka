@@ -3,45 +3,38 @@ var express     = require("express");
 var app         = express();
 var body        = require('body-parser');
 var path        = require('path');
-var permissions = require('./db_models/permissions/permissions_query');
-var profile_st  = require('./db_models/Profile_st/pr_st_query');
-var profile_tc  = require('./db_models/Profile_tc/pr_tc_query');
-var progress    = require('./db_models/Student_progress/Progress/progress_query');
-var st_discipline = require('./db_models/Student_progress/St_discipline/discipline_st_query');
-var discipline  = require('./db_models/Discipline/discipline_query');
-var marks       = require('./db_models/Student_progress/Marks/marks_query');
-var Standarts       = require('./db_models/Standarts/standarts_query');
-var Standarts_st       = require('./db_models/Student_progress/St_standars/standarts_st_query');
+var db          = require('./db_models/database').db;
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
-//========================== permissions ==========================================================================
-app.get('/permissions/get', function(req, res) {
-    permissions.getPermission(req.query.login, req.query.password, function(data) {
+
+//========================== Permissions ==========================================================================
+app.get('/Permissions/get', function(req, res) {
+    db.permissions.getPermission(req.query.login, req.query.password, function(data) {
         res.send(data);
     });
 });
 
-app.get('/permissions/add', function(req, res) {
-    permissions.addData(req.query, function(data) {
+app.get('/Permissions/add', function(req, res) {
+    db.permissions.addData(req.query, function(data) {
         res.send(data);
     });
 });
 
-app.get('/api/permissions/:id', function(req, res) {
-    permissions.getElementById(req.params.id, function (data) {
+app.get('/api/Permissions/:id', function(req, res) {
+    db.permissions.getElementById(req.params.id, function (data) {
         res.send(data);
     }, function (data) {
         res.send(data);
     });
 });
 app.get('/api/t', function(req,res) {
-    permissions.getTableList(function(data) {
+    db.permissions.getTableList(function(data) {
         res.send(data);
     })
 });
-app.get('/permissions/changePass', function(req,res) {
+app.get('/Permissions/changePass', function(req,res) {
     console.log(req.query);
-    permissions.changePass(req.query, function (data) {
+    db.permissions.changePass(req.query, function (data) {
         res.send(data);
     }, function (err) {
         console.log('s');
@@ -54,52 +47,52 @@ app.get('/permissions/changePass', function(req,res) {
 
 //====================== Student_profile ==========================================================================
 app.get('/Profile_st/get', function(req, res) {
-    profile_st.getProfile(req.query.ID, function(data) {
+    db.profile_st.getProfile(req.query.ID, function(data) {
         res.send(data);
     });
 });
 
 app.get('/Profile_st/add', function(req, res) {
-    profile_st.addData(req.query, function(data) {
+    db.profile_st.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.get('/Profile_st/table', function(req, res) {
-    profile_st.getTableList(function(data) {
+    db.profile_st.getTableList(function(data) {
         res.send(data);
     })
 });
 app.get('/Profile_st/remove', function(req, res) {
-    profile_st.removeAll(function(data) {
+    db.profile_st.removeAll(function(data) {
         res.send(data);
     })
 });
 app.get('/Profile_st/update', function(req, res) {
-    profile_st.updateData(req.query, function(data) {
+    db.profile_st.updateData(req.query, function(data) {
         res.send(data);
     })
 });
 //=================================================================================================================
 
 //====================== Teacher_profile ==========================================================================
-app.get('/api/profile_tc', function(req, res) {
-    profile_tc.getProfile(req.query.ID, function(data) {
+app.get('/api/Profile_tc', function(req, res) {
+    db.profile_tc.getProfile(req.query.ID, function(data) {
         res.send(data);
     });
 });
 
-app.post('/api/profile_tc', function(req, res) {
-    profile_tc.addData(req.query, function(data) {
+app.post('/api/Profile_tc', function(req, res) {
+    db.profile_tc.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.get('/api/table1', function(req, res) {
-    profile_tc.getTableList(function(data) {
+    db.profile_tc.getTableList(function(data) {
         res.send(data);
     })
 });
 app.get('/api/remove1', function(req, res) {
-    profile_tc.removeAll(function(data) {
+    db.profile_tc.removeAll(function(data) {
         res.send(data);
     })
 })
@@ -107,23 +100,23 @@ app.get('/api/remove1', function(req, res) {
 
 //====================== Progress =================================================================================
 app.get('/api/Progress', function(req, res) {
-    progress.getProgress(req.query.student_id, function(data) {
+    db.progress.getProgress(req.query.student_id, function(data) {
         res.send(data);
     });
 });
 
 app.post('/api/Progress', function(req, res) {
-    progress.addData(req.query, function(data) {
+    db.progress.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.get('/db/Progress/table', function(req, res) {
-    progress.getTableList(function(data) {
+    db.progress.getTableList(function(data) {
         res.send(data);
     })
 });
 app.post('/api/update', function(req, res) {
-    progress.updateData(req.query, function(data) {
+    db.progress.updateData(req.query, function(data) {
         res.send(data);
     })
 })
@@ -133,22 +126,22 @@ app.post('/api/update', function(req, res) {
 //====================== Discipline =================================================================================
 //test
 app.get('/db/discipline/get', function(req, res) {
-    discipline.getName(req.query, function(data) {
+    db.discipline.getName(req.query, function(data) {
         res.send(data);
     });
 });
 app.post('/db/discipline/add', function(req, res) {
-    discipline.addData(req.query, function(data) {
+    db.discipline.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.post('/db/discipline/remove', function(req, res) {
-    discipline.remove(req.query.ID, function(data) {
+    db.discipline.remove(req.query.ID, function(data) {
         res.send(data);
     });
 });
 app.post('/db/discipline/update', function(req, res) {
-    discipline.updateData(req.query, function(data) {
+    db.discipline.updateData(req.query, function(data) {
         res.send(data);
     })
 });
@@ -157,22 +150,22 @@ app.post('/db/discipline/update', function(req, res) {
 //====================== St_discipline =================================================================================
 //test
 app.get('/db/st_discipline/get', function(req, res) {
-    st_discipline.getTableList(req.query, function (data) {
+    db.st_discipline.getTableList(req.query, function (data) {
         res.send(data);
     });
 });
 app.post('/db/st_discipline/add', function(req, res) {
-    st_discipline.addData(req.query, function(data) {
+    db.st_discipline.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.post('/db/st_discipline/remove', function(req, res) {
-    st_discipline.getProgress(req.query.ID, function(data) {
+    db.st_discipline.getProgress(req.query.ID, function(data) {
         res.send(data);
     });
 });
 app.post('/db/st_discipline/update', function(req, res) {
-    st_discipline.updateData(req.query, function(data) {
+    db.st_discipline.updateData(req.query, function(data) {
         res.send(data);
     })
 });
@@ -181,27 +174,27 @@ app.post('/db/st_discipline/update', function(req, res) {
 //====================== Marks =================================================================================
 //test
 app.get('/db/marks/get', function(req, res) {
-    marks.get(req.query, function(data) {
+    db.marks.get(req.query, function(data) {
         res.send(data);
     })
 });
 app.get('/db/marks/table', function(req, res) {
-    marks.getTableList(function(data) {
+    db.marks.getTableList(function(data) {
         res.send(data);
     })
 });
 app.post('/db/marks/add', function(req, res) {
-    marks.addData(req.query, function(data) {
+    db.marks.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.post('/db/marks/remove', function(req, res) {
-    marks.remove(req.query.ID, function(data) {
+    db.marks.remove(req.query.ID, function(data) {
         res.send(data);
     });
 });
 app.post('/db/marks/update', function(req, res) {
-    marks.updateData(req.query, function(data) {
+    db.marks.updateData(req.query, function(data) {
         res.send(data);
     })
 });
@@ -210,27 +203,27 @@ app.post('/db/marks/update', function(req, res) {
 //====================== Standarts ================================================================================
 //test
 app.get('/db/Standarts/table', function(req, res) {
-    Standarts.getTableList(function(data) {
+    db.Standarts.getTableList(function(data) {
         res.send(data);
     })
 });
 app.get('/db/Standarts/get', function(req, res) {
-    Standarts.get(req.query, function(data) {
+    db.Standarts.get(req.query, function(data) {
         res.send(data);
     })
 });
 app.post('/db/Standarts/add', function(req, res) {
-    Standarts.addData(req.query, function(data) {
+    db.Standarts.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.post('/db/Standarts/remove', function(req, res) {
-    Standarts.remove(req.query.ID, function(data) {
+    db.Standarts.remove(req.query.ID, function(data) {
         res.send(data);
     });
 });
 app.post('/db/Standarts/update', function(req, res) {
-    Standarts.updateData(req.query, function(data) {
+    db.Standarts.updateData(req.query, function(data) {
         res.send(data);
     })
 });
@@ -239,27 +232,27 @@ app.post('/db/Standarts/update', function(req, res) {
 //====================== Standarts_st ================================================================================
 //test
 app.get('/db/Standarts_st/table', function(req, res) {
-    Standarts_st.getTableList(function(data) {
+    db.Standarts_st.getTableList(function(data) {
         res.send(data);
     })
 });
 app.get('/db/Standarts_st/get', function(req, res) {
-    Standarts_st.get(req.query, function (data) {
+    db.Standarts_st.get(req.query, function (data) {
         res.send(data);
     })
 });
 app.post('/db/Standarts_st/add', function(req, res) {
-    Standarts_st.addData(req.query, function(data) {
+    db.Standarts_st.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.get('/db/Standarts_st/remove', function(req, res) {
-    Standarts_st.remove(req.query.ID, function(data) {
+    db.Standarts_st.remove(req.query.ID, function(data) {
         res.send(data);
     });
 });
 app.post('/db/Standarts_st/update', function(req, res) {
-    Standarts_st.updateData(req.query, function(data) {
+    db.Standarts_st.updateData(req.query, function(data) {
         res.send(data);
     })
 });

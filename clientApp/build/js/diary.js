@@ -153,9 +153,9 @@ angular.module('app',
                 // Обработка подтверждения действия и закрытия диалогового окна
                 // objFromDialog (Object) - объект изменений
                 function dialogDone(objFromDialog) {
-                    $http.get('/permissions/add', {params: {login: objFromDialog.login, password: objFromDialog.password, permission: "student"}})
+                    $http.get('/Permissions/add', {params: {login: objFromDialog.login, password: objFromDialog.password, permission: "student"}})
                         .success(function (data) {
-                            $http.get('/permissions/get', {params: {login: objFromDialog.login, password: objFromDialog.password}})
+                            $http.get('/Permissions/get', {params: {login: objFromDialog.login, password: objFromDialog.password}})
                                 .success(function (Student_ID) {
                                     $http.get('/Profile_st/add', {params: {student_id: Student_ID.ID}})
                                         .success(function (data) {
@@ -213,7 +213,7 @@ angular.module('app',
     function login(loginData) {
         // Получение данных permission
         // ...
-        var s = $http.get('/permissions/get', {params: {login: loginData.login, password: loginData.password}})
+        var s = $http.get('/Permissions/get', {params: {login: loginData.login, password: loginData.password}})
             .success(function (data) {
                 currentUser.setID(data.ID);
                 switch (data.permission) {
@@ -263,7 +263,7 @@ angular.module('app',
             }
 
             redirectToStartByPermission(loginData.permissions);
-            // switch (loginData.permissions) {
+            // switch (loginData.Permissions) {
             //   case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
             //   case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
             //   case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
@@ -347,7 +347,7 @@ angular.module('app',
         */
         function checkPermissions(neededPermissions) {
             if (!getPermissions()) {
-                // TODO: Получать permissions с сервера по токену
+                // TODO: Получать Permissions с сервера по токену
                 // Заглушка
                 switch ($cookieStore.get('token')) {
                     case 'student': {
@@ -929,7 +929,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                                                 rows.push({ nameSubject: name, semestr1: v_semestr1, semestr2: v_semestr2});
                                                 discipline_count++;
                                                 if (data.length === discipline_count) {
-                                                    console.log(rows);
                                                     for (var i = 0; i < rows.length; i++) {
                                                         helper.addItemRow(rows[i]);
                                                     }
@@ -941,38 +940,49 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 } else {
                     $http.get('/db/Standarts_st/get', {params: {student_id: currentUser.getID()}})
                         .success(function(data) {
+                            rows = [];
                             var discipline_count = 0;
                             console.log(data);
                             data.forEach(function (standart) {
-                                $http.get('/db/Standarts/get', {params: {standart_id: data.standart_id}})
+                                $http.get('/db/Standarts/get', {params: {standart_id: standart.standart_id}})
                                     .success(function(name) {
                                         console.log(name);
-                                        // $http.get('/db/marks/get', {params: {student_discipline_id: discipline._id}})
-                                        //     .success(function(res) {
-                                        //         var v_semestr1, v_semestr2;
-                                        //         res.forEach(function (term) {
-                                        //             if (term.term == 1) {
-                                        //                 v_semestr1 = term.mark;
-                                        //             } else {
-                                        //                 v_semestr2 = term.mark;
-                                        //             }
-                                        //         });
-                                        //         rows.push({ nameSubject: name, semestr1: v_semestr1, semestr2: v_semestr2});
-                                        //         discipline_count++;
-                                        //         if (data.length === discipline_count) {
-                                        //             console.log(rows);
-                                        //             for (var i = 0; i < rows.length; i++) {
-                                        //                 helper.addItemRow(rows[i]);
-                                        //             }
-                                        //         }
-                                        //     });
+                                        var status = false;
+                                        rows.forEach(function (row) {
+                                            if (row.nameStandart === name) {
+                                                status = true;
+                                                if (standart.term == 1) {
+                                                    row.semestr1 = standart.standart;
+                                                }
+                                                if (standart.term == 2) {
+                                                    row.semestr2 = standart.standart;
+                                                }
+                                                if (standart.term == 3) {
+                                                    row.semestr3 = standart.standart;
+                                                }
+                                            }
+                                        });
+                                        if (status === false) {
+                                            if (standart.term == 1) {
+                                                rows.push({nameStandart: name, semestr1: standart.standart});
+                                            }
+                                            if (standart.term == 2) {
+                                                rows.push({nameStandart: name, semestr2: standart.standart});
+                                            }
+                                            if (standart.term == 3) {
+                                                rows.push({nameStandart: name, semestr3: standart.standart});
+                                            }
+                                        }
+                                        discipline_count++;
+                                        if (data.length === discipline_count) {
+                                            console.log(rows);
+                                            for (var i = 0; i < rows.length; i++) {
+                                                helper.addItemRow(rows[i]);
+                                            }
+                                        }
                                     });
                             });
                         });
-                    rows = resource.rows;
-                    for (var i = 0; i < rows.length; i++) {
-                        helper.addItemRow(rows[i]);
-                    }
                 }
             }
         });
@@ -1165,7 +1175,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     })
                     .then(function(pass) {
                         if (pass.new === pass.new_confirm) {
-                            $http.get('/permissions/changePass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
+                            $http.get('/Permissions/changePass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
                                 .success(function(res) {
                                     console.log(res);
                                 });
@@ -1620,7 +1630,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
-                var s = $http.get('/api/profile_tc', {params: {ID: currentUser.getID()}})
+                var s = $http.get('/api/Profile_tc', {params: {ID: currentUser.getID()}})
                  .success(function (data) {
                      vm.teacher = getTeacherData();
                      function getTeacherData() {

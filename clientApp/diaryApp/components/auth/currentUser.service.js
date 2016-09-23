@@ -48,7 +48,7 @@
         */
         function checkPermissions(neededPermissions) {
             if (!getPermissions()) {
-                // TODO: Получать permissions с сервера по токену
+                // TODO: Получать Permissions с сервера по токену
                 // Заглушка
                 switch ($cookieStore.get('token')) {
                     case 'student': {
