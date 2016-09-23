@@ -427,7 +427,7 @@ angular.module('app',
                 controller.mdDialog.show({
                     controller: 'StudentsProfileController',
                     controllerAs: 'profile',
-                    templateUrl: 'diaryApp/admin/discipline/views/addDiscGroup.html',
+                    templateUrl: 'diaryApp/admin/discipline/views/addDiscGroup1.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose: false
