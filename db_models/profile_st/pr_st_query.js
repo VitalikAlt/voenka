@@ -2,16 +2,10 @@
  * Created by Виталий on 17.09.2016.
  */
 var Users = require('./Profile_st').Profile_stModel;
+var Standart_query = require('../standart_query').standarts(Users);
 
-var getTableList = function(callback, err) {
-    return Users.find(function (err, data) {
-        if (!err) {
-            return callback(data);
-        } else {
-            return err(500);
-        }
-    });
-};
+var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
+var remove_All = function (anID, callback, error) { return Standart_query.remove_All(callback, error); };
 
 var getProfile = function(aStudentID, callback, err) {
     return Users.find( {student_id: aStudentID}, function (err, data) {
@@ -69,19 +63,6 @@ var addData = function(aData, callback, err) {
     });
 };
 
-var getElementById = function(aId, callback, err) {
-    return Users.findById(aId, function (err, article) {
-        if(!article) {
-            return err(404);
-        }
-        if (!err) {
-            return callback(article);
-        } else {
-            return err(500);
-        }
-    });
-};
-
 var removeAll = function(callback, error) {
     return Users.remove({}, function(err, succes) {
         if(!err) {
@@ -130,6 +111,5 @@ var updateData = function(aData, callback, error) {
 module.exports.getTableList = getTableList;
 module.exports.getProfile = getProfile;
 module.exports.addData = addData;
-module.exports.getElementById = getElementById;
-module.exports.removeAll = removeAll;
+module.exports.remove_All = remove_All;
 module.exports.updateData = updateData;

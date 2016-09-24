@@ -2,6 +2,10 @@
  * Created by Виталий on 22.09.2016.
  */
 var Standarts = require('./Standarts').StandartsModel;
+var Standart_query = require('../standart_query').standarts(Standarts);
+
+var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
+var remove_All = function (anID, callback, error) { return Standart_query.remove_All(callback, error); };
 
 // to test (\/ - ready to test) (\/\/ - tested)
 
@@ -9,16 +13,6 @@ var Standarts = require('./Standarts').StandartsModel;
 //добавить норматив \/
 //удалить норматив \/
 //изменить наименование норматива (?) \/
-
-var getTableList = function(callback, err) {
-    return Standarts.find(function (err, data) {
-        if (!err) {
-            return callback(data);
-        } else {
-            return err(500);
-        }
-    });
-};
 
 var get = function(aData, callback, err) {
     return Standarts.find({_id: aData.standart_id}, function (err, data) {

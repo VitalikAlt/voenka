@@ -2,26 +2,19 @@
  * Created by Виталий on 15.09.2016.
  */
 var Users = require('./Permissions').UsersModel;
+var Standart_query = require('../standart_query').standarts(Users);
 
-var getTableList = function(callback, err) {
-    return Users.find(function (err, data) {
-        if (!err) {
-            return callback(data);
-        } else {
-            return err(500);
-        }
-    });
-};
+var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
 
 var getPermission = function(aLogin, aPassword, callback, err) {
     return Users.find(function (err, data) {
         if (!err) {
             var status = false;
             data.forEach(function(usr) {
-                if (aLogin == usr.Login && aPassword == usr.Password) {
+                if (aLogin == usr.login && aPassword == usr.password) {
                     status = true;
                     var data = {
-                        permission: usr.Permission,
+                        permission: usr.permission,
                         ID: usr._id
                     }
                     return callback(data);
@@ -39,9 +32,9 @@ var getPermission = function(aLogin, aPassword, callback, err) {
 var addData = function(aData, callback, err) {
 
     var article = new Users({
-        Login: aData.login,
-        Password: aData.password,
-        Permission: aData.permission
+        login: aData.login,
+        password: aData.password,
+        permission: aData.permission
     });
 
     article.save(function (err) {
@@ -74,7 +67,7 @@ var getElementById = function(aId, callback, err) {
 };
 
 var remove = function(aData, callback, error) {
-    return Users.remove({Login: aData.login}, function(err, succes) {
+    return Users.remove({login: aData.login}, function(err, succes) {
         if(!err) {
             return callback(succes);
         } else {

@@ -2,13 +2,16 @@
  * Created by Виталий on 21.09.2016.
  */
 var Discipline = require('./Discipline').DisciplineModel;
+var Standart_query = require('../standart_query').standarts(Discipline);
+
+var remove = function (anID, callback, error) { return Standart_query.remove(anID, callback, error); };
 
 // to test (\/ - ready to test) (\/\/ - tested)
 
-//получить список дисциплин \/ \/
-//добавить дисциплину \/ \/
-//удалить дисциплину \/ \/
-//изменить преподавателя дисциплины \/ \/
+//получить список дисциплин \/ 
+//добавить дисциплину \/ 
+//удалить дисциплину \/ 
+//изменить преподавателя дисциплины \/
 
 var getName = function (aData, callback, err) {
     return Discipline.find({_id: aData.discipline_id}, function (err, data) {
@@ -39,16 +42,6 @@ var addData = function(aData, callback, err) {
                 return err(500);
             }
             console.log('Internal error(%d): %s',res.statusCode,err.message);
-        }
-    });
-};
-
-var remove = function(anID, callback, error) {
-    return Discipline.remove({_id: anID}, function(err, succes) {
-        if(!err) {
-            return callback(succes);
-        } else {
-            return error(err);
         }
     });
 };

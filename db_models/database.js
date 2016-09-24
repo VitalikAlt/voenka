@@ -3,7 +3,7 @@
  */
 var mongoose    = require('mongoose');
 
-mongoose.connect('mongodb://192.168.1.101:27017');
+mongoose.connect('mongodb://localhost:27017');
 
 // модули базы данных
 

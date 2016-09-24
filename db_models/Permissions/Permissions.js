@@ -6,9 +6,9 @@ var mongoose    = require('mongoose');
 var Permissions = mongoose.Schema;
 
 var Users = new Permissions({
-    Login: { type: String, required: true },
-    Password: { type: String, required: true},
-    Permission: { type: String, required: true}
+    login: { type: String, required: true },
+    password: { type: String, required: true},
+    permission: { type: String, required: true}
 });
 
 var UsersModel = mongoose.model('Users', Users);
