@@ -6,17 +6,17 @@
                 <div class="student_content">
                     <table class="table_student">
                         <tr class="right_align">
-                            <th class="column_1">№</th>
-                            <th class="column_2">Название</th>
-                            <th class="column_3">Преподаватель</th>
-                            <th class="column_4"></th>
+                            <th class="column_1"></th>
+                            <th class="column_2">№</th>
+                            <th class="column_3">Название</th>
+                            <th class="column_4">Преподаватель</th>
                             <th class="column_5"></th>
                             <th class="column_6"></th>
                         </tr>
                         <tr>
                             <td></td>
-                            <td><input type="text" style="width:100%" ></td>
                             <td></td>
+                            <td><input type="text" style="width:100%" ></td>
                             <td></td>
                             <td></td>
                             <td>
@@ -26,8 +26,9 @@
                             </td>
                         </tr>
                         <tr class="hover_string" ng-repeat="item in data_discipline">
+
                             <td>
-                                <input type="checkbox" style="margin-left:38%">
+                                <input type="checkbox" style="padding-right:10px ">
                             </td>
                             <td>{{item.num}}</td>
                             <td>{{item.name}}</td>

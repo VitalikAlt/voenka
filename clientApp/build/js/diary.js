@@ -329,6 +329,35 @@ angular.module('app',
                 })
             };
 
+            $scope.addDiscipline = function (ev) {
+                var self = this;
+                controller.mdDialog.show({
+                    controller: 'StudentsProfileController',
+                    controllerAs: 'profile',
+                    templateUrl: 'diaryApp/admin/discipline/views/addDiscipline.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: false
+                }).then(function()
+                {
+                    var tc_id = data_discipline.push();
+                    for(var i = 0; i < self.data_tc.length;i++){
+                        if(self.data_tc[i] == self.discipline_tc_name) {
+                            tc_id.auth_key = self.data_tc[i].getID();
+                        }
+                    }
+                    $http.post('/add/discipline', {discipline_name: self.discipline_name,teacher_id: newDiscipline.auth_key})//{dicsipline_name:"dfsdf",teacher_id:}
+                        .success(function (res) {
+                            console.log(res);
+                            self.data_discipline.push({discipline_id: res.discipline_id, num: self.data_discipline.length + 1, name: "discipline_3", tc_name:"Petrov"});
+                            if (self.data_tc.length != data_tc_c.length) data_tc_c.push({id: res.discipline_id, num: self.discipline_tc.length + 1, name: 'Undefined'});
+                        });
+                }, function(err) {
+                    console.log(err);
+                });
+            }
+
+
             $scope.addTeacher = function startAddStudentDialog(ev) {
                 var self = this;
                 controller.mdDialog.show({
@@ -416,27 +445,8 @@ angular.module('app',
                 });
             }
 
-            $scope.addDiscipline = function (ev) {
-                var self = this;
-                controller.mdDialog.show({
-                    controller: 'StudentsProfileController',
-                    controllerAs: 'profile',
-                    templateUrl: 'diaryApp/admin/discipline/views/addDiscipline.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: false
-                }).then(function(newDiscipline) {
-                    newDiscipline.auth_key = currentUser.getID();//не понимаю эту строку
-                    $http.post('/add/discipline', {auth_key: newDiscipline})
-                        .success(function (res) {
-                            console.log(res);
-                            self.data_discipline.push({discipline_id: res.discipline_id, num: self.data_discipline.length + 1, name: discipline_name, tc_name:discipline_tc_named});
-                            if (self.data_tc.length != data_tc_c.length) data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
-                        });
-                }, function(err) {
-                    console.log(err);
-                });
-            }
+           
+
 
             $scope.removeDiscipline = function (element) {
                 var self = this;
@@ -457,7 +467,7 @@ angular.module('app',
                 controller.mdDialog.show({
                     controller: 'StudentsProfileController',
                     controllerAs: 'profile',
-                    templateUrl: 'diaryApp/admin/discipline/views/addDiscGroup1.html',
+                    templateUrl: 'diaryApp/admin/discipline/views/addDiscGroup.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose: false

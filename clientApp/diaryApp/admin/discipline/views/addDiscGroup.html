@@ -1,8 +1,15 @@
 <div>
 
     <div class="table_student_teacher_2">
-        <div class="step">
-            Выберете группу для добавления
+        <div>
+            <div style="float: right">
+                <md-button class="md-icon-button" ng-click="profile.dialogCancel()">
+                    <md-icon md-font-library="material-icons">X</md-icon>
+                </md-button>
+            </div>
+            <div class="step">
+                Выберете группу для добавления
+            </div>
         </div>
         <div class="tab-menu">
             <input type="radio" name="tab" id="t1" checked>
@@ -31,19 +38,20 @@
                                 <input type="text" style="width:100%" ng-model="course" ng-keyup="sort('st', 'course', course)">
                             </td>
                             <td >
-                                <a title="Добавить">
+
+                                <!--<a title="Добавить">
                                     <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addTeacher()">
-                                </a>
+                                </a>-->
                             </td>
                         </tr>
-                        <tr class="hover_string">
+                        <tr class="hover_string" ng-repeat="item in data_group">
                             <td>
                                 <input type="checkbox" style="margin-left:38%" >
                             </td>
-                            <td>2</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td></td>
+                            <td>{{item.course}}</td>
+                            <td>{{item.squad}}</td>
+                            <td>{{item.count}}</td>
                             <td class="table_changing">
                                 <!--<table>
                                     <tr>
