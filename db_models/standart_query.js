@@ -1,5 +1,5 @@
 /**
- * Created by Алексей on 23.09.2016.
+ * Created by Виталий on 23.09.2016.
  */
 
 //  Стандартные функции:
@@ -9,59 +9,40 @@
 //      3) Удалить все элементы         (remove_All)
 //
 
-var standarts = {};
+module.exports.standarts = function(aDatabase) {
 
-standarts.a = function () {
-    console.log(standarts.aDatabase);
-    //return aDatabase;
-}
+    var query = {};
+    var database = aDatabase;
 
-standarts.list = function (callback, error) {
-    return standarts.aDatabase.find(function (err, array) {
-        if (!err) {
-            return callback(array);
-        } else {
-            return error(err);
-        }
-    });
-};
+    query.list = function (callback, error) {
+        database.find(function (err, array) {
+            if (!err) {
+                callback(array);
+            } else {
+                error(err);
+            }
+        });
+    };
 
-standarts.remove = function(anID, callback, error) {
-    return standarts.aDatabase.remove({_id: anID}, function(err, succes) {
-        if(!err) {
-            return callback(succes);
-        } else {
-            return error(err);
-        }
-    });
-};
+    query.remove = function(anID, callback, error) {
+        database.remove({_id: anID}, function(err, succes) {
+            if(!err) {
+                callback(succes);
+            } else {
+                error(err);
+            }
+        });
+    };
 
-standarts.remove_All = function(callback, error) {
-    return standarts.aDatabase.remove(function(err, succes) {
-        if(!err) {
-            return callback(succes);
-        } else {
-            return error(err);
-        }
-    });
-};
+    query.remove_All = function(callback, error) {
+        database.remove(function(err, succes) {
+            if(!err) {
+                callback(succes);
+            } else {
+                error(err);
+            }
+        });
+    };
 
-// var standart_functions = function(aDatabase, aFunction, aParams, callback, error) {
-//     switch (aFunction) {
-//         case 'list':
-//             list(callback, error);
-//             break;
-//         case 'remove':
-//             remove(aParams, callback, error);
-//             break;
-//         case 'remove_All':
-//             remove_All(callback, error);
-//             break;
-//     }
-// };
-
-//module.exports.standart_functions = standart_functions;
-module.exports.standarts = function(Database) {
-    standarts.aDatabase = Database;
-    return standarts;
+    return query;
 };

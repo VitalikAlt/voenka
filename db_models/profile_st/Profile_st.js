@@ -11,7 +11,7 @@ var profile_st = mongoose.Schema;
 var Profile = new profile_st({
     student_id: { type: String, required: true },
 
-    group: { type: String, required: false},
+    group_id: { type: String, required: false},
 
     name: { type: String, required: false},
     surname: { type: String, required: false},

@@ -3,9 +3,15 @@ var express     = require("express");
 var app         = express();
 var body        = require('body-parser');
 var path        = require('path');
-var db          = require('./db_models/database').db;
+var db          = require('./db_models/database').db('mongodb://192.168.1.100:27017');
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
+
+app.get('/add/student', function(req,res) {
+    db.addStudent(req.query, function (succes) {
+        res.send(succes);
+    }, function (err) { res.send(err); });
+});
 
 //========================== Permissions ==========================================================================
 app.get('/Permissions/get', function(req, res) {
@@ -40,10 +46,27 @@ app.get('/Permissions/changePass', function(req,res) {
         console.log('s');
     })
 });
-// student - 57da839dc9b8671924909235
-// teacher - 57da83c4c9b8671924909236
 //=================================================================================================================
 
+//========================== Groups ==========================================================================
+app.get('/Groups/get', function(req, res) {
+    db.groups.getElementById(req.query.ID, function(data) {
+        res.send(data);
+    });
+});
+
+app.get('/groups/add', function(req, res) {
+    db.groups.addData(req.query, function(data) {
+        res.send(data);
+    });
+});
+
+app.get('/Groups/t', function(req,res) {
+    db.groups.getTableList(function(data) {
+        res.send(data);
+    })
+});
+//=================================================================================================================
 
 //====================== Student_profile ==========================================================================
 app.get('/Profile_st/get', function(req, res) {
@@ -203,27 +226,27 @@ app.post('/db/marks/update', function(req, res) {
 //====================== Standarts ================================================================================
 //test
 app.get('/db/Standarts/table', function(req, res) {
-    db.Standarts.getTableList(function(data) {
+    db.standarts.getTableList(function(data) {
         res.send(data);
     })
 });
 app.get('/db/Standarts/get', function(req, res) {
-    db.Standarts.get(req.query, function(data) {
+    db.standarts.get(req.query, function(data) {
         res.send(data);
     })
 });
 app.post('/db/Standarts/add', function(req, res) {
-    db.Standarts.addData(req.query, function(data) {
+    db.standarts.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.post('/db/Standarts/remove', function(req, res) {
-    db.Standarts.remove(req.query.ID, function(data) {
+    db.standarts.remove(req.query.ID, function(data) {
         res.send(data);
     });
 });
 app.post('/db/Standarts/update', function(req, res) {
-    db.Standarts.updateData(req.query, function(data) {
+    db.standarts.updateData(req.query, function(data) {
         res.send(data);
     })
 });
@@ -232,27 +255,27 @@ app.post('/db/Standarts/update', function(req, res) {
 //====================== Standarts_st ================================================================================
 //test
 app.get('/db/Standarts_st/table', function(req, res) {
-    db.Standarts_st.getTableList(function(data) {
+    db.standarts_st.getTableList(function(data) {
         res.send(data);
     })
 });
 app.get('/db/Standarts_st/get', function(req, res) {
-    db.Standarts_st.get(req.query, function (data) {
+    db.standarts_st.get(req.query, function (data) {
         res.send(data);
     })
 });
 app.post('/db/Standarts_st/add', function(req, res) {
-    db.Standarts_st.addData(req.query, function(data) {
+    db.standarts_st.addData(req.query, function(data) {
         res.send(data);
     });
 });
 app.get('/db/Standarts_st/remove', function(req, res) {
-    db.Standarts_st.remove(req.query.ID, function(data) {
+    db.standarts_st.remove(req.query.ID, function(data) {
         res.send(data);
     });
 });
 app.post('/db/Standarts_st/update', function(req, res) {
-    db.Standarts_st.updateData(req.query, function(data) {
+    db.standarts_st.updateData(req.query, function(data) {
         res.send(data);
     })
 });

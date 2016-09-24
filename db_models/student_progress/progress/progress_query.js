@@ -2,16 +2,9 @@
  * Created by Виталий on 15.09.2016.
  */
 var Progress = require('./Progress').ProgressModel;
+var Standart_query = require('../../standart_query').standarts(Progress);
 
-var getTableList = function(callback, err) {
-    return Progress.find(function (err, data) {
-        if (!err) {
-            return callback(data);
-        } else {
-            return err(500);
-        }
-    });
-};
+var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
 
 var getProgress = function(aStudentID, callback, err) {
     return Progress.find( {student_id: aStudentID}, function (err, data) {

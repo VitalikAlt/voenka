@@ -112,22 +112,22 @@ angular.module('app',
                         targetEvent: ev,
                         clickOutsideToClose: false,
                     })
-                    .then(function(newStudent) {
-                        if (newStudent) {
-                            console.log(newStudent);
-                        newStudent.token = 'student';
-                        newStudent.permissions = PERMISSIONS.STUDENT;
-                        registerHelper.register(newStudent)
-                            .then(function() {
-                                $log.log('Register success!');
-                            })
-                            .catch(function() {
-                                $log.log('Registration failed');
-                            });
-                        }
-                    }, function() {
-                        // закрыто диалоговое окно
-                    });
+                    // .then(function(newStudent) {
+                    //     if (newStudent) {
+                    //         console.log(newStudent);
+                    //     newStudent.token = 'student';
+                    //     newStudent.permissions = PERMISSIONS.STUDENT;
+                    //     registerHelper.register(newStudent)
+                    //         .then(function() {
+                    //             $log.log('Register success!');
+                    //         })
+                    //         .catch(function() {
+                    //             $log.log('Registration failed');
+                    //         });
+                    //     }
+                    // }, function() {
+                    //     // закрыто диалоговое окно
+                    // });
                 }
 
                 // Запуск диалогового окна добавления преподавателя
@@ -153,17 +153,24 @@ angular.module('app',
                 // Обработка подтверждения действия и закрытия диалогового окна
                 // objFromDialog (Object) - объект изменений
                 function dialogDone(objFromDialog) {
-                    $http.get('/Permissions/add', {params: {login: objFromDialog.login, password: objFromDialog.password, permission: "student"}})
-                        .success(function (data) {
-                            $http.get('/Permissions/get', {params: {login: objFromDialog.login, password: objFromDialog.password}})
-                                .success(function (Student_ID) {
-                                    $http.get('/Profile_st/add', {params: {student_id: Student_ID.ID}})
-                                        .success(function (data) {
-                                            console.log(data);
-                                            $log.log('Register success!');
-                                        });
-                                    console.log(Student_ID);
-                                });
+                    // $http.get('/Permissions/add', {params: {login: objFromDialog.login, password: objFromDialog.password, permission: "student"}})
+                    //     .success(function (data) {
+                    //         $http.get('/Permissions/get', {params: {login: objFromDialog.login, password: objFromDialog.password}})
+                    //             .success(function (Student_ID) {
+                    //                 $http.get('/Groups/add', {params: {course: objFromDialog.course, squad: objFromDialog.squad}})
+                    //                     .success(function (group) {
+                    //                         console.log(group);
+                    //                         $http.get('/Profile_st/add', {params: {student_id: Student_ID.ID, group_id: group._id}})
+                    //                             .success(function (data) {
+                    //                                 $log.log('Register success!');
+                    //                             });
+                    //                     })
+                    //                 //console.log(Student_ID);
+                    //             });
+                    //     });
+                    $http.get('/add/student', {params: objFromDialog})
+                        .success(function (res) {
+                            console.log(res);
                         });
                     //this.mdDialog.hide(objFromDialog);
                     this.mdDialog.cancel();
@@ -1040,9 +1047,15 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 $http.get('/Profile_st/get', {params: {ID: currentUser.getID()}})
                     .success(function (data) {
                         vm.student = getStudentData();
+
+                        $http.get('/Groups/get', {params: {ID: data.group_id}})
+                            .success(function (group) {
+                                vm.student.squad = group.squad;
+                                vm.student.course = group.course;
+                            })
+
                         function getStudentData() {
                             return {
-                                group: data.group,
                                 name: data.name,
                                 surname: data.surname,
                                 fatherName: data.fatherName,
@@ -1075,38 +1088,41 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.saveData = saveData;
                 vm.clear = clear;
                 function saveData() {
-                    $http.get('/Profile_st/update', {params: {
-                        student_id: currentUser.getID(),
+                    if ((vm.student.squad < 7 && vm.student.squad>=0) || (vm.student.course < 7 && vm.student.course>=0))
+                    $http.get('/groups/add', {params: {squad: vm.student.squad, course:vm.student.course}})
+                        .success(function (group) {
+                            console.log(group);
+                            $http.get('/Profile_st/update', {params: {
+                                student_id: currentUser.getID(),
 
-                        group: vm.student.group,
+                                group_id: group._id,
 
-                        name: vm.student.name,
-                        surname: vm.student.surname,
-                        fatherName: vm.student.fatherName,
-                        student_card_number: vm.student.student_card_number,
+                                name: vm.student.name,
+                                surname: vm.student.surname,
+                                fatherName: vm.student.fatherName,
+                                student_card_number: vm.student.student_card_number,
 
-                        student_propis_number: vm.student.student_propis_number,
-                        student_military_number: vm.student.student_military_number,
-                        contract_data: vm.student.contract_data,
-                        parents_data: vm.student.parents_data,
-                        public_work: vm.student.public_work,
-                        family_status: vm.student.family_status,
+                                student_propis_number: vm.student.student_propis_number,
+                                student_military_number: vm.student.student_military_number,
+                                contract_data: vm.student.contract_data,
+                                parents_data: vm.student.parents_data,
+                                public_work: vm.student.public_work,
+                                family_status: vm.student.family_status,
 
-                        birthPlace: vm.student.birthPlace,
-                        education: vm.student.education,
-                        military: vm.student.military,
-                        address: vm.student.address,
-                        parents_address: vm.student.parents_address,
-                        faculty: vm.student.faculty,
-                        conclusion: vm.student.conclusion,
-                        start_study_year: vm.student.start_study_year,
-                        birthDate: vm.student.birthDate
-                    }})
-                        .success(function (data) {
-                        console.log(data);
-                    })
-                    console.log()
-                    console.log(vm.student);
+                                birthPlace: vm.student.birthPlace,
+                                education: vm.student.education,
+                                military: vm.student.military,
+                                address: vm.student.address,
+                                parents_address: vm.student.parents_address,
+                                faculty: vm.student.faculty,
+                                conclusion: vm.student.conclusion,
+                                start_study_year: vm.student.start_study_year,
+                                birthDate: vm.student.birthDate
+                            }})
+                                .success(function (data) {
+                                    console.log(data);
+                                })
+                        })
                 }
 
                 function clear() {

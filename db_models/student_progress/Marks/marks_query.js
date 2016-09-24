@@ -2,6 +2,9 @@
  * Created by Виталий on 20.09.2016.
  */
 var MarkModel = require('./Marks').MarkModel;
+var Standart_query = require('../../standart_query').standarts(MarkModel);
+
+var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
 
 // to test (\/ - ready to test) (\/\/ - tested)
 
@@ -9,17 +12,6 @@ var MarkModel = require('./Marks').MarkModel;
 //добавить оценку по предмету \/ \/
 //удалить оценку по предмету \/
 //изменить оценку \/ \/
-
-
-var getTableList = function(callback, err) {
-    return MarkModel.find(function (err, data) {
-        if (!err) {
-            return callback(data);
-        } else {
-            return err(500);
-        }
-    });
-};
 
 var get = function(aData, callback, err) {
     return MarkModel.find({student_discipline_id: aData.student_discipline_id}, function (err, data) {

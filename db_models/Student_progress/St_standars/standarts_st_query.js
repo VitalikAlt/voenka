@@ -2,6 +2,9 @@
  * Created by Виталий on 22.09.2016.
  */
 var Standarts_st = require('./Student_standarts').Standarts_stModel;
+var Standart_query = require('../../standart_query').standarts(Standarts_st);
+
+var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
 
 // to test (\/ - ready to test) (\/\/ - tested)
 
@@ -9,16 +12,6 @@ var Standarts_st = require('./Student_standarts').Standarts_stModel;
 //добавить норматив студенту \/
 //удалить норматив у студента ( за все семестры? (сейчас) ) \/
 //изменить норматив у студента \/
-
-var getTableList = function(callback, err) {
-    return Standarts_st.find(function (err, data) {
-        if (!err) {
-            return callback(data);
-        } else {
-            return err(500);
-        }
-    });
-};
 
 var get = function(aData, callback, err) {
     return Standarts_st.find({student_id: aData.student_id}, function (err, data) {

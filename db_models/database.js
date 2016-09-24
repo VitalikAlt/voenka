@@ -3,20 +3,24 @@
  */
 var mongoose    = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017');
-
 // модули базы данных
-
 var database = {
     permissions: require('./Permissions/permissions_query'),
     profile_st: require('./Profile_st/pr_st_query'),
     profile_tc: require('./Profile_tc/pr_tc_query'),
+    groups: require('./Group/group_query'),
     discipline: require('./Discipline/discipline_query'),
-    Standarts: require('./Standarts/standarts_query'),
+    standarts: require('./Standarts/standarts_query'),
     progress: require('./Student_progress/Progress/progress_query'),
-    st_discipline: require('./Student_progress/St_discipline/discipline_st_query'),
     marks: require('./Student_progress/Marks/marks_query'),
-    Standarts_st: require('./Student_progress/St_standars/standarts_st_query')
+    standarts_st: require('./Student_progress/St_standars/standarts_st_query')
 };
 
-module.exports.db = database;
+// Специальные запросы
+database.addStudent = require('./query').addStudent(database.permissions, database.profile_st, database.groups);
+
+module.exports.db = function(anUrl) {
+    mongoose.connect(anUrl);
+
+    return database;
+}

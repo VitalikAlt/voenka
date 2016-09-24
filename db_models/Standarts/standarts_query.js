@@ -4,8 +4,8 @@
 var Standarts = require('./Standarts').StandartsModel;
 var Standart_query = require('../standart_query').standarts(Standarts);
 
-var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
-var remove_All = function (anID, callback, error) { return Standart_query.remove_All(callback, error); };
+var getTableList = function(callback, error) { return Standart_query.list (callback, error); };
+var remove_All = function (anID, callback, error) { return Standart_query.remove_All (callback, error); };
 
 // to test (\/ - ready to test) (\/\/ - tested)
 

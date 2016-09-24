@@ -29,28 +29,30 @@ var getPermission = function(aLogin, aPassword, callback, err) {
     });
 }
 
-var addData = function(aData, callback, err) {
-
-    var article = new Users({
-        login: aData.login,
-        password: aData.password,
-        permission: aData.permission
-    });
-
-    article.save(function (err) {
+var addData = function(aData, callback, error) {
+    Users.find({login: aData.login}, function (err, data) {
         if (!err) {
-            console.log("article created");
-            return callback(article);
-        } else {
-            console.log(err);
-            if(err.name == 'ValidationError') {
-                return err(400);
+            if (!data.length) {
+                var user = new Users({
+                    login: aData.login,
+                    password: aData.password,
+                    permission: aData.permission
+                });
+
+                user.save(function (err) {
+                    if (!err) {
+                        return callback(user);
+                    } else {
+                        return error(err);
+                    }
+                });
             } else {
-                return err(500);
+                return callback(data[0]);
             }
-            console.log('Internal error(%d): %s',res.statusCode,err.message);
+        } else {
+            return error(err)
         }
-    });
+    })
 };
 
 var getElementById = function(aId, callback, err) {

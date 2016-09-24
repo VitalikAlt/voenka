@@ -54,4 +54,4 @@ var addData = function(aData, callback, err) {
 module.exports.getTableList = getTableList;
 module.exports.getProfile = getProfile;
 module.exports.addData = addData;
-module.exports.removeAll = removeAll;
+module.exports.remove_All = remove_All;
