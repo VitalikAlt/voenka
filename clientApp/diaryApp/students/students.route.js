@@ -15,17 +15,6 @@
               PERMISSIONS.STUDENT
             ]
           }
-          // resolve: {
-          //   isLogin: function(authHelper) {
-          //     return authHelper.isLogin();
-          //   }
-          // }
-          // resolve: {
-          // //Кидать AuthorizationError <- Error и обрабатывать в run
-          //   isGranted: function(permissionService) {
-          //     return permissionService.isGrantedAccessToStudent;
-          //   }
-          // }
         })
           .state('students.profile', {
             url: '/profile/',

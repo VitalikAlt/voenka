@@ -20,9 +20,12 @@ app.get('/get/standarts', function(req,res) {
     }, function (err) { res.send(err); });
 });
 
+app.get('/admin/s', function (req,res) {
+    res.sendFile(__dirname + '/clientApp/diaryApp/admin/admin.html');
+});
+
 app.get('/get/marks', function(req,res) {
     db.getMarks(req.query, function (success, average) {
-
         res.send({res: success, average: average});
     }, function (err) { res.send(err); });
 });

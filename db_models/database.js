@@ -25,4 +25,4 @@ module.exports.db = function(anUrl) {
     mongoose.connect(anUrl);
 
     return database;
-}
+};

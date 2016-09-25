@@ -110,24 +110,8 @@ angular.module('app',
                         templateUrl: 'diaryApp/auth/views/addStudentDialog.html',
                         parent: angular.element(document.body),
                         targetEvent: ev,
-                        clickOutsideToClose: false,
-                    })
-                    // .then(function(newStudent) {
-                    //     if (newStudent) {
-                    //         console.log(newStudent);
-                    //     newStudent.token = 'student';
-                    //     newStudent.permissions = PERMISSIONS.STUDENT;
-                    //     registerHelper.register(newStudent)
-                    //         .then(function() {
-                    //             $log.log('Register success!');
-                    //         })
-                    //         .catch(function() {
-                    //             $log.log('Registration failed');
-                    //         });
-                    //     }
-                    // }, function() {
-                    //     // закрыто диалоговое окно
-                    // });
+                        clickOutsideToClose: false
+                    });
                 }
 
                 // Запуск диалогового окна добавления преподавателя
@@ -193,7 +177,7 @@ angular.module('app',
     .module('app.auth')
     .factory('authHelper', authHelper);
 
-  function authHelper($http, $state, $q, PERMISSIONS, currentUser) {
+  function authHelper($http, $state, $q, PERMISSIONS, currentUser, $window) {
     var factory = {
       login: login, // авторизация пользователя
       noPermissionsRedirect: redirectToStartByPermission
@@ -217,6 +201,12 @@ angular.module('app',
                     case 'teacher':
                     {
                         loginData.permissions = PERMISSIONS.TEACHER;
+                        break;
+                    }
+                    case 'admin':
+                    {
+                        $window.location.href = '/admin/s';
+                        loginData.permissions = PERMISSIONS.ADMIN;
                         break;
                     }
                         //permission заданы
