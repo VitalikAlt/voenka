@@ -4,6 +4,7 @@
 var Discipline = require('./Discipline').DisciplineModel;
 var Standart_query = require('../standart_query').standarts(Discipline);
 
+var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
 var remove = function (anID, callback, error) { return Standart_query.remove(anID, callback, error); };
 
 // to test (\/ - ready to test) (\/\/ - tested)
@@ -13,7 +14,7 @@ var remove = function (anID, callback, error) { return Standart_query.remove(anI
 //удалить дисциплину \/ 
 //изменить преподавателя дисциплины \/
 
-var getName = function (aData, callback, error) {
+var get = function (aData, callback, error) {
     return Discipline.find({_id: aData.discipline_id}, function (err, data) {
         if (!err) {
             return callback(data[0].discipline_name);
@@ -45,7 +46,8 @@ var updateData = function(aData, callback, error) {
     });
 };
 
-module.exports.getName = getName;
+module.exports.getTableList = getTableList;
+module.exports.get = get;
 module.exports.addData = addData;
 module.exports.remove = remove;
 module.exports.updateData = updateData;

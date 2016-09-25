@@ -1,9 +1,23 @@
 /**
  * Created by Виталий on 25.09.2016.
  */
-//Получить оценки студента в виде массива строк: наименование, семестр - оценка, семестр - оценка, ...)
+//Получить нормативы студента в виде массива строк: наименование, семестр - оценка, семестр - оценка, ...)
 
 module.exports.getStandarts = function(standarts, standarts_st) {
+
+    var addStandart = function (row, term, result) {
+        switch (term) {
+            case '1': { row.semestr1 = result; break; }
+            case '2': { row.semestr2 = result; break; }
+            case '3': { row.semestr3 = result; break; }
+            case '4': { row.semestr4 = result; break; }
+            case '5': { row.semestr5 = result; break; }
+            case '6': { row.semestr6 = result; break; }
+            case '7': { row.semestr7 = result; break; }
+            case '8': { row.semestr8 = result; break; }
+        }
+    };
+
     var getStandarts = function (aData, callback, error) {
         standarts_st.get({student_id: aData.student_id}, function (data) {
             var rows = [];
@@ -15,13 +29,12 @@ module.exports.getStandarts = function(standarts, standarts_st) {
                     rows.forEach(function (row) {
                         if (row.nameStandart === name) {
                             status = true;
-                            row.results[standart.term - 1] = standart.standart;
+                            addStandart(row, standart.term, standart.standart);
                         }
                     })
                     if (status === false) {
-                        var results = [];
-                        results[standart.term - 1] = standart.standart;
-                        rows.push({ nameStandart: name , results: results});
+                        rows.push({ nameStandart: name});
+                        addStandart(rows[rows.length - 1], standart.term, standart.standart);
                     }
                     count++;
                     if (data.length === count) {

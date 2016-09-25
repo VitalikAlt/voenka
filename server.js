@@ -4,7 +4,7 @@ var express     = require("express");
 var app         = express();
 var body        = require('body-parser');
 var path        = require('path');
-var db          = require('./db_models/database').db('mongodb://localhost:27017');
+var db          = require('./db_models/database').db('mongodb://192.168.1.101:27017');
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
 
@@ -15,9 +15,15 @@ app.get('/add/student', function(req,res) {
 });
 
 app.get('/get/standarts', function(req,res) {
-    console.log('1');
     db.getStandarts(req.query, function (succes) {
         res.send(succes);
+    }, function (err) { res.send(err); });
+});
+
+app.get('/get/marks', function(req,res) {
+    db.getMarks(req.query, function (success, average) {
+
+        res.send({res: success, average: average});
     }, function (err) { res.send(err); });
 });
 
@@ -25,7 +31,7 @@ app.get('/permissions/change_pass', function(req,res) {
     db.permissions.changePass(req.query, function (data) {
         res.send(data);
     }, function (err) {
-        res.sen(err);
+        res.send(err);
     })
 });
 
@@ -126,7 +132,7 @@ app.get('/api/remove1', function(req, res) {
     db.profile_tc.removeAll(function(data) {
         res.send(data);
     })
-})
+});
 //=================================================================================================================
 
 //====================== Progress =================================================================================
@@ -150,14 +156,19 @@ app.post('/api/update', function(req, res) {
     db.progress.updateData(req.query, function(data) {
         res.send(data);
     })
-})
+});
 //=================================================================================================================
 
 
 //====================== Discipline =================================================================================
 //test
 app.get('/db/discipline/get', function(req, res) {
-    db.discipline.getName(req.query, function(data) {
+    db.discipline.get(req.query, function(data) {
+        res.send(data);
+    });
+});
+app.get('/db/discipline/table', function(req, res) {
+    db.discipline.getTableList(function(data) {
         res.send(data);
     });
 });

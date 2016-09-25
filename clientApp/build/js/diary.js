@@ -153,27 +153,12 @@ angular.module('app',
                 // Обработка подтверждения действия и закрытия диалогового окна
                 // objFromDialog (Object) - объект изменений
                 function dialogDone(objFromDialog) {
-                    // $http.get('/Permissions/add', {params: {login: objFromDialog.login, password: objFromDialog.password, permission: "student"}})
-                    //     .success(function (data) {
-                    //         $http.get('/Permissions/get', {params: {login: objFromDialog.login, password: objFromDialog.password}})
-                    //             .success(function (Student_ID) {
-                    //                 $http.get('/Groups/add', {params: {course: objFromDialog.course, squad: objFromDialog.squad}})
-                    //                     .success(function (group) {
-                    //                         console.log(group);
-                    //                         $http.get('/Profile_st/add', {params: {student_id: Student_ID.ID, group_id: group._id}})
-                    //                             .success(function (data) {
-                    //                                 $log.log('Register success!');
-                    //                             });
-                    //                     })
-                    //                 //console.log(Student_ID);
-                    //             });
-                    //     });
                     $http.get('/add/student', {params: objFromDialog})
                         .success(function (res) {
                             console.log(res);
                         });
-                    //this.mdDialog.hide(objFromDialog);
-                    this.mdDialog.cancel();
+                    this.mdDialog.hide(objFromDialog);
+                    //this.mdDialog.cancel();
                 }
 
                 // Нажатие отмены (закрыть)
@@ -878,10 +863,8 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             var vm = this;
             vm.marksHelper = tableHelper.getInstance();
             vm.standartsHelper = tableHelper.getInstance();
-            // $scope.marks = vm;
 
             init();
-
 
             function init() {
                 getTableTitles(vm.marksHelper, config.marks);
@@ -908,7 +891,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             // Получение заголовков таблицы
             function getTableTitles(helper, resource) {
                 // получение заголовков
-                // ...
                 var titles = resource.titles; // заглушка
                 for (var i = 0; i < titles.length; i++) {
                     helper.addTitle(titles[i].name, titles[i].options);
@@ -917,78 +899,19 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             function getTableList(helper, resource) {
                 var rows = [];
                 if (resource === config.marks) {
-                    $http.get('/db/st_discipline/get', {params: {student_id: currentUser.getID()}})
-                        .success(function(data) {
-                            var discipline_count = 0;
-                            data.forEach(function (discipline) {
-                                $http.get('/db/discipline/get', {params: {discipline_id: discipline.discipline_id}})
-                                    .success(function(name) {
-                                        $http.get('/db/marks/get', {params: {student_discipline_id: discipline._id}})
-                                            .success(function(res) {
-                                                var v_semestr1, v_semestr2;
-                                                res.forEach(function (term) {
-                                                    if (term.term == 1) {
-                                                        v_semestr1 = term.mark;
-                                                    } else {
-                                                        v_semestr2 = term.mark;
-                                                    }
-                                                });
-                                                rows.push({ nameSubject: name, semestr1: v_semestr1, semestr2: v_semestr2});
-                                                discipline_count++;
-                                                if (data.length === discipline_count) {
-                                                    for (var i = 0; i < rows.length; i++) {
-                                                        helper.addItemRow(rows[i]);
-                                                    }
-                                                }
-                                            });
-                                    });
-                            });
+                    $http.get('/get/marks', {params: {student_id: currentUser.getID()}})
+                        .success(function (results) {
+                            vm.summary.average = results.average;
+                            results.res.forEach(function (result) {
+                                helper.addItemRow(result);
+                            })
                         });
                 } else {
-                    $http.get('/db/Standarts_st/get', {params: {student_id: currentUser.getID()}})
-                        .success(function(data) {
-                            rows = [];
-                            var discipline_count = 0;
-                            console.log(data);
-                            data.forEach(function (standart) {
-                                $http.get('/db/Standarts/get', {params: {standart_id: standart.standart_id}})
-                                    .success(function(name) {
-                                        console.log(name);
-                                        var status = false;
-                                        rows.forEach(function (row) {
-                                            if (row.nameStandart === name) {
-                                                status = true;
-                                                if (standart.term == 1) {
-                                                    row.semestr1 = standart.standart;
-                                                }
-                                                if (standart.term == 2) {
-                                                    row.semestr2 = standart.standart;
-                                                }
-                                                if (standart.term == 3) {
-                                                    row.semestr3 = standart.standart;
-                                                }
-                                            }
-                                        });
-                                        if (status === false) {
-                                            if (standart.term == 1) {
-                                                rows.push({nameStandart: name, semestr1: standart.standart});
-                                            }
-                                            if (standart.term == 2) {
-                                                rows.push({nameStandart: name, semestr2: standart.standart});
-                                            }
-                                            if (standart.term == 3) {
-                                                rows.push({nameStandart: name, semestr3: standart.standart});
-                                            }
-                                        }
-                                        discipline_count++;
-                                        if (data.length === discipline_count) {
-                                            console.log(rows);
-                                            for (var i = 0; i < rows.length; i++) {
-                                                helper.addItemRow(rows[i]);
-                                            }
-                                        }
-                                    });
-                            });
+                    $http.get('/get/standarts', {params: {student_id: currentUser.getID()}})
+                        .success(function (results) {
+                            results.forEach(function (result) {
+                                helper.addItemRow(result);
+                            })
                         });
                 }
             }
@@ -1007,10 +930,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     { name: '6 семестр', options: { label: 'semestr6', show: true } },
                     { name: '7 семестр', options: { label: 'semestr7', show: true } },
                     { name: '8 семестр', options: { label: 'semestr8', show: true } }
-                ],
-                rows: [
-                    { nameSubject: 'ВСП', semestr1: 4, semestr2: 5 },
-                    { nameSubject: 'ТСП', semestr1: 5, semestr2: 3 }
                 ]
             },
             standarts: {
@@ -1024,11 +943,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     { name: '6 семестр', options: { label: 'semestr6', show: true } },
                     { name: '7 семестр', options: { label: 'semestr7', show: true } },
                     { name: '8 семестр', options: { label: 'semestr8', show: true } }
-                ],
-                rows: [
-                    { nameStandart: 'Подтягивания', semestr1: 14, semestr2: 15 },
-                    { nameStandart: 'Бег 100 м', semestr1: '10.7 с', semestr2: '11 с' },
-                    { nameStandart: 'Бег 1000 м', semestr1: '3.40 м' }
                 ]
             },
         }

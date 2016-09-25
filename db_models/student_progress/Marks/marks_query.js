@@ -14,7 +14,7 @@ var getTableList = function(callback, error) { return Standart_query.list(callba
 //изменить оценку \/ \/
 
 var get = function(aData, callback, error) {
-    return MarkModel.find({student_discipline_id: aData.student_discipline_id}, function (err, data) {
+    return MarkModel.find({student_id: aData.student_id}, function (err, data) {
         if (!err) {
             return callback(data);
         } else {

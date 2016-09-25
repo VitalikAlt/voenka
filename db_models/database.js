@@ -19,6 +19,7 @@ var database = {
 // Специальные запросы
 database.addStudent = require('./addStudent').addStudent(database.permissions, database.profile_st, database.groups);
 database.getStandarts = require('./getStandarts').getStandarts(database.standarts, database.standarts_st);
+database.getMarks = require('./getMarks').getMarks(database.discipline, database.marks);
 
 module.exports.db = function(anUrl) {
     mongoose.connect(anUrl);
