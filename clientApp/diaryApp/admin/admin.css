@@ -1,0 +1,79 @@
+.table_student{
+    margin-bottom: 10px;
+    width: 100%;
+    border: solid 1px gray;
+    border-radius: 4px;
+    border-spacing: 0;
+
+}
+
+.table_student input{
+    border:solid 1px lightgray;
+    border-radius: 2px;
+}
+
+.hover_string:hover{
+    background:lightblue;
+}
+
+.column_1{
+    width: 5%;
+
+}
+
+#column_2{
+    width: 5%;
+
+}
+
+#column_3{
+    width: 30%;
+
+}
+
+#column_4{
+    width: 20%;
+
+}
+
+#column_5{
+    width: 20%;
+
+}
+
+#column_6{
+    width: 10%;
+
+}
+
+.right_align{
+    text-align:left;
+}
+
+#column2_end{
+    width: 90%;
+}
+
+#img_remove{
+    float: right;
+    width: 20px;
+}
+
+#img_edit{
+    float: right;
+    width:20px;
+}
+
+#table_changing{
+    clear: both;
+}
+
+#table_changing img{
+    margin-right: 10px;
+}
+
+#img_search{
+    float:right;
+    width: 20px;
+    margin-right: 10px;
+}
