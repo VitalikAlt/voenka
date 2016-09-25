@@ -4,7 +4,7 @@ var express     = require("express");
 var app         = express();
 var body        = require('body-parser');
 var path        = require('path');
-var db          = require('./db_models/database').db('mongodb://192.168.1.101:27017');
+var db          = require('./db_models/database').db('mongodb://localhost:27017');
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
 
@@ -15,6 +15,7 @@ app.get('/add/student', function(req,res) {
 });
 
 app.get('/get/standarts', function(req,res) {
+    console.log('1');
     db.getStandarts(req.query, function (succes) {
         res.send(succes);
     }, function (err) { res.send(err); });

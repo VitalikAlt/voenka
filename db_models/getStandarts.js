@@ -14,20 +14,18 @@ module.exports.getStandarts = function(standarts, standarts_st) {
                     status = false;
                     rows.forEach(function (row) {
                         if (row.nameStandart === name) {
-                            status = false;
-                            row.results[standart.term] = standart.standart;
+                            status = true;
+                            row.results[standart.term - 1] = standart.standart;
                         }
                     })
                     if (status === false) {
-                        rows.push({ nameStandart: name });
-                        rows[rows.length].results[standart.term] = standart.standart;
+                        var results = [];
+                        results[standart.term - 1] = standart.standart;
+                        rows.push({ nameStandart: name , results: results});
                     }
                     count++;
                     if (data.length === count) {
                         callback(rows);
-                        // delete rows;
-                        // delete count;
-                        // delete status;
                     }
                 }, error);
             })
