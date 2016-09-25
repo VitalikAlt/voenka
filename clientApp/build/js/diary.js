@@ -1191,15 +1191,13 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     })
                     .then(function(pass) {
                         if (pass.new === pass.new_confirm) {
-                            $http.get('/Permissions/changePass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
+                            $http.get('/permissions/change_pass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
                                 .success(function(res) {
                                     console.log(res);
                                 });
                         } else {
                             console.log('Not change');
                         }
-                        console.dir(pass);
-                        // смена пароля (проверять внутри диалога до отправки)
                     }, function() {
                         // закрыто диалоговое окно
                     });

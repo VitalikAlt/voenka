@@ -14,17 +14,17 @@ var remove_All = function (anID, callback, error) { return Standart_query.remove
 //удалить норматив \/
 //изменить наименование норматива (?) \/
 
-var get = function(aData, callback, err) {
+var get = function(aData, callback, error) {
     return Standarts.find({_id: aData.standart_id}, function (err, data) {
         if (!err) {
             return callback(data[0].standart_name);
         } else {
-            return err(500);
+            return error(err);
         }
     });
 };
 
-var addData = function(aData, callback, err) {
+var addData = function(aData, callback, error) {
 
     var article = new Standarts({
         standart_name: aData.standart_name
@@ -32,16 +32,9 @@ var addData = function(aData, callback, err) {
 
     article.save(function (err) {
         if (!err) {
-            console.log("article created");
             return callback(article);
         } else {
-            console.log(err);
-            if(err.name == 'ValidationError') {
-                return err(400);
-            } else {
-                return err(500);
-            }
-            console.log('Internal error(%d): %s',res.statusCode,err.message);
+            return error(err);
         }
     });
 };

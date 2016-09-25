@@ -17,7 +17,8 @@ var database = {
 };
 
 // Специальные запросы
-database.addStudent = require('./query').addStudent(database.permissions, database.profile_st, database.groups);
+database.addStudent = require('./addStudent').addStudent(database.permissions, database.profile_st, database.groups);
+database.getStandarts = require('./getStandarts').getStandarts(database.standarts, database.standarts_st);
 
 module.exports.db = function(anUrl) {
     mongoose.connect(anUrl);

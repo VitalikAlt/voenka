@@ -13,37 +13,25 @@ var getTableList = function(callback, error) { return Standart_query.list(callba
 //удалить норматив у студента ( за все семестры? (сейчас) ) \/
 //изменить норматив у студента \/
 
-var get = function(aData, callback, err) {
+var get = function(aData, callback, error) {
     return Standarts_st.find({student_id: aData.student_id}, function (err, data) {
         if (!err) {
             return callback(data);
         } else {
-            return err(500);
+            return error(err);
         }
     });
 };
 
-var addData = function(aData, callback, err) {
+var addData = function(aData, callback, error) {
 
-    var article = new Standarts_st({
-        student_id: aData.student_id,
-        standart: aData.standart,
-        standart_id: aData.standart_id,
-        term: aData.term
-    });
+    var article = new Standarts_st(aData);
 
     article.save(function (err) {
         if (!err) {
-            console.log("article created");
             return callback(article);
         } else {
-            console.log(err);
-            if(err.name == 'ValidationError') {
-                return err(400);
-            } else {
-                return err(500);
-            }
-            console.log('Internal error(%d): %s',res.statusCode,err.message);
+            return error(err);
         }
     });
 };

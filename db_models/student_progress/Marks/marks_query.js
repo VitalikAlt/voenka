@@ -13,46 +13,35 @@ var getTableList = function(callback, error) { return Standart_query.list(callba
 //удалить оценку по предмету \/
 //изменить оценку \/ \/
 
-var get = function(aData, callback, err) {
+var get = function(aData, callback, error) {
     return MarkModel.find({student_discipline_id: aData.student_discipline_id}, function (err, data) {
         if (!err) {
             return callback(data);
         } else {
-            return err(500);
+            return error(err);
         }
     });
 };
 
-var addData = function(aData, callback, err) {
+var addData = function(aData, callback, error) {
 
     return MarkModel.find({student_discipline_id: aData.student_discipline_id, term: aData.term}, function (err, data) {
         if (!err) {
             if (data.length === 0) {
-                var article = new MarkModel({
-                    student_discipline_id: aData.student_discipline_id,
-                    term: aData.term,
-                    mark: aData.mark
-                });
+                var article = new MarkModel(aData);
 
                 article.save(function (err) {
                     if (!err) {
-                        console.log("article created");
                         return callback(article);
                     } else {
-                        console.log(err);
-                        if(err.name == 'ValidationError') {
-                            return err(400);
-                        } else {
-                            return err(500);
-                        }
-                        console.log('Internal error(%d): %s',res.statusCode,err.message);
+                        return error(err);
                     }
                 });
             } else {
                 return callback('Element already created');
             }
         } else {
-            return err(500);
+            return error(err);
         }
     });
 };

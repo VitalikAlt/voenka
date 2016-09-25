@@ -13,35 +13,24 @@ var remove = function (anID, callback, error) { return Standart_query.remove(anI
 //удалить дисциплину \/ 
 //изменить преподавателя дисциплины \/
 
-var getName = function (aData, callback, err) {
+var getName = function (aData, callback, error) {
     return Discipline.find({_id: aData.discipline_id}, function (err, data) {
         if (!err) {
             return callback(data[0].discipline_name);
         } else {
-            return err(500);
+            return error(err);
         }
     });
 };
 
-var addData = function(aData, callback, err) {
-
-    var article = new Discipline({
-        discipline_name: aData.discipline_name,
-        teacher_id: aData.teacher_id,
-    });
+var addData = function(aData, callback, error) {
+    var article = new Discipline(aData);
 
     article.save(function (err) {
         if (!err) {
-            console.log("article created");
             return callback(article);
         } else {
-            console.log(err);
-            if(err.name == 'ValidationError') {
-                return err(400);
-            } else {
-                return err(500);
-            }
-            console.log('Internal error(%d): %s',res.statusCode,err.message);
+            return error(err);
         }
     });
 };

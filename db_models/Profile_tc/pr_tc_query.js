@@ -18,35 +18,15 @@ var getProfile = function(aTeacherID, callback, err) {
     });
 }
 
-var addData = function(aData, callback, err) {
+var addData = function(aData, callback, error) {
 
-    var article = new Users({
-        teacher_id: aData.teacher_id,
-        name: aData.name,
-        surname: aData.surname,
-        fatherName: aData.fatherName,
-        teacher_passport: aData.student_card_number,
-        birthPlace: aData.birthPlace,
-        education: aData.education,
-        military: aData.military,
-        address: aData.address,
-        appointment: aData.appointment,
-        start_year: aData.start_year,
-        birthDate: aData.birthDate
-    });
+    var article = new Users(aData);
 
     article.save(function (err) {
         if (!err) {
-            console.log("article created");
             return callback(article);
         } else {
-            console.log(err);
-            if(err.name == 'ValidationError') {
-                return err(400);
-            } else {
-                return err(500);
-            }
-            console.log('Internal error(%d): %s',res.statusCode,err.message);
+            return error(err);
         }
     });
 };

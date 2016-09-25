@@ -1,9 +1,10 @@
 'use strict';
+
 var express     = require("express");
 var app         = express();
 var body        = require('body-parser');
 var path        = require('path');
-var db          = require('./db_models/database').db('mongodb://192.168.1.100:27017');
+var db          = require('./db_models/database').db('mongodb://192.168.1.101:27017');
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
 
@@ -11,6 +12,20 @@ app.get('/add/student', function(req,res) {
     db.addStudent(req.query, function (succes) {
         res.send(succes);
     }, function (err) { res.send(err); });
+});
+
+app.get('/get/standarts', function(req,res) {
+    db.getStandarts(req.query, function (succes) {
+        res.send(succes);
+    }, function (err) { res.send(err); });
+});
+
+app.get('/permissions/change_pass', function(req,res) {
+    db.permissions.changePass(req.query, function (data) {
+        res.send(data);
+    }, function (err) {
+        res.sen(err);
+    })
 });
 
 //========================== Permissions ==========================================================================
@@ -36,14 +51,6 @@ app.get('/api/Permissions/:id', function(req, res) {
 app.get('/api/t', function(req,res) {
     db.permissions.getTableList(function(data) {
         res.send(data);
-    })
-});
-app.get('/Permissions/changePass', function(req,res) {
-    console.log(req.query);
-    db.permissions.changePass(req.query, function (data) {
-        res.send(data);
-    }, function (err) {
-        console.log('s');
     })
 });
 //=================================================================================================================
@@ -170,30 +177,6 @@ app.post('/db/discipline/update', function(req, res) {
 });
 //=================================================================================================================
 
-//====================== St_discipline =================================================================================
-//test
-app.get('/db/st_discipline/get', function(req, res) {
-    db.st_discipline.getTableList(req.query, function (data) {
-        res.send(data);
-    });
-});
-app.post('/db/st_discipline/add', function(req, res) {
-    db.st_discipline.addData(req.query, function(data) {
-        res.send(data);
-    });
-});
-app.post('/db/st_discipline/remove', function(req, res) {
-    db.st_discipline.getProgress(req.query.ID, function(data) {
-        res.send(data);
-    });
-});
-app.post('/db/st_discipline/update', function(req, res) {
-    db.st_discipline.updateData(req.query, function(data) {
-        res.send(data);
-    })
-});
-//=================================================================================================================
-
 //====================== Marks =================================================================================
 //test
 app.get('/db/marks/get', function(req, res) {
@@ -280,29 +263,6 @@ app.post('/db/Standarts_st/update', function(req, res) {
     })
 });
 //=================================================================================================================
-
-app.post('/auth/admin/connect', function(req, res) {
-    console.log(req.query.password);
-    res.send(req.query.password);
-    //res.redirect('/auth/admin/connect');
-    //res.sendFile(__dirname + '/clientApp/admin/connect.html');
-});
-
-app.get('/admin', function(req, res) {
-    //res.send('sda');
-    res.sendFile(__dirname + '/clientApp/admin/administration.html');
-});
-
-app.get('/api/articles', function(req, res) {
-    first_API.getTableList(function(data) {
-        res.send(data);
-    });
-});
-
-app.get('/auth/s', function(req, res) {
-    res.send('sda');
-    //res.sendFile(__dirname + '/clientApp/admin/connect.html');
-});
 
 app.use('*', function(req, res){
     res.sendFile(__dirname + '/clientApp/index.html');

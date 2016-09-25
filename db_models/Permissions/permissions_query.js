@@ -6,7 +6,7 @@ var Standart_query = require('../standart_query').standarts(Users);
 
 var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
 
-var getPermission = function(aLogin, aPassword, callback, err) {
+var getPermission = function(aLogin, aPassword, callback, error) {
     return Users.find(function (err, data) {
         if (!err) {
             var status = false;
@@ -24,7 +24,7 @@ var getPermission = function(aLogin, aPassword, callback, err) {
                 return callback('false');
             }
         } else {
-            return err(500);
+            return error(err);
         }
     });
 }
@@ -33,11 +33,7 @@ var addData = function(aData, callback, error) {
     Users.find({login: aData.login}, function (err, data) {
         if (!err) {
             if (!data.length) {
-                var user = new Users({
-                    login: aData.login,
-                    password: aData.password,
-                    permission: aData.permission
-                });
+                var user = new Users(aData);
 
                 user.save(function (err) {
                     if (!err) {
@@ -55,16 +51,18 @@ var addData = function(aData, callback, error) {
     })
 };
 
-var getElementById = function(aId, callback, err) {
+var getElementById = function(aId, callback, error) {
     return Users.findById(aId, function (err, article) {
         if(!article) {
-            return err(404);
-        }
-        if (!err) {
-            return callback(article);
+            return error(404);
         } else {
-            return err(500);
+            if (!err) {
+                return callback(article);
+            } else {
+                return error(err);
+            }
         }
+
     });
 };
 
@@ -79,7 +77,7 @@ var remove = function(aData, callback, error) {
 };
 
 var changePass = function(aData, callback, error) {
-    return Users.update( {_id: aData._id, Password: aData.password}, {Password: aData.new_password}, function (err) {
+    return Users.update( {_id: aData._id, password: aData.password}, {password: aData.new_password}, function (err) {
         if (!err) {
             return callback(true);
         } else {
