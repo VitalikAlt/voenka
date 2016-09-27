@@ -23,9 +23,19 @@ var get = function(aData, callback, error) {
     });
 };
 
+var getByDiscipline = function(aData, callback, error) {
+    return MarkModel.find({discipline_id: aData.discipline_id}, function (err, data) {
+        if (!err) {
+            return callback(data);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 var addData = function(aData, callback, error) {
 
-    return MarkModel.find({student_discipline_id: aData.student_discipline_id, term: aData.term}, function (err, data) {
+    return MarkModel.find({student_id: aData.student_id, term: aData.term, discipline_id: aData.discipline_id}, function (err, data) {
         if (!err) {
             if (data.length === 0) {
                 var article = new MarkModel(aData);
@@ -68,6 +78,7 @@ var updateData = function(aData, callback, error) {
 
 module.exports.getTableList = getTableList;
 module.exports.get = get;
+module.exports.getByDiscipline = getByDiscipline;
 module.exports.addData = addData;
 module.exports.remove = remove;
 module.exports.updateData = updateData;

@@ -24,6 +24,16 @@ var get = function (aData, callback, error) {
     });
 };
 
+var getByTeacherID = function (aData, callback, error) {
+    return Discipline.find({teacher_id: aData.teacher_id}, function (err, data) {
+        if (!err) {
+            return callback(data);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 var addData = function(aData, callback, error) {
     var article = new Discipline(aData);
 
@@ -48,6 +58,7 @@ var updateData = function(aData, callback, error) {
 
 module.exports.getTableList = getTableList;
 module.exports.get = get;
+module.exports.getByTeacherID = getByTeacherID;
 module.exports.addData = addData;
 module.exports.remove = remove;
 module.exports.updateData = updateData;

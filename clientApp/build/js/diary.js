@@ -1348,9 +1348,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     })
                     .then(function(studentData) {
                         
-                    }, function() {
-                        // закрыто диалоговое окно
-                    });
+                    }, function() {});
             }
 
             function getStudentsMarks(helper, students) {

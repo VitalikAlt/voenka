@@ -4,7 +4,7 @@ var express     = require("express");
 var app         = express();
 var body        = require('body-parser');
 var path        = require('path');
-var db          = require('./db_models/database').db('mongodb://192.168.1.101:27017');
+var db          = require('./db_models/database').db('mongodb://192.168.1.100:27017');
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
 
@@ -28,6 +28,12 @@ app.get('/get/marks', function(req,res) {
     db.getMarks(req.query, function (success, average) {
         res.send({res: success, average: average});
     }, function (err) { res.send(err); });
+});
+
+app.get('/db/marks/getById', function(req, res) {
+    db.marks.getByDiscipline(req.query, function(data) {
+        res.send(data);
+    });
 });
 
 app.get('/permissions/change_pass', function(req,res) {
