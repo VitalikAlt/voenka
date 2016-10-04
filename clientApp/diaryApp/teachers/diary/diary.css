@@ -21,3 +21,7 @@
 .reason_absence_btn {
     margin: 0;
 }
+
+.actions_block {
+    justify-content: flex-end;
+}

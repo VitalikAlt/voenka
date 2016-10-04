@@ -6,6 +6,7 @@
 module.exports.getStandarts = function(standarts, standarts_st) {
 
     var addStandart = function (row, term, result) {
+        row['semestr' + standart.term] = standart.standart;
         switch (term) {
             case '1': { row.semestr1 = result; break; }
             case '2': { row.semestr2 = result; break; }
@@ -29,12 +30,12 @@ module.exports.getStandarts = function(standarts, standarts_st) {
                     rows.forEach(function (row) {
                         if (row.nameStandart === name) {
                             status = true;
-                            addStandart(row, standart.term, standart.standart);
+                            row['semestr' + standart.term] = standart.standart;
                         }
                     })
                     if (status === false) {
                         rows.push({ nameStandart: name});
-                        addStandart(rows[rows.length - 1], standart.term, standart.standart);
+                        rows[rows.length - 1]['semestr' + standart.term] = standart.standart;
                     }
                     count++;
                     if (data.length === count) {

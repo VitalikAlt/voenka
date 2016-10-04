@@ -4,7 +4,7 @@ var express     = require("express");
 var app         = express();
 var body        = require('body-parser');
 var path        = require('path');
-var db          = require('./db_models/database').db('mongodb://192.168.1.100:27017');
+var db          = require('./db_models/database').db('mongodb://localhost:27017');
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
 
@@ -20,6 +20,12 @@ app.get('/get/standarts', function(req,res) {
     }, function (err) { res.send(err); });
 });
 
+app.get('/get/students', function(req, res) {
+    db.getStudents(req.query, function (success) {
+        res.send(success);
+    })
+})
+
 app.get('/admin/s', function (req,res) {
     res.sendFile(__dirname + '/clientApp/diaryApp/admin/admin.html');
 });
@@ -32,6 +38,12 @@ app.get('/get/marks', function(req,res) {
 
 app.get('/db/marks/getById', function(req, res) {
     db.marks.getByDiscipline(req.query, function(data) {
+        res.send(data);
+    });
+});
+
+app.get('/update/marks', function(req, res) {
+    db.updateMarks(req.query, function(data) {
         res.send(data);
     });
 });
@@ -275,6 +287,37 @@ app.post('/db/Standarts_st/add', function(req, res) {
 });
 app.get('/db/Standarts_st/remove', function(req, res) {
     db.standarts_st.remove(req.query.ID, function(data) {
+        res.send(data);
+    });
+});
+app.post('/db/Standarts_st/update', function(req, res) {
+    db.standarts_st.updateData(req.query, function(data) {
+        res.send(data);
+    })
+});
+//=================================================================================================================
+
+//====================== group_dis ================================================================================
+//test
+app.get('/db/group_dis/table', function(req, res) {
+    db.groups_dis.getTableList(function(data) {
+        res.send(data);
+    })
+});
+app.get('/db/group_dis/get', function(req, res) {
+    db.groups_dis.get(req.query, function (data) {
+        res.send(data);
+    })
+});
+app.post('/db/group_dis/add', function(req, res) {
+    db.groups_dis.addData(req.query, function(data) {
+        res.send(data);
+    }, function (err) {
+        res.send(err);
+    });
+});
+app.get('/db/group_dis/remove', function(req, res) {
+    db.groups_dis.remove(req.query.ID, function(data) {
         res.send(data);
     });
 });

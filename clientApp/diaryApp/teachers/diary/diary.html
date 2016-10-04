@@ -1,8 +1,6 @@
 <div class="teachers_diary_container">
     <link rel="stylesheet" href="diaryApp/teachers/diary/diary.css">
     <h2 class="inner_header">Журнал успеваемости</h2>
-    
-    <div class="diary_container">
         <div class="select_params_container" layout="row">
             <md-select ng-model="diary.currentTroop"
                     placeholder="Взвод"
@@ -55,5 +53,11 @@
                 </tbody>
             </table>
         </md-table-container>
+        <div class="actions_block" layout="row" flex>
+            <md-button class="green_btn" ng-click="diary.clear()"
+                       aria-label="cancel_btn"> Отмена </md-button>
+            <md-button class="green_btn" ng-click="diary.saveData()"
+                       aria-label="save_btn"> Сохранить </md-button>
+        </div>
     </div>
 </div>

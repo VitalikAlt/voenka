@@ -1291,88 +1291,72 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 (function() {
     angular
         .module('app.students')
-        .controller('TeachersDiaryController', function($scope, tableHelper, $mdDialog, PopupService) {
+        .controller('TeachersDiaryController', function($scope, tableHelper, $mdDialog, PopupService, $http, currentUser) {
             var vm = this;
 
-            vm.data = testData;
-            vm.diaryHelper = tableHelper.getInstance();
-            vm.changeParams = changeParams;
+            vm.saveData = save;
+            vm.clear = clear;
             vm.changePresence = changePresence;
-            vm.getStudentInfo = getStudentInfo;
-            vm.openReasonDialog = openReasonDialog;
-
             vm.dialogCancel = dialogCancel;
             vm.dialogDone = dialogDone;
             vm.onDocLoad = onDocLoad;
 
-            vm.showPopupImage = showPopupImage;
-
-            vm.day = {};
-            vm.day.docs = [];
-
-            init();
-
-            function init() {
-                vm.currentTroop = vm.data.troops[0] || {};
-                vm.currentSubject = vm.currentTroop.subjects[0] || {};
-                changeParams();
+            function clear() {
+                $http.get('/get/students', {params: {teacher_id: currentUser.getID()}})
+                    .success(function (responce) {
+                        setData(responce);
+                    });
             }
 
-            function getTableTitles(helper, titles) {
-                for (var i = 0; i < titles.length; i++) {
-                    helper.addTitle(titles[i].name, titles[i].options);
-                }
-            }
-
-            function getStudentById(studentId, collection) {
-                for (var i = 0; i < collection.length; i++) {
-                    if (collection[i].student.id == studentId) return collection[i];
-                }
-                return false;
-            }
-
-            function getStudentInfo(ev, cell) {
-                console.dir(cell);
-                var newScope = $scope.$new();
-                var currentStudent = getStudentById(cell.value.id, vm.currentTroop.students);
-                newScope.student = currentStudent // записать данные студента
-
-                $mdDialog.show({
-                        scope: newScope,
-                        controller: 'TeachersDiaryController',
-                        controllerAs: 'diary',
-                        templateUrl: 'diaryApp/teachers/diary/views/studentInfo.html',
-                        parent: angular.element(document.body),
-                        targetEvent: ev,
-                        clickOutsideToClose: true,
+            function save() {
+                vm.data.troops.forEach(function (troop) {
+                    console.log(troop);
+                    var request = [];
+                    troop.students.forEach(function (mark) {
+                        var student_id = mark.data.student_id;
+                        var s = mark;
+                        for (key in s) {
+                            if (key !== 'data' && key !== 'student') {
+                                var discipline_id = s[key].id;
+                                for (term in s[key]) {
+                                    if (term !== 'id' && term!== 'student') {
+                                        if (s[key][term].marks === undefined) {
+                                            s[key][term].marks = 0;
+                                        }
+                                        if (s[key][term].presence) {
+                                            request.push({
+                                                student_id: student_id,
+                                                discipline_id: discipline_id,
+                                                term: term[term.length - 1],
+                                                mark: s[key][term].marks
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     })
-                    .then(function(studentData) {
-                        
-                    }, function() {});
+                    console.log(request);
+                    $http.get('/update/marks', {params: {req: request}})
+                        .success(function(res) {
+                            console.log(res);
+                        })
+                })
             }
 
-            function getStudentsMarks(helper, students) {
-                // var rows = students[vm.currentSubject.label];
-                for (var i = 0; i < students.length; i++) {
-                    var row = students[i][vm.currentSubject.label];
-                    row.student = students[i].student;
-                    helper.addItemRow(row);
-                }
-            }
 
-            // Обработка изменения параметров
-            function changeParams(ev) {
-                // Запрос данных при изменении взвода и предмета
-                // console.log('params changed');
-                vm.diaryHelper.clearHeaders();
-                vm.diaryHelper.clearList();
-                getTableTitles(vm.diaryHelper, vm.currentSubject.titles);
-                getStudentsMarks(vm.diaryHelper, vm.currentTroop.students);
-            }
+
+            $http.get('/get/students', {params: {teacher_id: currentUser.getID()}})
+                .success(function (responce) {
+                    console.log(responce);
+                    setData(responce);
+                });
+
 
             // Обработка изменения присутствия студента на занятии
             function changePresence(cell) {
                 cell.value.marks = cell.value.presence ? cell.value.marks : '';
+                console.log(cell.value.makrs);
             }
 
             function onDocLoad(doc, photo) {
@@ -1397,16 +1381,16 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 newScope.student = student;
                 newScope.date = date;
                 $mdDialog.show({
-                        scope: newScope,
-                        controller: 'TeachersDiaryController',
-                        controllerAs: 'diary',
-                        templateUrl: 'diaryApp/teachers/diary/views/reasonDialog.html',
-                        parent: angular.element(document.body),
-                        targetEvent: ev,
-                        clickOutsideToClose: false,
-                    })
+                    scope: newScope,
+                    controller: 'TeachersDiaryController',
+                    controllerAs: 'diary',
+                    templateUrl: 'diaryApp/teachers/diary/views/reasonDialog.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: false,
+                })
                     .then(function(reasonObj) {
-                        
+
                     }, function() {
                         // закрыто диалоговое окно
                     });
@@ -1419,121 +1403,79 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             function dialogDone(reasonDialog) {
                 $mdDialog.hide(reasonDialog);
             }
+
+            function setData(aData) {
+                vm.data = {troops: aData};
+                vm.diaryHelper = tableHelper.getInstance();
+                vm.getStudentInfo = getStudentInfo;
+                vm.openReasonDialog = openReasonDialog;
+                vm.changeParams = changeParams;
+
+                vm.showPopupImage = showPopupImage;
+
+                vm.day = {};
+                vm.day.docs = [];
+
+                init();
+
+                function init() {
+                    vm.currentTroop = vm.data.troops[0] || {};
+                    vm.currentSubject = vm.currentTroop.subjects[0] || {};
+                    changeParams();
+                }
+
+                function getTableTitles(helper, titles) {
+                    for (var i = 0; i < titles.length; i++) {
+                        helper.addTitle(titles[i].name, titles[i].options);
+                    }
+                }
+
+                function getStudentById(studentId, collection) {
+                    for (var i = 0; i < collection.length; i++) {
+                        if (collection[i].student.id == studentId) return collection[i];
+                    }
+                    return false;
+                }
+
+                function getStudentInfo(ev, cell) {
+                    console.dir(cell);
+                    var newScope = $scope.$new();
+                    var currentStudent = getStudentById(cell.value.id, vm.currentTroop.students);
+                    newScope.student = currentStudent // записать данные студента
+
+                    $mdDialog.show({
+                        scope: newScope,
+                        controller: 'TeachersDiaryController',
+                        controllerAs: 'diary',
+                        templateUrl: 'diaryApp/teachers/diary/views/studentInfo.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: true,
+                    })
+                        .then(function(studentData) {
+
+                        }, function() {});
+                }
+
+                function getStudentsMarks(helper, students) {
+                    for (var i = 0; i < students.length; i++) {
+                        var row = students[i][vm.currentSubject.label];
+                        row.student = students[i].student;
+                        helper.addItemRow(row);
+                    }
+                }
+
+                // Обработка изменения параметров
+                function changeParams(ev) {
+                    // Запрос данных при изменении взвода и предмета
+                    // console.log('params changed');
+                    vm.diaryHelper.clearHeaders();
+                    vm.diaryHelper.clearList();
+                    getTableTitles(vm.diaryHelper, vm.currentSubject.titles);
+                    getStudentsMarks(vm.diaryHelper, vm.currentTroop.students);
+                }
+            }
         });
-    // тестовые данные    
-    var testData = {
-        troops: [
-            { 
-                name: '1 взвод',
-                subjects: [ 
-                    {
-                        name: 'ВСП',
-                        label: 'vsp',
-                        titles: [ 
-                            { name: 'Студент', options: { label: 'student', isDiaryDay: false, editable: false } },
-                            { name: '01.09.2016', options: { label: 'date01092016', isDiaryDay: true, editable: true } },
-                            { name: '02.09.2016', options: { label: 'date02092016', isDiaryDay: true, editable: true } },
-                            { name: '03.09.2016', options: { label: 'date03092016', isDiaryDay: true, editable: true } },
-                        ]
-                    }, 
-                    { 
-                        name: 'ТСП',
-                        label: 'tsp',
-                        titles: [ 
-                            { name: 'Студент', options: { label: 'student', isDiaryDay: false, editable: false } },
-                            { name: '01.09.2016', options: { label: 'date01092016', isDiaryDay: true, editable: true } },
-                            { name: '02.09.2016', options: { label: 'date02092016', isDiaryDay: true, editable: true } },
-                            { name: '03.09.2016', options: { label: 'date03092016', isDiaryDay: true, editable: true } },
-                        ]
-                    } 
-                ],
-                students: [
-                    {
-                        student: { name: 'Иванов И. И.', id: 111 },
-                        vsp: {
-                            date01092016: { marks: 3, presence: true },
-                            date02092016: { marks: '', presence: false },
-                            date03092016: { marks: 3, presence: true } 
-                        },
-                        tsp: {
-                            date01092016: { marks: 4, presence: true },
-                            date02092016: { marks: 5, presence: true },
-                            date03092016: { marks: 4, presence: true } 
-                        },
-
-                        data: {
-                            name: 'Иван',
-                            surname: 'Иванов',
-                            fatherName: 'Иванович',
-                            birthDate: '01.01.1994',
-                            birthPlace: 'Иваново',
-                            faculty: 'ТЭФ',
-                            troop: 1,
-                            address: 'г. Иваново, ул. Пушкина, д. 1',
-                            parentsAddress: 'г. Иваново, ул. Пушкина, д. 1',
-                            conclusion: 'А - годен к военной службе',
-                            start_study_year: 2016,
-                            military: 'не служил, не участвовал',
-                            education: 'Лицей №21 г. Иваново',
-
-                            image: '/assets/images/default_avatar.jpg'
-                        }
-                    },
-                    {
-                        student: { name: 'Петров И. И.', id: 112 },
-                        vsp: {
-                            date01092016: { marks: 4, presence: true },
-                            date02092016: { marks: 5, presence: true },
-                            date03092016: { marks: 4, presence: true }
-                        },
-                        tsp: {
-                            date01092016: { marks: '', presence: false },
-                            date02092016: { marks: 5, presence: true },
-                            date03092016: { marks: 4, presence: true }
-                        },
-
-                        data: {
-                            name: 'Иван',
-                            surname: 'Петров',
-                            fatherName: 'Иванович',
-                            birthDate: '02.02.1993',
-                            birthPlace: 'Иваново',
-                            faculty: 'ТЭФ',
-                            troop: 1,
-                            address: 'г. Иваново, ул. Пушкина, д. 1',
-                            parentsAddress: 'г. Иваново, ул. Пушкина, д. 1',
-                            conclusion: 'А - годен к военной службе',
-                            start_study_year: 2016,
-                            military: 'не служил, не участвовал',
-                            education: 'Лицей №67 г. Иваново',
-
-                            image: '/assets/images/default_avatar.jpg'
-                        }
-                    },
-                ] 
-            },
-            { 
-                name: '2 взвод',
-                subjects: [ { name: 'ВСП' }, { name: 'ТСП' } ] 
-            },
-            { 
-                name: '3 взвод',
-                subjects: [ { name: 'ВСП' }, { name: 'ТСП' } ] 
-            },
-            { 
-                name: '4 взвод',
-                subjects: [ { name: 'ВСП' }, { name: 'ТСП' } ] 
-            },
-            { 
-                name: '5 взвод',
-                subjects: [ { name: 'ВСП' }, { name: 'ТСП' } ] 
-            },
-            { 
-                name: '6 взвод',
-                subjects: [ { name: 'ВСП' }, { name: 'ТСП' } ] 
-            },
-        ]
-    }
 })();
 (function() {
     'use strict';
@@ -1570,8 +1512,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                      vm.teacher.docs = [];
                  });
 
-
-                vm.showPopupImage = showPopupImage;
+                 vm.showPopupImage = showPopupImage;
 
                 vm.startDeleteDocDialog = startDeleteDocDialog;
                 vm.startChangePassDialog = startChangePassDialog;

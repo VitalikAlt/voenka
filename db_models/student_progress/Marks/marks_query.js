@@ -23,6 +23,16 @@ var get = function(aData, callback, error) {
     });
 };
 
+var get1 = function(aData, callback, error) {
+    return MarkModel.find({student_id: aData.student_id, discipline_id: aData.discipline_id}, function (err, data) {
+        if (!err) {
+            return callback(data);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 var getByDiscipline = function(aData, callback, error) {
     return MarkModel.find({discipline_id: aData.discipline_id}, function (err, data) {
         if (!err) {
@@ -57,7 +67,7 @@ var addData = function(aData, callback, error) {
 };
 
 var remove = function(aData, callback, error) {
-    return MarkModel.remove({student_discipline_id: aData.student_discipline_id, term: aData.term}, function(err, succes) {
+    return MarkModel.remove({student_id: aData.student_id, term: aData.term, discipline_id: aData.discipline_id}, function(err, succes) {
         if(!err) {
             return callback(succes);
         } else {
@@ -67,17 +77,24 @@ var remove = function(aData, callback, error) {
 };
 
 var updateData = function(aData, callback, error) {
-    return MarkModel.update( {student_discipline_id: aData.student_discipline_id, term: aData.term}, {mark: aData.mark}, function (err) {
-        if (!err) {
-            return callback(true);
+    addData(aData, function (res) {
+        if (res === 'Element already created') {
+            return MarkModel.update( {student_id: aData.student_id, term: aData.term, discipline_id: aData.discipline_id}, {mark: aData.mark}, function (err) {
+                if (!err) {
+                    return callback(true);
+                } else {
+                    return error(false);
+                }
+            });
         } else {
-            return error(false);
+            callback(res);
         }
-    });
+    }, error);
 };
 
 module.exports.getTableList = getTableList;
 module.exports.get = get;
+module.exports.get1 = get1;
 module.exports.getByDiscipline = getByDiscipline;
 module.exports.addData = addData;
 module.exports.remove = remove;

@@ -17,6 +17,16 @@ var getProfile = function(aStudentID, callback, error) {
     });
 };
 
+var getProfileByGroup = function(aGroupID, callback, error) {
+    return Users.find( {group_id: aGroupID}, function (err, data) {
+        if (!err) {
+            return callback(data);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 var addData = function(aData, callback, error) {
     Users.find({student_id: aData.student_id}, function (err, data) {
         if (!err) {
@@ -48,6 +58,7 @@ var updateData = function(aData, callback, error) {
 };
 
 module.exports.getTableList = getTableList;
+module.exports.getProfileByGroup = getProfileByGroup;
 module.exports.getProfile = getProfile;
 module.exports.addData = addData;
 module.exports.remove_All = remove_All;
