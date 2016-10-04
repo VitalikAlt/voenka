@@ -1,0 +1,51 @@
+.md-button.md-fab {
+    background-color: #007200!important;
+    font-size: 1.3em;
+}
+
+.md-button.md-fab:hover {
+    background-color: #008f00!important;
+}
+
+.dialog_content {
+    padding: 20px;
+}
+
+.docs {
+    max-width: 400px;
+    overflow: auto;
+}
+
+.doc_cover {
+    width: 100px;
+    height: 100px;
+}
+
+.doc_cover_container {
+    position: relative;
+}
+
+.remove_btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    display: none;
+}
+
+.remove_btn:hover md-icon{
+    color: red;
+}
+
+.doc_cover_container:hover .remove_btn {
+    display: block;
+}
+
+.reason_head_label {
+    letter-spacing: 2px;
+    font-size: 1.3em;
+    padding: 5px;
+    display: block;
+    text-align: center;
+}

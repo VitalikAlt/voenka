@@ -1,0 +1,148 @@
+.tab-menu label{
+    width: 200px;
+}
+.table_student_teacher{
+    width: 65%;
+    float: left;
+    margin-top: 15px;
+    margin-right: 10px;
+    margin-left: 320px;
+}
+
+.table_student{
+    display: block;
+    background: whitesmoke;
+    margin-bottom: 10px;
+    width: 100%;
+    border: solid 1px gray;
+    border-radius: 0 4px 4px 4px;
+    border-spacing: 0;
+    margin-right: 20px;
+
+}
+
+.table_teacher{
+    display: block;
+    background: whitesmoke;
+    margin-bottom: 10px;
+    width: 100%;
+    border: solid 1px gray;
+    border-radius: 0 4px 4px 4px;
+    border-spacing: 0;
+    margin-right: 20px;
+
+}
+
+.table_student input{
+    border:solid 1px lightgray;
+    border-radius: 2px;
+}
+
+.table_teacher input{
+    border:solid 1px lightgray;
+    border-radius: 2px;
+}
+
+.hover_string:hover{
+    background:lightblue;
+}
+
+.column_1{
+    width: 5%;
+
+}
+
+.column_2{
+    width: 5%;
+
+}
+
+.column_3{
+    width: 30%;
+
+}
+
+.column_3{
+    width: 20%;
+
+}
+
+.column_4{
+    width: 20%;
+
+}
+
+.column_5{
+    width: 20%;
+
+}
+
+.column_6{
+    width: 10%;
+
+}
+
+.right_align{
+    text-align:left;
+}
+
+.column2_end{
+    width: 90%;
+}
+
+.img_remove{
+    float: right;
+    width: 20px;
+}
+
+.img_edit{
+    float: right;
+    width:20px;
+}
+
+.table_changing{
+    clear: both;
+}
+
+.table_changing img{
+    margin-right: 10px;
+}
+
+.img_search{
+    float:right;
+    width: 20px;
+    margin-right: 10px;
+}
+
+
+#content-in-tab > div{
+    position: absolute;
+    opacity: 0;
+
+}
+
+.tab-menu > input{
+    display: none;
+}
+
+.tab-menu > label{
+    background: lightgray;
+    margin-top: 5px;
+    padding: 3px;
+}
+
+.tab-menu > input:checked + label{
+    background: darkgreen;
+}
+
+
+#t1:checked ~ #content-in-tab > div:nth-of-type(1),
+#t2:checked ~ #content-in-tab > div:nth-of-type(2)
+{
+    opacity: 1;
+}
+
+.tab-menu{
+    display:block;
+}
+

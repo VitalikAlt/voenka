@@ -1,0 +1,51 @@
+
+<div>
+    <div class="table_student_teacher">
+        <div class="tab-menu">
+            <input type="radio" name="tab" id="t1" checked>
+            <label for="t1">Группы</label>
+            <div id="content-in-tab">
+                <div class="student_content">
+                    <table class="table_student">
+                        <tr class="right_align">
+                            <th class="column_1"></th>
+                            <th class="column_2"></th>
+                            <th class="column_3"></th>
+                            <th class="column_4"></th>
+                            <th class="column_5"></th>
+                            <th class="column_6"></th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="text" style="width:100%" ></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="hover_string"  ng-repeat="">
+                            <td>
+                                <input type="checkbox" style="margin-left:38%" ng-click="">
+                            </td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td class="table_changing">
+                                <img class="img_remove" src="/diaryApp/admin/img/Remove.png" ng-click="removeStudent($index)">
+                                <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
+                            </td>
+                        </tr>
+                    </table>
+                    <table table class="table_student">
+                        <tr class="right_align">
+                            <td class="column1">
+                                <a href="#" ng-click="deleteStudents()">Удалить</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

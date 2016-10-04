@@ -1,0 +1,23 @@
+.marks_table_container {
+    background-color: #eaeaea;
+}
+
+.marks_table th,
+.marks_table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.summary_string {
+    padding: 10px;
+}
+
+.summary_name {
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+}
+
+.summary_value {
+    font-size: 1.2em;
+}

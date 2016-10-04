@@ -1,0 +1,22 @@
+.dialog_content {
+    padding: 20px;
+}
+
+.option {
+    padding: 10px;
+}
+
+.name_option {
+    color: #686868;
+    font-size: .9em;
+}
+
+.value_option {
+    font-size: 1.1em;
+    letter-spacing: 1px;
+}
+
+.student_photo {
+    width: 150px;
+    height: 150px;
+}

@@ -1,0 +1,136 @@
+<div class="table_student_teacher">
+    <div class="tab-menu">
+        <input type="radio" name="tab" id="t1" checked>
+        <label for="t1">Студенты</label>
+        <input type="radio" name="tab" id="t2">
+        <label for="t2">Преподаватели</label>
+
+        <div id="content-in-tab">
+            <div class="student_content">
+                <table class="table_student">
+                    <tr class="right_align">
+                        <th class="column_1"></th>
+                        <th class="column_2">№</th>
+                        <th class="column_3">ФИО</th>
+                        <th class="column_4">Взвод</th>
+                        <th class="column_5">Курс</th>
+                        <th class="column_6"></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>-</td>
+                        <td>
+                            <input type="text" style="..." >
+                        </td>
+                        <td>
+                            <input type="text" style="width:100%" >
+                        </td>
+                        <td>
+                            <input type="text" style="width:100%" >
+                        </td>
+                        <td>
+                            <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addStudent()">
+                        </td>
+                    </tr>
+                    <tr class="hover_string" ng-repeat="item in data">
+                        <td>
+                            <input type="checkbox" style="margin-left:38%" ng-click="">
+                        </td>
+                        <td>{{item.num}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.squad}}</td>
+                        <td>{{item.course}}</td>
+                        <td class="table_changing">
+                            <a title="Удалить">
+                                <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
+                                     ng-click="removeStudent($index)">
+                            </a>
+                            <a title="Изменить логин и пароль">
+                                <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
+                                     ng-click="startChangePassDialog($event)">
+                            </a>
+                            <a title="Изменить профиль">
+                                <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <table table class="table_student">
+                    <tr class="right_align">
+                        <td class="column1">
+                            <a href="#" style="text-decoration: none" ng-click="deleteStudents()">
+                                <div class="delete">
+                                    Удалить
+                                </div>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="teacher_content">
+                <table class="table_student">
+                    <tr class="right_align">
+                        <th class="column_1"></th>
+                        <th class="column_2">№</th>
+                        <th class="column_3">ФИО</th>
+                        <th class="column_4"></th>
+                        <th class="column_5"></th>
+                        <th class="column_6"></th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>-</td>
+                        <td>
+                            <input type="text" style="width:100%" ng-model="name_tc"
+                                   ng-keyup="sort('tc', 'name', name_tc)">
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <a title="Добавить">
+                                <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addTeacher()">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="hover_string" ng-repeat="item in data_tc">
+                        <td>
+                            <input type="checkbox" style="margin-left:38%" ng-click="selectTeacher(item.id)">
+                        </td>
+                        <td>{{item.num}}</td>
+                        <td>{{item.name}}</td>
+                        <td></td>
+                        <td></td>
+                        <td class="table_changing">
+                            <a title="Удалить">
+                                <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
+                                     ng-click="removeTeacher($index)">
+                            </a>
+                            <a title="Изменить логин и пароль">
+                                <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
+                                     ng-click="profile.startChangePassDialog($event)">
+                            </a>
+                            <a title="Изменить профиль">
+                                <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                <table table class="table_student">
+                    <tr class="right_align">
+                        <td id="column1">
+                            <a href="#" style="text-decoration: none" ng-click="deleteTeacher()">
+                                <div class="delete">
+                                    Удалить
+                                </div>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "Group_discipline.js",
+  "sourceRoot": "",
+  "sources": [
+    "Group_discipline.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;AAAA,MAAA;;EAAA,QAAA,GAAW,OAAA,CAAQ,UAAR;;EAEX,SAAA,GAAY,QAAQ,CAAC;;EAErB,SAAA,GAAgB,IAAA,SAAA,CACd;IAAA,aAAA,EACE;MAAA,IAAA,EAAM,MAAN;MACA,QAAA,EAAU,IADV;KADF;IAGA,QAAA,EACE;MAAA,IAAA,EAAM,MAAN;MACA,QAAA,EAAU,IADV;KAJF;GADc;;EAShB,cAAA,GAAiB,QAAQ,CAAC,KAAT,CAAe,WAAf,EAA4B,SAA5B;;EAEjB,MAAM,CAAC,OAAO,CAAC,eAAf,GAAiC;AAfjC"
+}

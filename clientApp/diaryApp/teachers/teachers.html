@@ -1,0 +1,37 @@
+<div class="teachers_view_container" layout="row" flex>
+    <md-sidenav flex
+                md-is-open="true"
+                layout="column"
+                md-component-id="left"
+                class="md-sidenav-left md-whiteframe-z2"
+                md-is-locked-open="true">
+        <md-toolbar layout="row">
+            <div class="menu-header-label">Меню</div>
+        </md-toolbar>
+        <md-content flex id="content" flex role="navigation">
+            <md-button ui-sref="teachers.profile" id="teachers.profile" class="menu-row" badge-menu layout="row" > 
+                <span class="menu-label">Профиль</span>
+                <!--<md-icon md-font-library="material-icons">desktop_windows</md-icon>-->
+            </md-button>
+            <md-button ui-sref="teachers.diary" id="teachers.diary" class="menu-row" badge-menu layout="row" > 
+                <span class="menu-label">Журнал</span>
+            </md-button>
+            <md-button ui-sref="teachers.schedule" id="teachers.schedule" class="menu-row" badge-menu layout="row" > 
+                <span class="menu-label">Расписание</span>
+            </md-button>
+            <md-button ui-sref="teachers.reports" id="teachers.reports" class="menu-row" badge-menu layout="row" > 
+                <span class="menu-label">Отчеты</span>
+            </md-button>
+            <md-button ng-click="teachers.logout()" ui-sref="auth" id="logout" class="menu-row" badge-menu layout="row" > 
+                <span class="menu-label">Выход</span>
+            </md-button>
+        </md-content>
+    </md-sidenav>
+
+    <md-content layout-padding
+                flex
+                class="ui-view nested_block"
+                md-whiteframe="4">
+    </md-content>
+    <!--<ui-view class="nested_block" flex></ui-view>-->
+</div>

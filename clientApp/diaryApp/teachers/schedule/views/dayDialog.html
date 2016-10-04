@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="diaryApp/students/schedule/views/dayDialog.css">
+<md-dialog aria-label="day_dialog_container">
+   <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 class="inner_header">{{ "Расписание на " + dayData.date.toLocaleDateString()}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="schedule.dialogCancel()">
+          <md-icon md-font-library="material-icons">close</md-icon>
+        </md-button>
+      </div>
+   </md-toolbar> 
+   <md-dialog-content class="day_dialog_content" layout="column">
+       <!--<h2 class="inner_header">
+           {{ "Расписание на " + dayData.date.getDate() + "." + (dayData.date.getMonth() + 1) + "." + dayData.date.getFullYear()}}
+       </h2>-->
+       <div class="day_data_content" layout="column">
+            <div class="dialog_schedule_container">
+                <!--{{dayData}}-->
+                <div ng-if="dayData.data.lessons" class="dialog_lesson" ng-repeat="lesson in dayData.data.lessons">
+                    <span>{{ lesson.time }}</span>
+                    <span>{{ lesson.name }}</span>
+                    <span>{{ " (" + lesson.room + ")" }}</span>
+                    <span>{{ " - " + lesson.troop }}</span>
+                </div>
+                <div ng-if="!dayData.data.lessons" class="dialog_lesson">
+                    <span>Нет занятий!</span>
+                </div>
+                <div class="day_notes">
+                    <md-input-container>
+                        <label>Заметки на день:</label>
+                        <textarea ng-model="dayData.notes" columns="1"></textarea>
+                    </md-input-container>
+                </div>
+            </div>
+       </div>
+      
+   </md-dialog-content>
+   <!--<md-dialog-actions>
+        <span flex></span>
+        <md-button aria-label="doneBtn" ng-click="profile.dialogDone(doc)">
+        	Добавить
+        </md-button>
+        <md-button aria-label="cancelBtn" ng-click="profile.dialogCancel()">
+            Отмена
+        </md-button>
+   </md-dialog-actions>-->
+</md-dialog>
