@@ -1,4 +1,3 @@
-
 <div>
     <div class="table_student_teacher">
         <div class="tab-menu">
@@ -9,46 +8,54 @@
                     <table class="table_student">
                         <tr class="right_align">
                             <th class="column_1"></th>
-                            <th class="column_2">№</th>
-                            <th class="column_3">Курс</th>
-                            <th class="column_4">Взвод</th>
-                            <th class="column_5">Кол-во человек</th>
+                            <th class="column_2"></th>
+                            <th class="column_3"></th>
+                            <th class="column_4"></th>
+                            <th class="column_5"></th>
                             <th class="column_6"></th>
                         </tr>
                         <tr>
                             <td></td>
+                            <td><input type="text" style="width:100%" ></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td>
-                                <input type="text" style="width: 100%" ng-model="name" ng-keyup="sort('st', 'name', name)">
-                            </td>
-                            <td>
-                                <input type="text" style="width:100%" ng-model="squad" ng-keyup="sort('st', 'squad', squad)">
-                            </td>
-                            <td>
-                                <input type="text" style="width:100%" ng-model="course" ng-keyup="sort('st', 'course', course)">
-                            </td>
-                            <td >
-                                <a title="Добавить">
+                                <a title="Добавить дисциплину">
                                     <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addTeacher()">
                                 </a>
                             </td>
                         </tr>
-                        <tr class="hover_string"  ng-repeat="item in data">
+                        <tr class="hover_string">
                             <td>
-                                <input type="checkbox" style="margin-left:38%" ng-click="">
+                                <input type="checkbox" style="margin-left:38%">
                             </td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td class="table_changing">
-                                <a title="Удалить">
-                                    <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
-                                         ng-click="">
-                                </a>
-                                <a title="Изменить">
-                                    <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
-                                </a>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <a title="Добавить группу">
+                                                <img class="img_edit" src="/diaryApp/admin/img/Add.png">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a title="Изменить">
+                                                <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
+                                                     ng-click="startChangePassDialog($event)">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a title="Удалить">
+                                                <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
+                                                     ng-click="removeTeacher($index)">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>

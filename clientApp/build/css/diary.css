@@ -117,9 +117,11 @@ md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
     width: 200px;
 }
 .table_student_teacher{
+    width: 90%;
     float: left;
     margin-top: 15px;
     margin-right: 10px;
+
 }
 
 .table_student{
@@ -215,6 +217,7 @@ md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
 
 .table_changing{
     clear: both;
+    width: 300px;
 }
 
 .table_changing img{

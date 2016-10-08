@@ -41,17 +41,27 @@
                         <td>{{item.squad}}</td>
                         <td>{{item.course}}</td>
                         <td class="table_changing">
-                            <a title="Удалить">
-                                <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
-                                     ng-click="removeStudent($index)">
-                            </a>
-                            <a title="Изменить логин и пароль">
-                                <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
-                                     ng-click="startChangePassDialog($event)">
-                            </a>
-                            <a title="Изменить профиль">
-                                <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
-                            </a>
+                             <table>
+                                 <tr>
+                                     <td>
+                                         <a title="Удалить">
+                                             <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
+                                                  ng-click="removeStudent($index)">
+                                         </a>
+                                     </td>
+                                     <td>
+                                         <a title="Изменить логин и пароль">
+                                             <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
+                                                  ng-click="startChangePassDialog($event)">
+                                         </a>
+                                     </td>
+                                     <td>
+                                         <a title="Изменить профиль">
+                                             <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
+                                         </a>
+                                     </td>
+                                 </tr>
+                             </table>
                         </td>
                     </tr>
                 </table>
@@ -105,17 +115,27 @@
                         <td></td>
                         <td></td>
                         <td class="table_changing">
-                            <a title="Удалить">
-                                <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
-                                     ng-click="removeTeacher($index)">
-                            </a>
-                            <a title="Изменить логин и пароль">
-                                <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
-                                     ng-click="profile.startChangePassDialog($event)">
-                            </a>
-                            <a title="Изменить профиль">
-                                <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
-                            </a>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <a title="Удалить">
+                                            <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
+                                                 ng-click="removeTeacher($index)">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a title="Изменить логин и пароль">
+                                            <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
+                                                 ng-click="startChangePassDialog($event)">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a title="Изменить профиль">
+                                            <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                 </table>
