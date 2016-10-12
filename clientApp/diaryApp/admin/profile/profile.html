@@ -32,10 +32,12 @@
                                    ng-keyup="sort('st', 'course', course)">
                         </td>
                         <td>
-                            <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addStudent()">
+                            <a title="добавить студента">
+                                <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addStudent()">
+                            </a>
                         </td>
                     </tr>
-                    <tr class="hover_string" ng-repeat="item in data">
+                    <tr class="hover_string" ng-repeat="item in data" >
                         <td>
                             <input type="checkbox" style="margin-left:38%" ng-click="">
                         </td>
@@ -47,20 +49,20 @@
                              <table>
                                  <tr>
                                      <td>
-                                         <a title="Удалить">
-                                             <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
-                                                  ng-click="removeStudent($index)">
-                                         </a>
-                                     </td>
-                                     <td>
                                          <a title="Изменить логин и пароль">
                                              <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
-                                                  ng-click="startChangePassDialog($event)">
+                                                  ng-click="changePassword($event,$index)">
                                          </a>
                                      </td>
                                      <td>
                                          <a title="Изменить профиль">
-                                             <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
+                                             <img class="img_edit" src="/diaryApp/admin/img/Edit.png" ng-click="showStudentProfile($index)">
+                                         </a>
+                                     </td>
+                                     <td>
+                                         <a title="Удалить">
+                                             <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
+                                                  ng-click="removeStudent($index)">
                                          </a>
                                      </td>
                                  </tr>
@@ -104,7 +106,7 @@
 
                         </td>
                         <td>
-                            <a title="Добавить">
+                            <a title="Добавить преподавателя">
                                 <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addTeacher()">
                             </a>
                         </td>
@@ -129,12 +131,12 @@
                                     <td>
                                         <a title="Изменить логин и пароль">
                                             <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
-                                                 ng-click="startChangePassDialog($event)">
+                                                 ng-click="changePassword($event)">
                                         </a>
                                     </td>
                                     <td>
                                         <a title="Изменить профиль">
-                                            <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
+                                            <img class="img_edit" src="/diaryApp/admin/img/Edit.png" ng-click="showProfile()">
                                         </a>
                                     </td>
                                 </tr>

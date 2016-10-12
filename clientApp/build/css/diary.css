@@ -237,6 +237,10 @@ md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
 
 }
 
+#content-in-tab{
+    margin-top:3px;
+}
+
 .tab-menu > input{
     display: none;
 }
