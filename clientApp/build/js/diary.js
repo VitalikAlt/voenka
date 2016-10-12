@@ -107,6 +107,7 @@ angular.module('app',
     angular
         .module('app.admin')
         .controller('AdminProfileController', function($scope, $mdDialog, $http, $cookieStore, currentUser, PERMISSIONS) {
+
             var vm = this;
             vm.mdDialog = $mdDialog;
             vm.dialogDone = dialogDone;
@@ -144,6 +145,7 @@ angular.module('app',
             $http.get('/get/studentList', {params: {auth_key: currentUser.getID()}})
                 .then(function(res) {
                     $scope.data = res.data;
+                    console.log(res);
                     data_c = res.data;
                     $scope.reloadNum();
                 });
@@ -307,28 +309,87 @@ angular.module('app',
                 this.mdDialog.cancel();
             }
 
-            function startChangePassDialog(ev) {
+
+            $scope.changePassword = function startChangePassDialog(ev, idStudent) {
+                console.log(currentUser.getID());
+                    $mdDialog.show({
+                        controller: 'StudentsProfileController',
+                        controllerAs: 'profile',
+                        templateUrl: 'diaryApp/students/profile/views/changePasswordDialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: false,
+                    })
+                        .then(function(pass) {
+                            if (pass.new === pass.new_confirm) {
+                                $http.get('/permissions/change_pass', {params: {_id: $scope.data[idStudent].id, password: pass.old, new_password: pass.new}})
+                                    .success(function(res) {
+                                        console.log(res);
+                                    });
+                            } else {
+                                console.log('Not change');
+                            }
+                        }, function() {
+                            // закрыто диалоговое окно
+                        });
+
+            }
+
+            $scope.showStudentProfile = function (idStudent) {
+                $http.get('/get/student_profile', {params: {Id: $scope.data[idStudent].id}})
+                    .success(function (data) {
+                        vm.student = getStudentData();
+                        //$scope.$digest();//обновелние scope
+                        console.log(data);
+                        /*$http.get('/get/groups', {params: {Id: data.group_id}})
+                            .success(function (group) {
+                                vm.student.squad = group.squad;
+                                vm.student.course = group.course;
+                            })
+                        */
+                        //$scope.data.surname="bnkjn";
+                        function getStudentData() {
+                            return {
+                                name: data.name,
+                                surname: data.surname,
+                                fatherName: data.fatherName,
+                                student_card_number: data.student_card_number,
+
+                                student_propis_number: data.student_propis_number,
+                                student_military_number: data.student_military_number,
+                                contract_data: data.contract_data,
+                                parents_data: data.parents_data,
+                                public_work: data.public_work,
+                                family_status: data.family_status,
+
+                                birthPlace: data.birthPlace,
+                                education: data.education,
+                                military: data.military,
+                                address: data.address,
+                                parents_address: data.parents_address,
+                                parents_address_1: data.parents_address_1,
+                                faculty: data.faculty,
+                                conclusion: data.conclusion,
+                                start_study_year: data.start_study_year,
+                            };
+                        }
+                        /*if (!vm.student.photo) {
+                            vm.student.preview_img = CONFIG.defaultAvatar;
+                        }
+                        vm.student.docs = [];
+                        vm.student.birthDate = new Date(data.birthDate);*/
+                    });
                 $mdDialog.show({
                     controller: 'AdminProfileController',
-                    controllerAs: 'auth',
-                    templateUrl: 'diaryApp/admin/profile/views/changePasswordDialog.html',
+                    controllerAs: 'profile',
+                    templateUrl: 'diaryApp/students/profile/profile.html',
                     parent: angular.element(document.body),
-                    targetEvent: ev,
                     clickOutsideToClose: false,
                 })
-                    /*.then(function(pass) {
-                        if (pass.new === pass.new_confirm) {
-                            $http.get('/permissions/change_pass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
-                                .success(function(res) {
-                                    console.log(res);
-                                });
-                        } else {
-                            console.log('Not change');
-                        }
-                    }, function() {
-                        // закрыто диалоговое окно
-                    });*/
+
             }
+
+
         });
 })();
 
@@ -455,6 +516,7 @@ angular.module('app',
         var s = $http.get('/get/permission', {params: {login: loginData.login, password: loginData.password}})
             .success(function (data) {
                 currentUser.setID(data.ID);
+
                 console.log(data.ID);
                 console.log(currentUser.getID());
                 switch (data.permission) {
@@ -579,9 +641,8 @@ angular.module('app',
         function setData(data) {
             User.currentData = data;
             setPermissions(data.permissions || 0);
-            
             $cookieStore.put('token', data.token);
-            $cookieStore.put('ID', data.login);
+            $cookieStore.put('ID',User.ID);
         }
 
         function clearData() {
@@ -1390,6 +1451,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
+                console.log("ffff"+currentUser);
 
                 $http.get('/get/student_profile', {params: {Id: currentUser.getID()}})
                     .success(function (data) {

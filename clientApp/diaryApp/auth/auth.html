@@ -8,7 +8,8 @@
                   ng-model="form.login" 
                   minlength="0"
                   placeholder="Введите логин"
-                  aria-label="login">
+                  aria-label="login"
+                  value="admin">
         </md-input-container>
         <md-input-container>
            <input name="password"
@@ -16,7 +17,8 @@
                   ng-model="form.password"
                   minlength="0"
                   placeholder="Введите пароль"
-                  aria-label="password">
+                  aria-label="password"
+           ng-value="123">
         </md-input-container>
         <md-button ng-click="auth.authorize(form)"
                    id="auth_btn"
