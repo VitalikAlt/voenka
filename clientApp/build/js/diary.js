@@ -115,6 +115,7 @@ angular.module('app',
             var controller = this;
             $scope.logout = logout;
             $scope.removeTc = function() {};
+            $scope.dis_data = [];
             $scope.data = [];
             $scope.data_tc = [];
             var selectedSt = [];
@@ -145,7 +146,6 @@ angular.module('app',
             $http.get('/get/studentList', {params: {auth_key: currentUser.getID()}})
                 .then(function(res) {
                     $scope.data = res.data;
-                    console.log(res);
                     data_c = res.data;
                     $scope.reloadNum();
                 });
@@ -333,66 +333,27 @@ angular.module('app',
                             // закрыто диалоговое окно
                         });
 
-            }
+            };
 
             $scope.showStudentProfile = function (idStudent) {
-                $http.get('/get/student_profile', {params: {Id: $scope.data[idStudent].id}})
-                    .success(function (data) {
-                        vm.student = getStudentData();
-                        //$scope.$digest();//обновелние scope
-                        console.log(data);
-                        /*$http.get('/get/groups', {params: {Id: data.group_id}})
-                            .success(function (group) {
-                                vm.student.squad = group.squad;
-                                vm.student.course = group.course;
-                            })
-                        */
-                        //$scope.data.surname="bnkjn";
-                        function getStudentData() {
-                            return {
-                                name: data.name,
-                                surname: data.surname,
-                                fatherName: data.fatherName,
-                                student_card_number: data.student_card_number,
-
-                                student_propis_number: data.student_propis_number,
-                                student_military_number: data.student_military_number,
-                                contract_data: data.contract_data,
-                                parents_data: data.parents_data,
-                                public_work: data.public_work,
-                                family_status: data.family_status,
-
-                                birthPlace: data.birthPlace,
-                                education: data.education,
-                                military: data.military,
-                                address: data.address,
-                                parents_address: data.parents_address,
-                                parents_address_1: data.parents_address_1,
-                                faculty: data.faculty,
-                                conclusion: data.conclusion,
-                                start_study_year: data.start_study_year,
-                            };
-                        }
-                        /*if (!vm.student.photo) {
-                            vm.student.preview_img = CONFIG.defaultAvatar;
-                        }
-                        vm.student.docs = [];
-                        vm.student.birthDate = new Date(data.birthDate);*/
-                    });
+                var Id = currentUser.getID();
+                currentUser.setID($scope.data[idStudent].id);
                 $mdDialog.show({
-                    controller: 'AdminProfileController',
+                    controller: 'StudentsProfileController',
                     controllerAs: 'profile',
                     templateUrl: 'diaryApp/students/profile/profile.html',
                     parent: angular.element(document.body),
                     clickOutsideToClose: false,
-                })
-
+                }).then(function() {
+                    console.log(1);
+                }, function () {
+                    currentUser.setID(Id);
+                });
             }
 
 
         });
 })();
-
 
 (function(){
     angular
@@ -939,7 +900,6 @@ function getPhotoFromFile(file) {
                 .state('admin.discipline', {
                     url: '/discipline/',
                     controller: 'AdminDisciplineController',
-                    controllerAs: 'admin',
                     templateUrl: 'diaryApp/admin/discipline/discipline.html'
                 })
                 .state('admin.group', {
@@ -1217,8 +1177,22 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     'use strict';
     angular
         .module('app.admin')
-        .controller('AdminDisciplineController', function () {
-
+        .controller('AdminDisciplineController', function ($scope, $mdDialog, $http, $cookieStore, currentUser, PERMISSIONS) {
+            console.log('1');
+            $http.get('/get/disciplineList', {params: {auth_key: currentUser.getID()}})
+                .then(function(res) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        $scope.dis_data.push({
+                            num: i + 1,
+                            name: res.data[i].name,
+                            teacher: res.data[i].teacher
+                        });
+                    }
+                    console.log(res.data);
+                    //console.log($scope.dis_data);
+                }, function (err) {
+                    console.log(err);
+                })
         });
 })
 
@@ -1451,17 +1425,18 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
-                console.log("ffff"+currentUser);
+                console.log(currentUser.getID());
 
                 $http.get('/get/student_profile', {params: {Id: currentUser.getID()}})
                     .success(function (data) {
+                        console.log(vm.student);
                         vm.student = getStudentData();
 
                         $http.get('/get/groups', {params: {Id: data.group_id}})
                             .success(function (group) {
                                 vm.student.squad = group.squad;
                                 vm.student.course = group.course;
-                            })
+                            });
 
                         function getStudentData() {
                             return {
