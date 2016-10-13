@@ -31,7 +31,18 @@ var addData = function(aData, callback, error) {
     });
 };
 
+var updateData = function(aData, callback, error) {
+    return Users.update( {teacher_id: aData.teacher_id}, aData, function (err) {
+        if (!err) {
+            return callback(true);
+        } else {
+            return error(false);
+        }
+    });
+};
+
 module.exports.getTableList = getTableList;
 module.exports.getProfile = getProfile;
 module.exports.addData = addData;
 module.exports.remove_All = remove_All;
+module.exports.updateData = updateData;

@@ -6,17 +6,17 @@
 module.exports.getMarks = function(discipline, marks) {
 
     var addMark = function (row, term, mark) {
-        row[semestr + term] = mark;
-        // switch (term) {
-        //     case '1': { row.semestr1 = mark; break; }
-        //     case '2': { row.semestr2 = mark; break; }
-        //     case '3': { row.semestr3 = mark; break; }
-        //     case '4': { row.semestr4 = mark; break; }
-        //     case '5': { row.semestr5 = mark; break; }
-        //     case '6': { row.semestr6 = mark; break; }
-        //     case '7': { row.semestr7 = mark; break; }
-        //     case '8': { row.semestr8 = mark; break; }
-        // }
+        //row[semestr + term] = mark;
+        switch (term) {
+            case '1': { row.semestr1 = mark; break; }
+            case '2': { row.semestr2 = mark; break; }
+            case '3': { row.semestr3 = mark; break; }
+            case '4': { row.semestr4 = mark; break; }
+            case '5': { row.semestr5 = mark; break; }
+            case '6': { row.semestr6 = mark; break; }
+            case '7': { row.semestr7 = mark; break; }
+            case '8': { row.semestr8 = mark; break; }
+        }
     };
 
     var getMarks = function (aData, callback, error) {

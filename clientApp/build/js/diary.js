@@ -33,6 +33,7 @@ angular.module('app',
         'app.table',
         'app.utils'
     ])
+    
 .run(function($http, $cookies, $rootScope, currentUser, $state, $log, authHelper) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
@@ -85,6 +86,18 @@ angular.module('app',
 (function(){
     angular
         .module('app.auth')
+        .directive('ngEnter', function () {
+            return function (scope, element, attrs) {
+                element.bind("keydown keypress", function (event) {
+                    if(event.which === 13) {
+                        scope.$apply(function (){
+                            scope.$eval(attrs.ngEnter);
+                        });
+                        event.preventDefault();
+                    }
+                });
+            };
+        })
         .controller('AuthController',
             function (authHelper, $log, $state, $mdDialog, currentUser, registerHelper, PERMISSIONS, $http) {
                 var vm = this;
@@ -205,7 +218,7 @@ angular.module('app',
                     }
                     case 'admin':
                     {
-                        $window.location.href = '/admin/s';
+                        $window.location.href = '/admin/';
                         loginData.permissions = PERMISSIONS.ADMIN;
                         break;
                     }
@@ -887,23 +900,25 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 }
             }
             function getTableList(helper, resource) {
-                var rows = [];
-                if (resource === config.marks) {
-                    $http.get('/get/marks', {params: {student_id: currentUser.getID()}})
-                        .success(function (results) {
-                            vm.summary.average = results.average;
-                            results.res.forEach(function (result) {
-                                helper.addItemRow(result);
-                            })
-                        });
-                } else {
-                    $http.get('/get/standarts', {params: {student_id: currentUser.getID()}})
-                        .success(function (results) {
-                            results.forEach(function (result) {
-                                helper.addItemRow(result);
-                            })
-                        });
-                }
+                    var rows = [];
+                    if (resource === config.marks) {
+                        $http.get('/get/marks', {params: {student_id: currentUser.getID()}})
+                            .success(function (results) {
+                                console.log(results);
+                                results.res.forEach(function (result) {
+                                    console.log(result);
+                                    helper.addItemRow(result);
+                                });
+                                vm.summary.average = results.average.toFixed(2);
+                            });
+                    } else {
+                        $http.get('/get/standarts', {params: {student_id: currentUser.getID()}})
+                            .success(function (results) {
+                                results.forEach(function (result) {
+                                    helper.addItemRow(result);
+                                })
+                            });
+                    }
             }
         });
 
@@ -936,11 +951,34 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 ]
             },
         }
-                
+
 })();
 (function(){
     angular
         .module('app.students')
+        .config(function($mdDateLocaleProvider) {
+            $mdDateLocaleProvider.formatDate = function(date) {
+                var s = new Date(date);
+                var day = '';
+                if (s.getDate() < 10) {
+                    day = '0' + s.getDate();
+                } else {
+                    day = s.getDate();
+                }
+                var month = '';
+                if (s.getMonth() < 9) {
+                    month = '0' + (s.getMonth() + 1);
+                } else {
+                    month = s.getMonth() + 1;
+                }
+                return date ? day + '.' + month + '.' + String(s.getFullYear()) : '';
+            };
+
+            $mdDateLocaleProvider.parseDate = function(dateString) {
+                var month = Number(dateString.substr(3).substr(0,2)) - 1;
+                return new Date(dateString.substr(6).substr(0,4), month, dateString.substr(0,4));
+            };
+        })
         .controller('StudentsProfileController',
             function ($scope, CONFIG, $mdDialog, Utils, PopupService, currentUser, $http) {
                 var vm = this;
@@ -948,6 +986,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
+
                 $http.get('/Profile_st/get', {params: {ID: currentUser.getID()}})
                     .success(function (data) {
                         vm.student = getStudentData();
@@ -1146,8 +1185,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 }
             }
         );
-
-
 
     var config = {
         faculties: [
@@ -1481,6 +1518,29 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     'use strict';
     angular
         .module('app.teachers')
+        .config(function($mdDateLocaleProvider) {
+            $mdDateLocaleProvider.formatDate = function(date) {
+                var s = new Date(date);
+                var day = '';
+                if (s.getDate() < 10) {
+                    day = '0' + s.getDate();
+                } else {
+                    day = s.getDate();
+                }
+                var month = '';
+                if (s.getMonth() < 9) {
+                    month = '0' + (s.getMonth() + 1);
+                } else {
+                    month = s.getMonth() + 1;
+                }
+                return date ? day + '.' + month + '.' + String(s.getFullYear()) : '';
+            };
+
+            $mdDateLocaleProvider.parseDate = function(dateString) {
+                var month = Number(dateString.substr(3).substr(0,2)) - 1;
+                return new Date(dateString.substr(6).substr(0,4), month, dateString.substr(0,4));
+            };
+        })
         .controller('TeachersProfileController',
              function ($scope, CONFIG, $mdDialog, Utils, PopupService, $http, currentUser) {
                 var vm = this;
@@ -1494,25 +1554,52 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                      function getTeacherData() {
                          return {
                              name: data.name,
-                             surname: '2',
-                             fatherName: '3',
-                             teacher_passport: 'das',
-                             birthPlace: 'dsa',
-                             education: '123',
-                             military: 'sda',
-                             appointment: 'sfd',
-                             address: 'das',
-                             start_year: '2016',
-                             birthDate: new Date(1996, 10, 16)
+                             surname: data.surname,
+                             fatherName: data.fatherName,
+                             teacher_passport: data.teacher_passport,
+                             birthPlace: data.birthPlace,
+                             education: data.education,
+                             military: data.military,
+                             appointment: data.appointment,
+                             address: data.address,
+                             start_year: data.start_year,
                          };
                      }
                      if (!vm.teacher.photo) {
                          vm.teacher.preview_img = CONFIG.defaultAvatar;
                      }
                      vm.teacher.docs = [];
+                     vm.teacher.birthDate = new Date(data.birthDate);
                  });
 
-                 vm.showPopupImage = showPopupImage;
+                 vm.saveData = saveData;
+                 vm.clear = clear;
+                 function saveData() {
+                     $http.get('/Profile_tc/update', {params: {
+                         teacher_id: currentUser.getID(),
+
+                         name: vm.teacher.name,
+                         surname: vm.teacher.surname,
+                         fatherName: vm.teacher.fatherName,
+                         teacher_passport: vm.teacher.teacher_passport,
+                         birthPlace: vm.teacher.birthPlace,
+                         education: vm.teacher.education,
+                         military: vm.teacher.military,
+                         appointment: vm.teacher.appointment,
+                         address: vm.teacher.address,
+                         start_year: vm.teacher.start_year,
+                         birthDate: vm.teacher.birthDate
+                     }})
+                         .success(function (data) {
+                             console.log(data);
+                         })
+                 }
+
+                 function clear() {
+                     vm.teacher = {};
+                 }
+
+                vm.showPopupImage = showPopupImage;
 
                 vm.startDeleteDocDialog = startDeleteDocDialog;
                 vm.startChangePassDialog = startChangePassDialog;
@@ -1572,8 +1659,14 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         clickOutsideToClose: false,
                     })
                     .then(function(pass) {
-                        console.dir(pass);
-                        // смена пароля (проверять внутри диалога до отправки)
+                        if (pass.new === pass.new_confirm) {
+                            $http.get('/permissions/change_pass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
+                                .success(function(res) {
+                                    console.log(res);
+                                });
+                        } else {
+                            console.log('Not change');
+                        }
                     }, function() {
                         // закрыто диалоговое окно
                     });

@@ -154,6 +154,11 @@ app.get('/api/remove1', function(req, res) {
         res.send(data);
     })
 });
+app.get('/Profile_tc/update', function(req, res) {
+    db.profile_tc.updateData(req.query, function(data) {
+        res.send(data);
+    })
+});
 //=================================================================================================================
 
 //====================== Progress =================================================================================

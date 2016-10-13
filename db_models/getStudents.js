@@ -104,7 +104,7 @@ module.exports.getMarks = function(discipline, marks, groups, profile_st, group_
             });
             var num = row.subjects.length - 1;
             for (var i = 1; i < 9; i++) {
-                row.subjects[num].titles.push({name: i + 'семестр', options: { label: 'semestr' + i, isDiaryDay: true, editable: true }});
+                row.subjects[num].titles.push({name: i + ' семестр', options: { label: 'semestr' + i, isDiaryDay: true, editable: true }});
             }
         }
     };
