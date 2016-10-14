@@ -1,0 +1,82 @@
+<div>
+
+    <div class="table_student_teacher_2">
+        <div class="step">
+            Выберете группу для добавления
+        </div>
+        <div class="tab-menu">
+            <input type="radio" name="tab" id="t1" checked>
+            <label for="t1">Группы</label>
+            <div id="content-in-tab">
+                <div class="student_content">
+                    <table class="table_student">
+                        <tr class="right_align">
+                            <th class="column_1"></th>
+                            <th class="column_2">№</th>
+                            <th class="column_3">Курс</th>
+                            <th class="column_4">Взвод</th>
+                            <th class="column_5">Кол-во человек</th>
+                            <th class="column_6"></th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input type="text" style="width: 100%" ng-model="name" ng-keyup="sort('st', 'name', name)">
+                            </td>
+                            <td>
+                                <input type="text" style="width:100%" ng-model="squad" ng-keyup="sort('st', 'squad', squad)">
+                            </td>
+                            <td>
+                                <input type="text" style="width:100%" ng-model="course" ng-keyup="sort('st', 'course', course)">
+                            </td>
+                            <td >
+                                <a title="Добавить">
+                                    <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addTeacher()">
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="hover_string">
+                            <td>
+                                <input type="checkbox" style="margin-left:38%" >
+                            </td>
+                            <td>2</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td>{{}}</td>
+                            <td class="table_changing">
+                                <!--<table>
+                                    <tr>
+                                        <td>
+                                            <a title="Изменить">
+                                                <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
+                                                     ng-click="startChangePassDialog($event)">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a title="Удалить">
+                                                <img class="img_remove" src="/diaryApp/admin/img/Remove.png"
+                                                     ng-click="removeTeacher($index)">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>-->
+                            </td>
+                        </tr>
+                    </table>
+                    <table table class="table_student">
+                        <tr class="right_align">
+                            <td class="column1">
+                                <a href="#" style="text-decoration: none" ng-click="deleteStudents()">
+                                    <div class="delete">
+                                        Добавить
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

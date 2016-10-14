@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="diaryApp/students/profile/views/changePasswordDialog.css">
+<md-dialog aria-label="change_pass_dialog">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2 class="inner_header">Добавление дисциплины</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="profile.dialogCancel()">
+                <md-icon md-font-library="material-icons" style="font-size: 15px">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="change_pass_content" layout="column">
+        <!--<h2 class="inner_header">Изменение пароля</h2>-->
+        <div class="change_pass_container" layout="column">
+            <md-input-container>
+                <input name="new_logg"
+                       ng-model="discipline_name"
+                       placeholder="Введите название дисциплины"
+                       aria-label="new_discipline">
+            </md-input-container>
+            <md-input-container>
+                <input name="new_logg"
+                       ng-model="discipline_tc_name"
+                       placeholder="Введите имя преподавателя"
+                       aria-label="teacher">
+            </md-input-container>
+        </div>
+
+    </md-dialog-content>
+    <md-dialog-actions>
+        <span flex></span>
+        <md-button aria-label="doneBtn" ng-click="profile.dialogDone(discipline)">
+            Добавить
+        </md-button>
+        <md-button aria-label="cancelBtn" ng-click="profile.dialogCancel()">
+            Отмена
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>
