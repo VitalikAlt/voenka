@@ -124,6 +124,18 @@ md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
 
 }
 
+.table_student_teacher_2{
+    width: 90%;
+    float: left;
+    margin-top: 15px;
+    margin-right: 10px;
+    padding: 0px 50px 0px 50px;
+
+}
+
+.step{
+    padding-bottom: 10px;
+}
 .table_student{
     display: block;
     background: whitesmoke;
@@ -255,6 +267,14 @@ md-dialog md-toolbar:not(.md-menu-toolbar) md-icon {
 .tab-menu > input:checked + label{
     background: darkgreen;
     color: #ffffff;
+}
+
+.top-view{
+    background: darkgreen;
+    color: #ffffff;
+    width: 100px;
+    padding: 3px;
+    margin-bottom: -3px;
 }
 
 #t1:checked ~ #content-in-tab > div:nth-of-type(1),

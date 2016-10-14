@@ -1,8 +1,7 @@
 <div>
     <div class="table_student_teacher">
         <div class="tab-menu">
-            <input type="radio" name="tab" id="t1" checked>
-            <label for="t1">Дисциплины</label>
+            <div class="top-view">Дисциплины</div>
             <div id="content-in-tab">
                 <div class="student_content">
                     <table class="table_student">
@@ -22,7 +21,7 @@
                             <td></td>
                             <td>
                                 <a title="Добавить дисциплину">
-                                    <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addTeacher()">
+                                    <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addDiscipline($event)">
                                 </a>
                             </td>
                         </tr>
@@ -39,7 +38,7 @@
                                     <tr>
                                         <td>
                                             <a title="Добавить группу">
-                                                <img class="img_edit" src="/diaryApp/admin/img/Add.png">
+                                                <img class="img_edit" src="/diaryApp/admin/img/Add.png" ng-click="addDiscGroup($event)">
                                             </a>
                                         </td>
                                         <td>

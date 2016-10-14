@@ -118,10 +118,16 @@ angular.module('app',
             $scope.dis_data = [];
             $scope.data = [];
             $scope.data_tc = [];
+            $scope.data_discipline=[];
+            $scope.data_group=[];
+
+            
             var selectedSt = [];
             var selectedTc = [];
             var data_c = [];
             var data_tc_c = [];
+            var data_discipline_dis=[];
+            var data_group_gr=[];
 
             $scope.reloadNum = function() {
                 for (var i = 0; i < this.data.length; i++) {
@@ -154,6 +160,20 @@ angular.module('app',
                 .then(function(res) {
                     $scope.data_tc = res.data;
                     data_tc_c = res.data;
+                    $scope.reloadNum();
+                });
+
+            $http.get('/get/disciplineList', {params: {auth_key: currentUser.getID()}})
+                .then(function(res) {
+                    $scope.data_discipline = res.data;
+                    data_c = res.data;
+                    $scope.reloadNum();
+                });
+
+            $http.get('/get/groupList', {params: {auth_key: currentUser.getID()}})
+                .then(function(res) {
+                    $scope.data_group = res.data;
+                    data_group_gr = res.data;
                     $scope.reloadNum();
                 });
 
@@ -301,6 +321,7 @@ angular.module('app',
                     });
             };
 
+
             function dialogDone(objFromDialog) {
                 this.mdDialog.hide(objFromDialog);
             }
@@ -322,7 +343,7 @@ angular.module('app',
                     })
                         .then(function(pass) {
                             if (pass.new === pass.new_confirm) {
-                                $http.get('/permissions/change_pass', {params: {_id: $scope.data[idStudent].id, password: pass.old, new_password: pass.new}})
+                                $http.get('/permissions/change_pass', {params: {/*logg:logg.new,*/_id: $scope.data[idStudent].id, password: pass.old, new_password: pass.new}})
                                     .success(function(res) {
                                         console.log(res);
                                     });
@@ -350,6 +371,67 @@ angular.module('app',
                     currentUser.setID(Id);
                 });
             }
+
+            $scope.addDiscipline = function (ev) {
+                var self = this;
+                controller.mdDialog.show({
+                    controller: 'StudentsProfileController',
+                    controllerAs: 'profile',
+                    templateUrl: 'diaryApp/admin/discipline/views/addDiscipline.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: false
+                }).then(function(newDiscipline) {
+                    newDiscipline.auth_key = currentUser.getID();//не понимаю эту строку
+                    $http.get('/add/discipline', {auth_key: newDiscipline})
+                        .success(function (res) {
+                            console.log(res);
+                            self.data_discipline.push({discipline_id: res.discipline_id, num: self.data_discipline.length + 1, name: discipline_name, tc_name:discipline_tc_named});
+                            if (self.data_tc.length != data_tc_c.length) data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
+                        });
+                }, function(err) {
+                    console.log(err);
+                });
+            }
+
+            $scope.removeDiscipline = function (element) {
+                var self = this;
+                $http.get('/delete/discipline', {params: {id: $scope.data_discipline[element].id}})
+                    .then(function(res) {
+                        if (selectedSt.indexOf(self.data_discipline[element].id) !== -1) {
+                            selectedSt.splice(selectedSt.indexOf(self.data_discipline[element].id), 1);
+                        }
+                        element = self.data_discipline[element];
+                        self.data_discipline.splice(self.data-discipline.indexOf(element),1);
+                        if (self.data_discipline.length != data_discipline_dis.length) data_discipline_dis.splice(data_discipline_dis.indexOf(element),1);
+                        self.reloadNum();
+                    });
+            };
+
+            $scope.addDiscGroup = function (ev) {
+                var self = this;
+                controller.mdDialog.show({
+                    controller: 'StudentsProfileController',
+                    controllerAs: 'profile',
+                    templateUrl: 'diaryApp/admin/discipline/views/addDiscGroup.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: false
+                })/*.then(function(newDiscipline) {
+                    newDiscipline.auth_key = currentUser.getID();//не понимаю эту строку
+                    $http.get('/add/discipline', {auth_key: newDiscipline})
+                        .success(function (res) {
+                            console.log(res);
+                            self.data_discipline.push({discipline_id: res.discipline_id, num: self.data_discipline.length + 1, name: discipline_name, tc_name:discipline_tc_named});
+                            if (self.data_tc.length != data_tc_c.length) data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
+                        });
+                }, function(err) {
+                    console.log(err);
+                });*/
+            }
+
+
+
 
 
         });
@@ -1106,7 +1188,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 });
 
 
-            }
+            } 
         });
 })();
 (function() {
@@ -1519,6 +1601,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
                 vm.startDeleteDocDialog = startDeleteDocDialog;
                 vm.startChangePassDialog = startChangePassDialog;
+                vm.startChangeLoggDialog = startChangeLoggDialog;
 
                 vm.years = [];
                 var currentYear = new Date().getFullYear();
@@ -1589,6 +1672,18 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     });
                 }
 
+                function startChangeLoggDialog(ev) {
+                    $mdDialog.show({
+                        controller: 'StudentsProfileController',
+                        controllerAs: 'profile',
+                        templateUrl: 'diaryApp/students/profile/views/changeLoginDialog.html',
+                        parent: angular.element(document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: false,
+                    })
+
+                }
+
                 function dialogDone(doc) {
                     $mdDialog.hide(doc);
                 }
@@ -1610,6 +1705,8 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         }
                     }
                 }
+
+
                 // Открытие диалога удаления
                 function startDeleteDocDialog(ev, doc) {
                     var confirm =
