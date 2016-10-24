@@ -3,6 +3,60 @@
  */
 //Получить оценки студента в виде массива строк: наименование, семестр - оценка, семестр - оценка, ...)
 
+var addDis = function (row, discipline) {
+
+    var status = false;
+
+    row.subjects.forEach(function (subject) {
+        if (subject.name === discipline.discipline_name) {
+            status = true;
+        }
+    });
+
+    if (!status) {
+        row.subjects.push({
+            name: discipline.discipline_name,
+            label: discipline.discipline_name,
+            titles: [
+                { name: 'Студент', options: { label: 'student', isDiaryDay: false, editable: false } }
+            ]
+        });
+
+        var num = row.subjects.length - 1;
+
+        for (var i = 1; i < 9; i++) {
+            row.subjects[num].titles.push({name: i + ' семестр', options: { label: 'semestr' + i, isDiaryDay: true, editable: true }});
+        }
+    }
+};
+
+var addStudent = function (row, profile, discipline, marks) {
+
+    var name, status = false;
+    
+    try {
+        name = profile.surname + ' ' + profile.name[0] + '. ' + profile.fatherName[0] + '.';
+    } catch(e) {
+        name = "Undefined";
+    }
+
+    row.students.forEach(function (student) {
+        if (student.student.name === name) {
+            status = true;
+            (!student[discipline])? student[discipline] = marks: null;
+        }
+    });
+
+    if (!status) {
+        row.students.push({
+            student: {name: name},
+            data: profile
+        });
+
+        row.students[row.students.length - 1][discipline] = marks;
+    }
+};
+
 module.exports.getMarks = function(discipline, marks, groups, profile_st, group_dis) {
 
     var getStudent = function (aData, callback, error) {
@@ -31,9 +85,6 @@ module.exports.getMarks = function(discipline, marks, groups, profile_st, group_
                                     for (var i = 1; i < 9; i++) {
                                         var status = false;
                                         if (discipline_marks['semestr' + i] === undefined) {
-                                            status = true;
-                                        }
-                                        if (status) {
                                             discipline_marks['semestr' + i] = {marks: "", presence: false};
                                         }
                                     }
@@ -51,8 +102,11 @@ module.exports.getMarks = function(discipline, marks, groups, profile_st, group_
                                         addDis(rows[rows.length - 1], subject);
                                         addStudent(rows[rows.length - 1], profile, subject.discipline_name, discipline_marks);
                                     }
+
                                     count_prf++;
+
                                     if (count_prf === profile_arr.length) count_dis++;
+
                                     if (success.length === count_dis && count_prf === profile_arr.length) {
                                         callback(rows);
                                     }
@@ -63,50 +117,6 @@ module.exports.getMarks = function(discipline, marks, groups, profile_st, group_
                 })
             })
         }, function (err) {});
-
-    };
-
-    var addStudent = function (row, profile, discipline, marks) {
-        var status = false;
-        var name = profile.surname + ' ' + profile.name[0] + '. ' + profile.fatherName[0] + '.';
-        row.students.forEach(function (student) {
-            if (student.student.name === name) {
-                status = true;
-                if (!student[discipline]) {
-                    student[discipline] = marks;
-                }
-            }
-        });
-        if (!status) {
-            row.students.push({
-                student: {name: name},
-                data: profile
-            });
-            row.students[row.students.length - 1][discipline] = marks;
-        }
-    };
-
-    var addDis = function (row, discipline) {
-        var status = false;
-        row.subjects.forEach(function (subject) {
-            if (subject.name === discipline.discipline_name) {
-                subject
-                status = true;
-            }
-        });
-        if (!status) {
-            row.subjects.push({
-                name: discipline.discipline_name,
-                label: discipline.discipline_name,
-                titles: [
-                    { name: 'Студент', options: { label: 'student', isDiaryDay: false, editable: false } }
-                ]
-            });
-            var num = row.subjects.length - 1;
-            for (var i = 1; i < 9; i++) {
-                row.subjects[num].titles.push({name: i + ' семестр', options: { label: 'semestr' + i, isDiaryDay: true, editable: true }});
-            }
-        }
     };
 
     return getStudent;

@@ -868,7 +868,6 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             vm.standartsHelper = tableHelper.getInstance();
 
             init();
-
             function init() {
                 getTableTitles(vm.marksHelper, config.marks);
                 getTableList(vm.marksHelper, config.marks);

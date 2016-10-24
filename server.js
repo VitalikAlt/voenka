@@ -13,6 +13,9 @@ app.get('/add/student', function(req,res) {
         res.send(succes);
     }, function (err) { res.send(err); });
 });
+app.get('', function(req,res) {
+    res.sendFile(__dirname + '/clientApp/diaryApp/admin/admin.html');
+});
 
 app.get('/get/standarts', function(req,res) {
     db.getStandarts(req.query, function (succes) {

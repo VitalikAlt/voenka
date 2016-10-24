@@ -1,5 +1,5 @@
 /**
- * Created by Алексей on 23.09.2016.
+ * Created by Виталий on 23.09.2016.
  */
 var mongoose    = require('mongoose');
 
@@ -26,6 +26,5 @@ database.updateMarks = require('./updateMarks').updateMarks(database.marks);
 
 module.exports.db = function(anUrl) {
     mongoose.connect(anUrl);
-
     return database;
 };

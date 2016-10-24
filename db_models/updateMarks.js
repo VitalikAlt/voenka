@@ -6,18 +6,17 @@ module.exports.updateMarks = function(marks) {
     // внимание: удаления поля оценки не происходит
 
     function updateMarks(aData, callback, error) {
+        
         var success = true;
+        
         aData.req.forEach(function (mark) {
             marks.updateData(JSON.parse(mark), function(res) {}, function(err) {
                 success = false;
             });
         });
-        if (success) {
-            callback(true);
-        } else {
-            error(false);
-        }
+        
+        (success)? callback(true): error(false);
     }
 
     return updateMarks;
-}
+};
