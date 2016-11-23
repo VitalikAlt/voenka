@@ -5,16 +5,26 @@ var app         = express();
 var body        = require('body-parser');
 var path        = require('path');
 var db          = require('./db_models/database').db('mongodb://localhost:27017');
+require('coffee-script');
 
 app.use(express.static(path.join(__dirname + '/clientApp')));
+
+app.get('/get/studentList', function(req,res) {
+    db.getStudentList(function (succes) {
+        res.send(succes);
+    }, function (err) { res.send(err); });
+});
+
+app.get('/delete/student', function(req,res) {
+    db.deleteStudent(req.query, function (succes) {
+        res.send(succes);
+    }, function (err) { res.send(err); });
+});
 
 app.get('/add/student', function(req,res) {
     db.addStudent(req.query, function (succes) {
         res.send(succes);
     }, function (err) { res.send(err); });
-});
-app.get('', function(req,res) {
-    res.sendFile(__dirname + '/clientApp/diaryApp/admin/admin.html');
 });
 
 app.get('/get/standarts', function(req,res) {
