@@ -8,6 +8,7 @@ var getTableList = function(callback, error) { return Standart_query.list(callba
 var remove = function (anID, callback, error) { return Standart_query.remove(anID, callback, error); };
 
 var addData = function(aData, callback, error) {
+    console.log(aData);
     Groups.find({course: aData.course, squad: aData.squad}, function (err, data) {
         if (!err) {
             if (!data.length) {

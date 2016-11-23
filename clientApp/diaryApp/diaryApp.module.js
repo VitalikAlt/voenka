@@ -1,12 +1,14 @@
 angular.module('app',
     [
+        'app.test',
         'app.core',
         'app.directives',
         'app.auth',
         'app.students',
         'app.teachers',
         'app.table',
-        'app.utils'
+        'app.utils',
+        'app.admin'
     ])
 .run(function($http, $cookies, $rootScope, currentUser, $state, $log, authHelper) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;

@@ -76,6 +76,16 @@ var remove = function(aData, callback, error) {
     });
 };
 
+var removeSt = function(anId, callback, error) {
+    return MarkModel.remove({student_id: anId}, function(err, succes) {
+        if(!err) {
+            return callback(succes);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 var updateData = function(aData, callback, error) {
     addData(aData, function (res) {
         if (res === 'Element already created') {
@@ -98,4 +108,5 @@ module.exports.get1 = get1;
 module.exports.getByDiscipline = getByDiscipline;
 module.exports.addData = addData;
 module.exports.remove = remove;
+module.exports.removeSt = removeSt;
 module.exports.updateData = updateData;

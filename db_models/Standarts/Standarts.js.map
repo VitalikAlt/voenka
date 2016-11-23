@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "Standarts.js",
+  "sourceRoot": "",
+  "sources": [
+    "Standarts.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;AAAA,MAAA;;EAAA,QAAA,GAAW,OAAA,CAAQ,UAAR;;EAEX,SAAA,GAAY,QAAQ,CAAC;;EAErB,QAAA,GAAe,IAAA,SAAA,CACb;IAAA,aAAA,EACE;MAAA,IAAA,EAAM,MAAN;MACA,QAAA,EAAU,IADV;KADF;GADa;;EAMf,cAAA,GAAiB,QAAQ,CAAC,KAAT,CAAe,UAAf,EAA2B,QAA3B;;EAEjB,MAAM,CAAC,OAAO,CAAC,cAAf,GAAgC;AAZhC"
+}

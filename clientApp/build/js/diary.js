@@ -9,8 +9,15 @@
 })();
 (function() {
     'use strict';
+    angular
+        .module('app.test', []);
+})();
+(function() {
+    'use strict';
     angular.module('app.utils', []);
 })();
+
+
 (function() {
   'use strict';
   angular
@@ -23,17 +30,25 @@
     ])
 })();
 
+
+
 angular.module('app',
     [
+
         'app.core',
         'app.directives',
         'app.auth',
         'app.students',
         'app.teachers',
         'app.table',
-        'app.utils'
+        'app.utils',
+        'app.test',
+        'app.admin'
     ])
-    
+
+
+
+
 .run(function($http, $cookies, $rootScope, currentUser, $state, $log, authHelper) {
         $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
         $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
@@ -78,11 +93,58 @@ angular.module('app',
     angular.module('app.students', []);
 })();
 
+(function(){
+    'use strict';
+    angular.module('app.admin',[]);
+})();
+
 (function() {
     'use strict';
     angular
         .module('app.teachers', []);
 })();
+
+(function() {
+    angular
+        .module('app.admin')
+        .controller('AdminController', function($scope, $http) {
+            var vm = this;
+            $http.get('/get/studentList')
+                .then(function(res) {
+                    $scope.data = res.data;
+                    console.log(res);
+                });
+            // $scope.data = [
+            //     {
+            //         name:"Ilya",
+            //         vzvod:"Radist"
+            //     },
+            //     {
+            //         name:"Roma",
+            //         vzvod:"Svyazist"
+            //     }
+            //
+            // ]
+            $scope.remove = function (element) {
+                $http.get('/delete/student', {params: {key: "123", id: $scope.data[element].id}})
+                    .then(function(res) {console.log(res);});
+                console.log($scope.data[element]);
+                this.data.splice(element,1);
+            };
+            $scope.add = function () {
+                this.data.push(
+                    {
+                        name:"serj",
+                        vzvod:"Radist"
+                    }
+                )
+
+            }
+
+        });
+})();
+
+
 (function(){
     angular
         .module('app.auth')
@@ -605,10 +667,28 @@ function getPhotoFromFile(file) {
                 .state('page404', {
                     url: '/404_page_not_found',
                     templateUrl: 'diaryApp/page404/page404.html'
-                });
+                })
+                .state('admin', {
+                    url: '/admin',
+                    templateUrl: 'diaryApp/admin/admin.html'
+                })
+                .state('admin.profile', {
+                    url: '/list/',
+                    controller: 'AdminProfileController',
+                    controllerAs: 'admin',
+                    templateUrl: 'diaryApp/admin/profile/profile.html'
+                })
+                .state('admin.marks', {
+                    url: '/marks/',
+                    controller: 'AdminMarksController',
+                    controllerAs: 'admin',
+                    templateUrl: 'diaryApp/admin/marks/marks.html'
+                })
+
                 $urlRouterProvider.otherwise('/404_page_not_found');
         });
 })();
+
 
  // Директива для подсветки пунктов меню
  angular.module('app.directives').directive('badgeMenu', function ($state) {
@@ -861,6 +941,101 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 (function() {
     'use strict';
     angular
+        .module('app.admin')
+        .controller('AdminMarksController', function($scope, tableHelper, $http, currentUser) {
+            var vm = this;
+            vm.marksHelper = tableHelper.getInstance();
+            vm.standartsHelper = tableHelper.getInstance();
+
+            init();
+
+            function init() {
+                getTableTitles(vm.marksHelper, config.marks);
+                getTableList(vm.marksHelper, config.marks);
+
+                getTableTitles(vm.standartsHelper, config.standarts);
+                getTableList(vm.standartsHelper, config.standarts);
+            }
+
+            $http.get('/api/Progress', {params: {student_id: currentUser.getID()}})
+                .success(function (data) {
+                    vm.summary = getSummary();
+                    function getSummary() {
+                        var summary = {
+                            average: data.average_point, // Средний балл
+                            missed: data.skippings, // Количество пропусков
+                            placed: data.visitings // Кол-во присутствий на парах
+                        };
+                        summary.percentMissed = (summary.missed / (Number(summary.missed) + Number(summary.placed)) * 100).toFixed(1);
+                        return summary;
+                    }
+                });
+
+            // Получение заголовков таблицы
+            function getTableTitles(helper, resource) {
+                // получение заголовков
+                var titles = resource.titles; // заглушка
+                for (var i = 0; i < titles.length; i++) {
+                    helper.addTitle(titles[i].name, titles[i].options);
+                }
+            }
+            function getTableList(helper, resource) {
+                var rows = [];
+                if (resource === config.marks) {
+                    $http.get('/get/marks', {params: {student_id: currentUser.getID()}})
+                        .success(function (results) {
+                            console.log(results);
+                            results.res.forEach(function (result) {
+                                console.log(result);
+                                helper.addItemRow(result);
+                            });
+                            vm.summary.average = results.average.toFixed(2);
+                        });
+                } else {
+                    $http.get('/get/standarts', {params: {student_id: currentUser.getID()}})
+                        .success(function (results) {
+                            results.forEach(function (result) {
+                                helper.addItemRow(result);
+                            })
+                        });
+                }
+            }
+        });
+
+    // Тестовый конфиг. имитация данных
+    var config = {
+        marks: {
+            titles: [
+                { name: 'Название', options: { label: 'nameSubject', show: true } },
+                { name: '1 семестр', options: { label: 'semestr1', show: true } },
+                { name: '2 семестр', options: { label: 'semestr2', show: true } },
+                { name: '3 семестр', options: { label: 'semestr3', show: true } },
+                { name: '4 семестр', options: { label: 'semestr4', show: true } },
+                { name: '5 семестр', options: { label: 'semestr5', show: true } },
+                { name: '6 семестр', options: { label: 'semestr6', show: true } },
+                { name: '7 семестр', options: { label: 'semestr7', show: true } },
+                { name: '8 семестр', options: { label: 'semestr8', show: true } }
+            ]
+        },
+        standarts: {
+            titles: [
+                { name: 'Название', options: { label: 'nameStandart', show: true } },
+                { name: '1 семестр', options: { label: 'semestr1', show: true } },
+                { name: '2 семестр', options: { label: 'semestr2', show: true } },
+                { name: '3 семестр', options: { label: 'semestr3', show: true } },
+                { name: '4 семестр', options: { label: 'semestr4', show: true } },
+                { name: '5 семестр', options: { label: 'semestr5', show: true } },
+                { name: '6 семестр', options: { label: 'semestr6', show: true } },
+                { name: '7 семестр', options: { label: 'semestr7', show: true } },
+                { name: '8 семестр', options: { label: 'semestr8', show: true } }
+            ]
+        },
+    }
+
+})();
+(function() {
+    'use strict';
+    angular
         .module('app.students')
         .controller('StudentsMarksController', function($scope, tableHelper, $http, currentUser) {
             var vm = this;
@@ -868,6 +1043,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             vm.standartsHelper = tableHelper.getInstance();
 
             init();
+
             function init() {
                 getTableTitles(vm.marksHelper, config.marks);
                 getTableList(vm.marksHelper, config.marks);
@@ -1015,6 +1191,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                                 military: data.military,
                                 address: data.address,
                                 parents_address: data.parents_address,
+                                parents_address_1: data.parents_address_1,
                                 faculty: data.faculty,
                                 conclusion: data.conclusion,
                                 start_study_year: data.start_study_year,
@@ -1056,6 +1233,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                                 military: vm.student.military,
                                 address: vm.student.address,
                                 parents_address: vm.student.parents_address,
+                                parents_address_1: vm.student.parents_address_1,
                                 faculty: vm.student.faculty,
                                 conclusion: vm.student.conclusion,
                                 start_study_year: vm.student.start_study_year,
@@ -1208,6 +1386,62 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
         //
     }
 })();
+
+(function(){
+    'use strict';
+    angular
+        .module('app.admin')
+        .controller('StudentsScheduleController', function($scope, $mdDialog) {
+            var vm = this;
+            vm.onDayClick = openDayDialog;
+
+            vm.getDayData = getDayData;
+            vm.dialogCancel = dialogCancel;
+
+            function getDayData(date) {
+                // Получение инфы по текущей дате
+                // ...
+                var data = {};
+                var curDay = date.getDay();
+                // заглушка и тестовые данные
+                if (curDay && curDay % 5 == 0)
+                    data = {
+                        lessons: [
+                            { name: "Практика", time: "11:00", room: "В513", teacher: "Герасев В.Е." },
+                            { name: "ТСП", time: "13:00", room: "В513", teacher: "Герасев В.Е." },
+                            { name: "Техническая подготовка", time: "15:00", room: "В513", teacher: "Герасев В.Е." }
+                        ]
+                    }
+                return data;
+            }
+
+            function openDayDialog(ev, dayData) {
+                if (!dayData.data) return;
+
+                var newScope = $scope.$new();
+                newScope.dayData = dayData;
+                $mdDialog.show({
+                    scope: newScope,
+                    controller: 'StudentsScheduleController',
+                    controllerAs: 'schedule',
+                    templateUrl: 'diaryApp/students/schedule/views/dayDialog.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                })
+                    .then(function() {
+                        // console.dir(dayData);
+                    }, function() {
+                        // закрыто диалоговое окно
+                    });
+            }
+
+            function dialogCancel() {
+                $mdDialog.cancel();
+            }
+        });
+})();
+
 (function(){
     'use strict';
     angular
@@ -1321,9 +1555,17 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             controller: 'StudentsScheduleController',
             controllerAs: 'schedule',
             templateUrl: 'diaryApp/students/schedule/schedule.html'
+          })
+          .state('students.admin', {
+              url: '/admin/',
+              controller: 'AdminController',
+              controllerAs: 'admin',
+              templateUrl: 'diaryApp/students/admin/admin.html'
           });
     });
 })();
+
+
 (function() {
     angular
         .module('app.students')
@@ -1715,7 +1957,9 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 'ИВТФ',
                 'ТЭФ',
                 'ЭЭФ',
-                'ФЭУ'
+                'ЭМФ',
+                'ФЭУ',
+                'ИФФ'
             ],
             conclusions: [
                 "А - годен к военной службе",
@@ -1723,6 +1967,13 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             ],
         }
 })();
+
+
+
+
+
+
+
 (function() {
     'use strict';
     angular
@@ -1840,6 +2091,34 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     controller: 'TeachersReportsController',
                     controllerAs: 'reports',
                     templateUrl: 'diaryApp/teachers/reports/reports.html'
+                })
+        });
+})();
+
+
+(function() {
+    'use strict';
+    angular
+        .module('app.test')
+        .config(function($stateProvider, PERMISSIONS) {
+            $stateProvider
+                .state('test', {
+                    url: '/test',
+                    controller: 'TestController',
+                    controllerAs: 'test',
+                    templateUrl: 'diaryApp/test/admin.html',
+                    abstract: true,
+                    data: {
+                        permissions: [
+                            PERMISSIONS.TEACHER
+                        ]
+                    }
+                })
+                .state('test.profile', {
+                    url: '/profile/',
+                    controller: 'TestProfileController',
+                    controllerAs: 'profile',
+                    templateUrl: 'diaryApp/teachers/profile/profile.html'
                 })
         });
 })();

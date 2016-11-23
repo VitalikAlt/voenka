@@ -30,6 +30,7 @@ var getPermission = function(aLogin, aPassword, callback, error) {
 }
 
 var addData = function(aData, callback, error) {
+    console.log(aData);
     Users.find({login: aData.login}, function (err, data) {
         if (!err) {
             if (!data.length) {
@@ -66,8 +67,8 @@ var getElementById = function(aId, callback, error) {
     });
 };
 
-var remove = function(aData, callback, error) {
-    return Users.remove({login: aData.login}, function(err, succes) {
+var remove = function(anId, callback, error) {
+    return Users.remove({_id: anId}, function(err, succes) {
         if(!err) {
             return callback(succes);
         } else {
@@ -86,9 +87,20 @@ var changePass = function(aData, callback, error) {
     });
 };
 
+var getByPermission = function(aPermission, callback, error) {
+    return Users.find({permission: aPermission}, function (err, res) {
+        if (!err) {
+            return callback(res);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 module.exports.getTableList = getTableList;
 module.exports.getPermission = getPermission;
 module.exports.addData = addData;
 module.exports.getElementById = getElementById;
+module.exports.getByPermission = getByPermission;
 module.exports.remove = remove;
 module.exports.changePass = changePass;

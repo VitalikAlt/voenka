@@ -46,6 +46,16 @@ var remove = function(aData, callback, error) {
     });
 };
 
+var removeSt = function(anId, callback, error) {
+    return Standarts_st.remove({student_id: anId}, function(err, succes) {
+        if(!err) {
+            return callback(succes);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 var updateData = function(aData, callback, error) {
     return Standarts_st.update( {standart_id: aData.standart_id, student_id: aData.student_id, term: aData.term}, {standart: aData.standart}, function (err) {
         if (!err) {
@@ -60,4 +70,5 @@ module.exports.getTableList = getTableList;
 module.exports.get = get;
 module.exports.addData = addData;
 module.exports.remove = remove;
+module.exports.removeSt = removeSt;
 module.exports.updateData = updateData;

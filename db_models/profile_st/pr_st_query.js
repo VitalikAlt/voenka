@@ -57,9 +57,20 @@ var updateData = function(aData, callback, error) {
     });
 };
 
+var remove = function(anId, callback, error) {
+    return Users.remove({student_id: anId}, function(err, succes) {
+        if(!err) {
+            return callback(succes);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 module.exports.getTableList = getTableList;
 module.exports.getProfileByGroup = getProfileByGroup;
 module.exports.getProfile = getProfile;
 module.exports.addData = addData;
 module.exports.remove_All = remove_All;
+module.exports.remove = remove;
 module.exports.updateData = updateData;
