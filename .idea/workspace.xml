@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6278b931-091f-4936-be6f-248a27f603f7" name="Default" comment="" />
+    <list default="true" id="6278b931-091f-4936-be6f-248a27f603f7" name="Default" comment="fix, now it's worked">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/DigitalDiary_node_modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/clientApp/diaryApp/auth/views/addStudentDIalog.html" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/Student_progress/St_standars/Student_standarts.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/st_standars/Student_standarts.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/Student_progress/St_standars/standarts_st_query.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/st_standars/standarts_st_query.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/profile_st/Profile_st.js" afterPath="$PROJECT_DIR$/db_models/Profile_st/Profile_st.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/profile_st/pr_st_query.js" afterPath="$PROJECT_DIR$/db_models/Profile_st/pr_st_query.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/Marks/Marks.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/marks/Marks.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/Marks/marks_query.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/marks/marks_query.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/issue.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/issue.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/progress/Progress.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/progress/Progress.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/progress/progress_query.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/progress/progress_query.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/DigitalDiary.iml" afterPath="$PROJECT_DIR$/.idea/DigitalDiary.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/angular-material/angular-material.js" afterPath="$PROJECT_DIR$/bower_components/angular-material/angular-material.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/angular-material/modules/closure/chips/chips.js" afterPath="$PROJECT_DIR$/bower_components/angular-material/modules/closure/chips/chips.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/angular-material/modules/js/chips/chips.js" afterPath="$PROJECT_DIR$/bower_components/angular-material/modules/js/chips/chips.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/clientApp/build/js/diary.js" afterPath="$PROJECT_DIR$/clientApp/build/js/diary.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db_models/database.coffee" afterPath="$PROJECT_DIR$/db_models/database.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db_models/database.js" afterPath="$PROJECT_DIR$/db_models/database.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
+    </list>
     <ignored path="DigitalDiary.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,107 +44,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server.js">
+      <file leaf-file-name="admin.controller.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/clientApp/diaryApp/admin/admin.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-306">
-              <caret line="36" column="3" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="group_query.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db_models/Group/group_query.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="31" column="18" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="getStudents.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/db_models/getStudents.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="33" column="78" selection-start-line="33" selection-start-column="78" selection-end-line="33" selection-end-column="78" />
+            <state relative-caret-position="45">
+              <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
               <folding>
-                <element signature="e#0#44#0" expanded="false" />
+                <marker date="1478758214000" expanded="true" signature="878:901" ph="{&quot;name&quot;: &quot;serj&quot;...}" />
+                <marker date="1478758214000" expanded="true" signature="878:950" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="diary.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="diary.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/clientApp/build/js/diary.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1119">
-              <caret line="1480" column="21" selection-start-line="1480" selection-start-column="21" selection-end-line="1480" selection-end-column="21" />
-              <folding>
-                <element signature="e#47554#47971#0" expanded="false" />
-                <element signature="e#48021#48069#0" expanded="false" />
-                <element signature="e#49051#49146#0" expanded="false" />
-                <element signature="e#49191#49644#0" expanded="false" />
-                <element signature="e#49689#49751#0" expanded="false" />
-                <element signature="e#49810#50589#0" expanded="false" />
-                <element signature="e#50627#50678#0" expanded="false" />
-                <element signature="e#50726#50787#0" expanded="false" />
-                <element signature="e#55400#55513#0" expanded="false" />
-                <element signature="e#55527#55640#0" expanded="false" />
-                <element signature="e#55654#55767#0" expanded="false" />
-                <element signature="e#55781#55894#0" expanded="false" />
-                <element signature="e#55908#56021#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="discipline_query.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db_models/Discipline/discipline_query.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="marks_query.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db_models/Student_progress/Marks/marks_query.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="19" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="database.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db_models/database.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="14" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="getMarks.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db_models/getMarks.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="28" column="20" selection-start-line="28" selection-start-column="20" selection-end-line="45" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Marks.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db_models/Student_progress/Marks/Marks.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="17" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="17" />
+            <state relative-caret-position="239">
+              <caret line="664" column="45" selection-start-line="664" selection-start-column="45" selection-end-line="664" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -170,15 +111,17 @@
         <option value="$PROJECT_DIR$/db_models/Discipline/Discipline.js" />
         <option value="$PROJECT_DIR$/db_models/getStandarts.js" />
         <option value="$PROJECT_DIR$/db_models/getMarks.js" />
-        <option value="$PROJECT_DIR$/db_models/database.js" />
         <option value="$PROJECT_DIR$/clientApp/diaryApp/students/students.route.js" />
-        <option value="$PROJECT_DIR$/clientApp/diaryApp/admin/admin.html" />
-        <option value="$PROJECT_DIR$/clientApp/build/js/diary.js" />
         <option value="$PROJECT_DIR$/db_models/Student_progress/Marks/marks_query.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/db_models/Discipline/discipline_query.js" />
         <option value="$PROJECT_DIR$/db_models/Group/group_query.js" />
         <option value="$PROJECT_DIR$/db_models/getStudents.js" />
+        <option value="$PROJECT_DIR$/db_models/database.js" />
+        <option value="$PROJECT_DIR$/db_models/database.coffee" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/clientApp/diaryApp/admin/admin.html" />
+        <option value="$PROJECT_DIR$/clientApp/build/js/diary.js" />
       </list>
     </option>
   </component>
@@ -195,11 +138,13 @@
     </gulpfiles>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/node_modules" />
+  </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+    <option name="y" value="24" />
+    <option name="width" value="1366" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -270,87 +215,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="db_models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Student_progress" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voenka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voenka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db_models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Student_progress" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Marks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voenka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voenka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db_models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Profile_st" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voenka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voenka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db_models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Group" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voenka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="voenka" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="db_models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Discipline" />
+              <option name="myItemId" value="clientApp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -365,6 +230,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="clientApp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="diaryApp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -417,8 +286,15 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
-    <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
+    <property name="nodejs_interpreter_path" value="$USER_HOME$/.nvm/versions/node/v6.9.1/bin/node" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/db_models/student_progress" />
+    </key>
   </component>
   <component name="RunManager" selected="Node.js.server.js">
     <configuration default="false" name="server.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="server.js" working-dir="$PROJECT_DIR$">
@@ -511,23 +387,25 @@
       <workItem from="1474819649678" duration="7276000" />
       <workItem from="1474827847186" duration="3053000" />
       <workItem from="1474997965884" duration="6641000" />
+      <workItem from="1479966199546" duration="982000" />
+      <workItem from="1479967239264" duration="2965000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61987000" />
+    <option name="totallyTimeSpent" value="65934000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="0" y="24" width="1366" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24880952" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24869695" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1819172" sideWeight="0.50476193" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1819172" sideWeight="0.4952381" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23374613" sideWeight="0.4952381" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -537,7 +415,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32897604" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32817337" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -552,6 +430,10 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix, now it's worked" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix, now it's worked" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <option name="time" value="6" />
@@ -559,44 +441,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/clientApp/build/js/diary.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14858">
-          <caret line="874" column="42" selection-start-line="874" selection-start-column="42" selection-end-line="874" selection-end-column="42" />
-          <folding>
-            <element signature="e#47554#47971#0" expanded="false" />
-            <element signature="e#48021#48069#0" expanded="false" />
-            <element signature="e#49051#49146#0" expanded="false" />
-            <element signature="e#49191#49644#0" expanded="false" />
-            <element signature="e#49689#49751#0" expanded="false" />
-            <element signature="e#49810#50589#0" expanded="false" />
-            <element signature="e#50627#50678#0" expanded="false" />
-            <element signature="e#50726#50787#0" expanded="false" />
-            <element signature="e#55400#55513#0" expanded="false" />
-            <element signature="e#55527#55640#0" expanded="false" />
-            <element signature="e#55654#55767#0" expanded="false" />
-            <element signature="e#55781#55894#0" expanded="false" />
-            <element signature="e#55908#56021#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gulpfile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -604,27 +448,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gulpfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="359" column="12" selection-start-line="359" selection-start-column="12" selection-end-line="359" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="260" column="0" selection-start-line="260" selection-start-column="0" selection-end-line="260" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/lib/index.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/server.js" />
     <entry file="file://$PROJECT_DIR$/db_models/Profile_tc/Profile_tc.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -634,13 +459,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/db_models/progress/progress_query.js" />
     <entry file="file://$PROJECT_DIR$/db_models/progress/Progress.js" />
-    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/issue.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="78" selection-start-line="15" selection-start-column="78" selection-end-line="15" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/issue.js" />
     <entry file="file://$PROJECT_DIR$/clientApp/diaryApp/students/profile/profile.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -672,13 +491,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/Profile_st/Profile_st.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="13" column="12" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/Profile_st/Profile_st.js" />
     <entry file="file://$PROJECT_DIR$/db_models/standart_query.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
@@ -693,13 +506,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/progress/progress_query.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/progress/progress_query.js" />
     <entry file="file://$PROJECT_DIR$/db_models/Permissions/permissions_query.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
@@ -714,14 +521,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/St_standars/Student_standarts.js">
+    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/st_standars/Student_standarts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="12" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/St_standars/standarts_st_query.js">
+    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/st_standars/standarts_st_query.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
@@ -753,7 +560,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -761,7 +567,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -790,20 +595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="30" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clientApp/diaryApp/admin/admin.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="63" selection-start-line="22" selection-start-column="63" selection-end-line="22" selection-end-column="63" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#td#2;n#tr#1;n#table#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#td#3;n#tr#1;n#table#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#td#4;n#tr#1;n#table#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#input#0;n#td#0;n#tr#2;n#table#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -811,7 +602,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="20" column="51" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -819,7 +609,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="25" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -827,7 +616,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -835,7 +623,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="27" column="7" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -843,103 +630,107 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="14" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/Discipline/discipline_query.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/Marks/marks_query.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="19" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/Marks/Marks.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/Marks/marks_query.js" />
+    <entry file="file://$PROJECT_DIR$/db_models/Student_progress/Marks/Marks.js" />
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-306">
+        <state relative-caret-position="540">
           <caret line="36" column="3" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/database.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="14" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/getMarks.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="28" column="20" selection-start-line="28" selection-start-column="20" selection-end-line="45" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db_models/Profile_st/pr_st_query.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/Profile_st/pr_st_query.js" />
     <entry file="file://$PROJECT_DIR$/db_models/Group/group_query.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="31" column="18" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clientApp/build/js/diary.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1119">
-          <caret line="1480" column="21" selection-start-line="1480" selection-start-column="21" selection-end-line="1480" selection-end-column="21" />
-          <folding>
-            <element signature="e#47554#47971#0" expanded="false" />
-            <element signature="e#48021#48069#0" expanded="false" />
-            <element signature="e#49051#49146#0" expanded="false" />
-            <element signature="e#49191#49644#0" expanded="false" />
-            <element signature="e#49689#49751#0" expanded="false" />
-            <element signature="e#49810#50589#0" expanded="false" />
-            <element signature="e#50627#50678#0" expanded="false" />
-            <element signature="e#50726#50787#0" expanded="false" />
-            <element signature="e#55400#55513#0" expanded="false" />
-            <element signature="e#55527#55640#0" expanded="false" />
-            <element signature="e#55654#55767#0" expanded="false" />
-            <element signature="e#55781#55894#0" expanded="false" />
-            <element signature="e#55908#56021#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="465">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/db_models/getStudents.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="33" column="78" selection-start-line="33" selection-start-column="78" selection-end-line="33" selection-end-column="78" />
+        <state relative-caret-position="465">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/Discipline/discipline_query.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/getMarks.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="20" selection-start-line="28" selection-start-column="20" selection-end-line="45" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/database.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/addStudent.js.map">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="sourcemapFileViewerProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db_models/database.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clientApp/diaryApp/admin/admin.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1725">
+          <caret line="115" column="52" selection-start-line="115" selection-start-column="52" selection-end-line="115" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clientApp/diaryApp/admin/admin.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="36" selection-start-line="3" selection-start-column="36" selection-end-line="3" selection-end-column="36" />
           <folding>
-            <element signature="e#0#44#0" expanded="false" />
+            <marker date="1478758214000" expanded="true" signature="878:901" ph="{&quot;name&quot;: &quot;serj&quot;...}" />
+            <marker date="1478758214000" expanded="true" signature="878:950" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clientApp/build/js/diary.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="664" column="45" selection-start-line="664" selection-start-column="45" selection-end-line="664" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
