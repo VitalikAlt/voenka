@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6278b931-091f-4936-be6f-248a27f603f7" name="Default" comment="" />
+    <list default="true" id="6278b931-091f-4936-be6f-248a27f603f7" name="Default" comment="fix, now it's worked, fix admin">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="DigitalDiary.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -95,9 +98,9 @@
         <option value="$PROJECT_DIR$/db_models/getStudents.js" />
         <option value="$PROJECT_DIR$/db_models/database.js" />
         <option value="$PROJECT_DIR$/db_models/database.coffee" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/clientApp/diaryApp/admin/admin.html" />
         <option value="$PROJECT_DIR$/clientApp/build/js/diary.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -365,7 +368,7 @@
       <workItem from="1474827847186" duration="3053000" />
       <workItem from="1474997965884" duration="6641000" />
       <workItem from="1479966199546" duration="982000" />
-      <workItem from="1479967239264" duration="3226000" />
+      <workItem from="1479967239264" duration="4176000" />
     </task>
     <task id="LOCAL-00001" summary="fix, now it's worked, fix admin">
       <created>1479970290019</created>
@@ -378,7 +381,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66195000" />
+    <option name="totallyTimeSpent" value="67145000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1366" y="24" width="1366" height="744" extended-state="6" />
@@ -677,14 +680,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db_models/database.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -709,6 +704,14 @@
             <marker date="1478758214000" expanded="true" signature="878:901" ph="{&quot;name&quot;: &quot;serj&quot;...}" />
             <marker date="1478758214000" expanded="true" signature="878:950" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
