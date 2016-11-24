@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6278b931-091f-4936-be6f-248a27f603f7" name="Default" comment="fix, now it's worked, fix admin">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="DigitalDiary.iws" />
@@ -368,7 +367,7 @@
       <workItem from="1474827847186" duration="3053000" />
       <workItem from="1474997965884" duration="6641000" />
       <workItem from="1479966199546" duration="982000" />
-      <workItem from="1479967239264" duration="4176000" />
+      <workItem from="1479967239264" duration="4415000" />
     </task>
     <task id="LOCAL-00001" summary="fix, now it's worked, fix admin">
       <created>1479970290019</created>
@@ -381,7 +380,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67145000" />
+    <option name="totallyTimeSpent" value="67384000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1366" y="24" width="1366" height="744" extended-state="6" />
