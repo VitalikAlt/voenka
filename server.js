@@ -1,5 +1,5 @@
 'use strict';
-// какие-то правки
+
 var express     = require("express");
 var app         = express();
 var body        = require('body-parser');
