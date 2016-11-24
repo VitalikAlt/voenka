@@ -15,6 +15,12 @@ app.get('/get/studentList', function(req,res) {
     }, function (err) { res.send(err); });
 });
 
+app.get('/get/teacherList', function(req,res) {
+    db.getTeacherList(function (succes) {
+        res.send(succes);
+    }, function (err) { res.send(err); });
+});
+
 app.get('/delete/student', function(req,res) {
     db.deleteStudent(req.query, function (succes) {
         res.send(succes);

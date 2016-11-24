@@ -58,7 +58,7 @@
                         <td>
                             <input type="checkbox" style="margin-left:38%">
                         </td>
-                        <td>{{item.number}}</td>
+                        <td>{{item.num}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.squad}}</td>
                         <td>{{item.course}}</td>
@@ -106,16 +106,16 @@
                             <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="add()">
                         </td>
                     </tr>
-                    <tr class="hover_string" ng-repeat="item in data">
+                    <tr class="hover_string" ng-repeat="item in data_tc">
                         <td>
                             <input type="checkbox" style="margin-left:38%">
                         </td>
-                        <td>{{item.number}}</td>
+                        <td>{{item.num}}</td>
                         <td>{{item.name}}</td>
-                        <td>{{item.vzvod}}</td>
-                        <td>{{item.course}}</td>
+                        <td></td>
+                        <td></td>
                         <td class="table_changing">
-                            <img class="img_remove" src="/diaryApp/admin/img/Remove.png" ng-click="remove($index)">
+                            <img class="img_remove" src="/diaryApp/admin/img/Remove.png" ng-click="removeTc($index)">
                             <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
                         </td>
                     </tr>

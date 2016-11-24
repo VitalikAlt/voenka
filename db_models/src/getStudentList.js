@@ -26,7 +26,7 @@ module.exports.getStudentList = function(permissions, profile_st, groups) {
                                 var name = res.surname + ' ' + res.name[0] + '. ' + res.fatherName[0] + '.';
                                 rows.push({
                                     id: student._id,
-                                    num: rows.length,
+                                    num: rows.length + 1,
                                     name: name,
                                     squad: group.squad,
                                     course: group.course
@@ -34,7 +34,7 @@ module.exports.getStudentList = function(permissions, profile_st, groups) {
                             } catch (e) {
                                 rows.push({
                                     id: student._id,
-                                    num: rows.length,
+                                    num: rows.length + 1,
                                     name: 'Undefined',
                                     squad: group.squad,
                                     course: group.course

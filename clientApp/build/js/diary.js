@@ -118,12 +118,17 @@ angular.module('app',
                 currentUser.setData = {};
                 console.log(currentUser.setPermissions(PERMISSIONS.GUEST));
             }
-
             $scope.logout = logout;
+            $scope.removeTc = function() {};
             $http.get('/get/studentList')
                 .then(function(res) {
+                    console.log(res.data);
                     $scope.data = res.data;
-                    console.log(res);
+                });
+            $http.get('/get/teacherList')
+                .then(function(res) {
+                    console.log(res.data);
+                    $scope.data_tc = res.data;
                 });
             $scope.remove = function (element) {
                 $http.get('/delete/student', {params: {key: "123", id: $scope.data[element].id}})
