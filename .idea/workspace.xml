@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6278b931-091f-4936-be6f-248a27f603f7" name="Default" comment="fix, now it's worked">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/DigitalDiary_node_modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/clientApp/diaryApp/auth/views/addStudentDIalog.html" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/Student_progress/St_standars/Student_standarts.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/st_standars/Student_standarts.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/Student_progress/St_standars/standarts_st_query.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/st_standars/standarts_st_query.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/profile_st/Profile_st.js" afterPath="$PROJECT_DIR$/db_models/Profile_st/Profile_st.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/profile_st/pr_st_query.js" afterPath="$PROJECT_DIR$/db_models/Profile_st/pr_st_query.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/Marks/Marks.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/marks/Marks.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/Marks/marks_query.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/marks/marks_query.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/issue.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/issue.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/progress/Progress.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/progress/Progress.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/db_models/student_progress/progress/progress_query.js" afterPath="$PROJECT_DIR$/db_models/Student_progress/progress/progress_query.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/DigitalDiary.iml" afterPath="$PROJECT_DIR$/.idea/DigitalDiary.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/angular-material/angular-material.js" afterPath="$PROJECT_DIR$/bower_components/angular-material/angular-material.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/angular-material/modules/closure/chips/chips.js" afterPath="$PROJECT_DIR$/bower_components/angular-material/modules/closure/chips/chips.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/angular-material/modules/js/chips/chips.js" afterPath="$PROJECT_DIR$/bower_components/angular-material/modules/js/chips/chips.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/clientApp/build/js/diary.js" afterPath="$PROJECT_DIR$/clientApp/build/js/diary.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db_models/database.coffee" afterPath="$PROJECT_DIR$/db_models/database.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db_models/database.js" afterPath="$PROJECT_DIR$/db_models/database.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
-    </list>
+    <list default="true" id="6278b931-091f-4936-be6f-248a27f603f7" name="Default" comment="" />
     <ignored path="DigitalDiary.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,8 +36,8 @@
       <file leaf-file-name="diary.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/clientApp/build/js/diary.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="664" column="45" selection-start-line="664" selection-start-column="45" selection-end-line="664" selection-end-column="45" />
+            <state relative-caret-position="254">
+              <caret line="665" column="25" selection-start-line="665" selection-start-column="25" selection-end-line="665" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -142,6 +118,7 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="-1366" />
     <option name="y" value="24" />
     <option name="width" value="1366" />
     <option name="height" value="744" />
@@ -388,15 +365,23 @@
       <workItem from="1474827847186" duration="3053000" />
       <workItem from="1474997965884" duration="6641000" />
       <workItem from="1479966199546" duration="982000" />
-      <workItem from="1479967239264" duration="2965000" />
+      <workItem from="1479967239264" duration="3226000" />
     </task>
+    <task id="LOCAL-00001" summary="fix, now it's worked, fix admin">
+      <created>1479970290019</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1479970290019</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65934000" />
+    <option name="totallyTimeSpent" value="66195000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1366" height="744" extended-state="6" />
+    <frame x="-1366" y="24" width="1366" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -432,7 +417,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fix, now it's worked" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix, now it's worked" />
+    <MESSAGE value="fix, now it's worked, fix admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix, now it's worked, fix admin" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -728,8 +714,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/clientApp/build/js/diary.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="664" column="45" selection-start-line="664" selection-start-column="45" selection-end-line="664" selection-end-column="45" />
+        <state relative-caret-position="254">
+          <caret line="665" column="25" selection-start-line="665" selection-start-column="25" selection-end-line="665" selection-end-column="25" />
           <folding />
         </state>
       </provider>
