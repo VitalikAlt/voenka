@@ -107,8 +107,19 @@ angular.module('app',
 (function() {
     angular
         .module('app.admin')
-        .controller('AdminController', function($scope, $http) {
+        .controller('AdminController', function($scope, $http, $cookieStore, currentUser, PERMISSIONS) {
             var vm = this;
+            function logout() {
+                clearData();
+                $cookieStore.remove('token');
+            }
+
+            function clearData() {
+                currentUser.setData = {};
+                console.log(currentUser.setPermissions(PERMISSIONS.GUEST));
+            }
+
+            $scope.logout = logout;
             $http.get('/get/studentList')
                 .then(function(res) {
                     $scope.data = res.data;
@@ -334,7 +345,7 @@ angular.module('app',
           case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
           case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
           case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
-          case PERMISSIONS.ADMIN:   { $state.go('admin'); break; }
+          case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
         }
     }
   }
@@ -659,6 +670,7 @@ function getPhotoFromFile(file) {
                 })
                 .state('admin', {
                     url: '/admin',
+                    controller: 'AdminController',
                     templateUrl: 'diaryApp/admin/admin.html',
                     data: {
                         permissions: [
