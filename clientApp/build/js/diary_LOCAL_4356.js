@@ -2085,31 +2085,3 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 })
         });
 })();
-
-
-(function() {
-    'use strict';
-    angular
-        .module('app.test')
-        .config(function($stateProvider, PERMISSIONS) {
-            $stateProvider
-                .state('test', {
-                    url: '/test',
-                    controller: 'TestController',
-                    controllerAs: 'test',
-                    templateUrl: 'diaryApp/test/admin.html',
-                    abstract: true,
-                    data: {
-                        permissions: [
-                            PERMISSIONS.TEACHER
-                        ]
-                    }
-                })
-                .state('test.profile', {
-                    url: '/profile/',
-                    controller: 'TestProfileController',
-                    controllerAs: 'profile',
-                    templateUrl: 'diaryApp/teachers/profile/profile.html'
-                })
-        });
-})();

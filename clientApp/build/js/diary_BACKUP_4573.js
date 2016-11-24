@@ -114,6 +114,20 @@ angular.module('app',
                     $scope.data = res.data;
                     console.log(res);
                 });
+<<<<<<< 42195b95eedd9eb1ec6e5fb8b13fadb8626c7b24
+=======
+            // $scope.data = [
+            //     {
+            //         name:"Ilya",
+            //         vzvod:"Radist"
+            //     },
+            //     {
+            //         name:"Roma",
+            //         vzvod:"Svyazist"
+            //     }
+            //
+            // ]
+>>>>>>> # This is a combination of 2 commits.
             $scope.remove = function (element) {
                 $http.get('/delete/student', {params: {key: "123", id: $scope.data[element].id}})
                     .then(function(res) {console.log(res);});
@@ -659,12 +673,16 @@ function getPhotoFromFile(file) {
                 })
                 .state('admin', {
                     url: '/admin',
+<<<<<<< 42195b95eedd9eb1ec6e5fb8b13fadb8626c7b24
                     templateUrl: 'diaryApp/admin/admin.html',
                     data: {
                         permissions: [
                             PERMISSIONS.ADMIN
                         ]
                     }
+=======
+                    templateUrl: 'diaryApp/admin/admin.html'
+>>>>>>> # This is a combination of 2 commits.
                 })
                 .state('admin.profile', {
                     url: '/list/',
@@ -1965,6 +1983,12 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
 
 
 
+<<<<<<< 42195b95eedd9eb1ec6e5fb8b13fadb8626c7b24
+=======
+
+
+
+>>>>>>> # This is a combination of 2 commits.
 (function() {
     'use strict';
     angular

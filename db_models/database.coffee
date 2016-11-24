@@ -9,9 +9,9 @@ database =
   groups_dis: require('./group_discipline/group_dis_query')
   discipline: require('./Discipline/discipline_query')
   standarts: require('./Standarts/standarts_query')
-  progress: require('./Student_progress/Progress/progress_query')
-  marks: require('./Student_progress/Marks/marks_query')
-  standarts_st: require('./Student_progress/St_standars/standarts_st_query')
+  progress: require('./Student_progress/progress/progress_query')
+  marks: require('./Student_progress/marks/marks_query')
+  standarts_st: require('./Student_progress/st_standars/standarts_st_query')
 
 #   Специальные запросы
 database.addStudent = require('./src/addStudent').addStudent(database.permissions, database.profile_st, database.groups)

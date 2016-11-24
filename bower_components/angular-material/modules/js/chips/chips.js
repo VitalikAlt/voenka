@@ -602,7 +602,7 @@ MdChipsCtrl.prototype.selectAndFocusChipSafe = function(index) {
 };
 
 /**
- * Marks the chip at the given index as selected.
+ * marks the chip at the given index as selected.
  * @param index
  */
 MdChipsCtrl.prototype.selectChip = function(index) {

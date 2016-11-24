@@ -114,6 +114,17 @@ angular.module('app',
                     $scope.data = res.data;
                     console.log(res);
                 });
+            // $scope.data = [
+            //     {
+            //         name:"Ilya",
+            //         vzvod:"Radist"
+            //     },
+            //     {
+            //         name:"Roma",
+            //         vzvod:"Svyazist"
+            //     }
+            //
+            // ]
             $scope.remove = function (element) {
                 $http.get('/delete/student', {params: {key: "123", id: $scope.data[element].id}})
                     .then(function(res) {console.log(res);});
@@ -269,7 +280,7 @@ angular.module('app',
                     }
                     case 'admin':
                     {
-                        //$window.location.href = '/admin/list';
+                        $window.location.href = '/admin/';
                         loginData.permissions = PERMISSIONS.ADMIN;
                         break;
                     }
@@ -334,7 +345,7 @@ angular.module('app',
           case PERMISSIONS.GUEST:   { $state.go('auth'); break; }
           case PERMISSIONS.STUDENT: { $state.go('students.profile'); break; }
           case PERMISSIONS.TEACHER: { $state.go('teachers.profile'); break; }
-          case PERMISSIONS.ADMIN:   { $state.go('admin'); break; }
+          case PERMISSIONS.ADMIN:   { $state.go('admin.profile'); break; }
         }
     }
   }
@@ -659,12 +670,7 @@ function getPhotoFromFile(file) {
                 })
                 .state('admin', {
                     url: '/admin',
-                    templateUrl: 'diaryApp/admin/admin.html',
-                    data: {
-                        permissions: [
-                            PERMISSIONS.ADMIN
-                        ]
-                    }
+                    templateUrl: 'diaryApp/admin/admin.html'
                 })
                 .state('admin.profile', {
                     url: '/list/',
@@ -1961,6 +1967,9 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             ],
         }
 })();
+
+
+
 
 
 
