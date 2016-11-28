@@ -3,7 +3,6 @@
 module.exports.getStandarts = (standarts, standarts_st) ->
   getStandarts = (aData, callback, error) ->
     standarts_st.get({student_id: aData.student_id}, (data) ->
-
       rows = []
       count = 0
 

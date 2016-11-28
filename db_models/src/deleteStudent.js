@@ -5,8 +5,6 @@
 module.exports.deleteStudent = function(permissions, profile_st, marks, st_standart) {
     var deleteStudent = function(aData, callback, error) {
 
-        console.log(aData);
-
         if (aData.key = "123") {
             var del1= new Promise(function(resolve, reject) {
                 permissions.remove(aData.id, function(res) {

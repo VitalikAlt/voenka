@@ -51,7 +51,7 @@
                         </td>
                         <td >
                             <img class="img_search" src="/diaryApp/admin/img/Search.png">
-                            <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="add()">
+                            <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addStudent()">
                         </td>
                     </tr>
                     <tr class="hover_string"  ng-repeat="item in data">
@@ -63,7 +63,7 @@
                         <td>{{item.squad}}</td>
                         <td>{{item.course}}</td>
                         <td class="table_changing">
-                            <img class="img_remove" src="/diaryApp/admin/img/Remove.png" ng-click="remove($index)">
+                            <img class="img_remove" src="/diaryApp/admin/img/Remove.png" ng-click="removeStudent($index)">
                             <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
                         </td>
                     </tr>
@@ -103,7 +103,7 @@
                         </td>
                         <td >
                             <img class="img_search" src="/diaryApp/admin/img/Search.png">
-                            <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="add()">
+                            <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addTeacher()">
                         </td>
                     </tr>
                     <tr class="hover_string" ng-repeat="item in data_tc">
@@ -115,7 +115,7 @@
                         <td></td>
                         <td></td>
                         <td class="table_changing">
-                            <img class="img_remove" src="/diaryApp/admin/img/Remove.png" ng-click="removeTc($index)">
+                            <img class="img_remove" src="/diaryApp/admin/img/Remove.png" ng-click="removeTeacher($index)">
                             <img class="img_edit" src="/diaryApp/admin/img/Edit.png">
                         </td>
                     </tr>

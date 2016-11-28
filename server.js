@@ -4,117 +4,23 @@ var express     = require("express");
 var app         = express();
 var body        = require('body-parser');
 var path        = require('path');
-var db          = require('./db_models/database').db('mongodb://localhost:27017');
 require('coffee-script');
-
+var RouteHandler = require('./routing/RouteHandler');
+var db = {};
 app.use(express.static(path.join(__dirname + '/clientApp')));
 
-app.get('/get/studentList', function(req,res) {
-    db.getStudentList(function (succes) {
-        res.send(succes);
-    }, function (err) { res.send(err); });
-});
-
-app.get('/get/teacherList', function(req,res) {
-    db.getTeacherList(function (succes) {
-        res.send(succes);
-    }, function (err) { res.send(err); });
-});
-
-app.get('/delete/student', function(req,res) {
-    db.deleteStudent(req.query, function (succes) {
-        res.send(succes);
-    }, function (err) { res.send(err); });
-});
-
-app.get('/add/student', function(req,res) {
-    db.addStudent(req.query, function (succes) {
-        res.send(succes);
-    }, function (err) { res.send(err); });
-});
-
-app.get('/get/standarts', function(req,res) {
-    db.getStandarts(req.query, function (succes) {
-        res.send(succes);
-    }, function (err) { res.send(err); });
-});
-
-app.get('/get/students', function(req, res) {
-    db.getStudents(req.query, function (success) {
-        res.send(success);
-    })
-})
-
-app.get('/admin/s', function (req,res) {
-    res.sendFile(__dirname + '/clientApp/diaryApp/admin/admin.html');
-});
-
-app.get('/get/marks', function(req,res) {
-    db.getMarks(req.query, function (success, average) {
-        res.send({res: success, average: average});
-    }, function (err) { res.send(err); });
-});
-
-app.get('/db/marks/getById', function(req, res) {
-    db.marks.getByDiscipline(req.query, function(data) {
-        res.send(data);
-    });
-});
-
-app.get('/update/marks', function(req, res) {
-    db.updateMarks(req.query, function(data) {
-        res.send(data);
-    });
-});
-
-app.get('/permissions/change_pass', function(req,res) {
-    db.permissions.changePass(req.query, function (data) {
-        res.send(data);
-    }, function (err) {
-        res.send(err);
-    })
-});
+RouteHandler.createRoute(app);
 
 //========================== Permissions ==========================================================================
-app.get('/Permissions/get', function(req, res) {
-    db.permissions.getPermission(req.query.login, req.query.password, function(data) {
-        res.send(data);
-    });
-});
-
+//нужно, чтобы добавить админа
 app.get('/Permissions/add', function(req, res) {
     db.permissions.addData(req.query, function(data) {
         res.send(data);
     });
 });
-
-app.get('/api/Permissions/:id', function(req, res) {
-    db.permissions.getElementById(req.params.id, function (data) {
-        res.send(data);
-    }, function (data) {
-        res.send(data);
-    });
-});
-app.get('/api/t', function(req,res) {
-    db.permissions.getTableList(function(data) {
-        res.send(data);
-    })
-});
 //=================================================================================================================
 
 //========================== Groups ==========================================================================
-app.get('/Groups/get', function(req, res) {
-    db.groups.getElementById(req.query.ID, function(data) {
-        res.send(data);
-    });
-});
-
-app.get('/groups/add', function(req, res) {
-    db.groups.addData(req.query, function(data) {
-        res.send(data);
-    });
-});
-
 app.get('/Groups/t', function(req,res) {
     db.groups.getTableList(function(data) {
         res.send(data);
@@ -123,11 +29,6 @@ app.get('/Groups/t', function(req,res) {
 //=================================================================================================================
 
 //====================== Student_profile ==========================================================================
-app.get('/Profile_st/get', function(req, res) {
-    db.profile_st.getProfile(req.query.ID, function(data) {
-        res.send(data);
-    });
-});
 
 app.get('/Profile_st/add', function(req, res) {
     db.profile_st.addData(req.query, function(data) {
@@ -144,25 +45,9 @@ app.get('/Profile_st/remove', function(req, res) {
         res.send(data);
     })
 });
-app.get('/Profile_st/update', function(req, res) {
-    db.profile_st.updateData(req.query, function(data) {
-        res.send(data);
-    })
-});
 //=================================================================================================================
 
 //====================== Teacher_profile ==========================================================================
-app.get('/api/Profile_tc', function(req, res) {
-    db.profile_tc.getProfile(req.query.ID, function(data) {
-        res.send(data);
-    });
-});
-
-app.post('/api/Profile_tc', function(req, res) {
-    db.profile_tc.addData(req.query, function(data) {
-        res.send(data);
-    });
-});
 app.get('/api/table1', function(req, res) {
     db.profile_tc.getTableList(function(data) {
         res.send(data);
@@ -173,40 +58,10 @@ app.get('/api/remove1', function(req, res) {
         res.send(data);
     })
 });
-app.get('/Profile_tc/update', function(req, res) {
-    db.profile_tc.updateData(req.query, function(data) {
-        res.send(data);
-    })
-});
 //=================================================================================================================
-
-//====================== Progress =================================================================================
-app.get('/api/Progress', function(req, res) {
-    db.progress.getProgress(req.query.student_id, function(data) {
-        res.send(data);
-    });
-});
-
-app.post('/api/Progress', function(req, res) {
-    db.progress.addData(req.query, function(data) {
-        res.send(data);
-    });
-});
-app.get('/db/Progress/table', function(req, res) {
-    db.progress.getTableList(function(data) {
-        res.send(data);
-    })
-});
-app.post('/api/update', function(req, res) {
-    db.progress.updateData(req.query, function(data) {
-        res.send(data);
-    })
-});
-//=================================================================================================================
-
 
 //====================== Discipline =================================================================================
-//test
+//test не ведут запросы
 app.get('/db/discipline/get', function(req, res) {
     db.discipline.get(req.query, function(data) {
         res.send(data);
@@ -235,7 +90,7 @@ app.post('/db/discipline/update', function(req, res) {
 //=================================================================================================================
 
 //====================== marks =================================================================================
-//test
+//test не ведут запросы
 app.get('/db/marks/get', function(req, res) {
     db.marks.get(req.query, function(data) {
         res.send(data);
@@ -264,7 +119,7 @@ app.post('/db/marks/update', function(req, res) {
 //=================================================================================================================
 
 //====================== Standarts ================================================================================
-//test
+//test не ведут запросы
 app.get('/db/Standarts/table', function(req, res) {
     db.standarts.getTableList(function(data) {
         res.send(data);
@@ -293,7 +148,7 @@ app.post('/db/Standarts/update', function(req, res) {
 //=================================================================================================================
 
 //====================== Standarts_st ================================================================================
-//test
+//test не ведут
 app.get('/db/Standarts_st/table', function(req, res) {
     db.standarts_st.getTableList(function(data) {
         res.send(data);
@@ -322,7 +177,7 @@ app.post('/db/Standarts_st/update', function(req, res) {
 //=================================================================================================================
 
 //====================== group_dis ================================================================================
-//test
+//test не ведут
 app.get('/db/group_dis/table', function(req, res) {
     db.groups_dis.getTableList(function(data) {
         res.send(data);

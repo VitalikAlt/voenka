@@ -6,17 +6,17 @@ var Standart_query = require('../standart_query').standarts(Users);
 
 var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
 
-var getPermission = function(aLogin, aPassword, callback, error) {
+var getPermission = function(aData, callback, error) {
     return Users.find(function (err, data) {
         if (!err) {
             var status = false;
             data.forEach(function(usr) {
-                if (aLogin == usr.login && aPassword == usr.password) {
+                if (aData.login == usr.login && aData.password == usr.password) {
                     status = true;
                     var data = {
                         permission: usr.permission,
                         ID: usr._id
-                    }
+                    };
                     return callback(data);
                 }
             });
@@ -27,10 +27,9 @@ var getPermission = function(aLogin, aPassword, callback, error) {
             return error(err);
         }
     });
-}
+};
 
 var addData = function(aData, callback, error) {
-    console.log(aData);
     Users.find({login: aData.login}, function (err, data) {
         if (!err) {
             if (!data.length) {

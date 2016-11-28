@@ -17,7 +17,7 @@ module.exports.getByTeacherList = function(permissions, profile_tc) {
             var count = res.length;
 
             res.forEach(function (teacher) {
-                profile_tc.getProfile(teacher._id, function(res) {
+                profile_tc.getProfile({Id: teacher._id}, function(res) {
                     try {
                         var name = res.surname + ' ' + res.name[0] + '. ' + res.fatherName[0] + '.';
                         rows.push({

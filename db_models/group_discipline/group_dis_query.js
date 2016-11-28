@@ -1,7 +1,7 @@
 /**
  * Created by Виталий on 29.09.2016.
  */
-var Group_dis = require('./Group_discipline').Group_disModel;
+var Group_dis = require('./Group_discipline').DisciplineModel;
 var Standart_query = require('../standart_query').standarts(Group_dis);
 
 var getTableList = function(callback, error) { return Standart_query.list(callback, error); };

@@ -58,9 +58,7 @@ var addStudent = function (row, profile, discipline, marks) {
 };
 
 module.exports.getMarks = function(discipline, marks, groups, profile_st, group_dis) {
-
     var getStudent = function (aData, callback, error) {
-
         var promise = new Promise(function (onResolved, onReject) {
             discipline.getByTeacherID({teacher_id: aData.teacher_id}, function(data) {
                 onResolved(data);
@@ -72,8 +70,8 @@ module.exports.getMarks = function(discipline, marks, groups, profile_st, group_
             var rows = [];
             success.forEach(function (subject) {
                 group_dis.get({discipline_id: subject._id}, function(group) {
-                    groups.getElementById(group.group_id, function (group) {
-                        profile_st.getProfileByGroup(group._id, function (profile_arr) {
+                    groups.getElementById({Id: group.group_id}, function (group) {
+                        profile_st.getProfileByGroup({Id: group._id}, function (profile_arr) {
                             var count_prf = 0;
                             profile_arr.forEach(function(profile) {
                                 marks.get1({student_id: profile.student_id, discipline_id: subject._id}, function (results) {
@@ -108,6 +106,7 @@ module.exports.getMarks = function(discipline, marks, groups, profile_st, group_
                                     if (count_prf === profile_arr.length) count_dis++;
 
                                     if (success.length === count_dis && count_prf === profile_arr.length) {
+                                        console.log('2');
                                         callback(rows);
                                     }
                                 });

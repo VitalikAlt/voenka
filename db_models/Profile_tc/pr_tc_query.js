@@ -7,9 +7,8 @@ var Standart_query = require('../standart_query').standarts(Users);
 var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
 var remove_All = function (anID, callback, error) { return Standart_query.remove_All(callback, error); };
 
-
-var getProfile = function(aTeacherID, callback, err) {
-    return Users.find( {teacher_id: aTeacherID}, function (err, data) {
+var getProfile = function(aData, callback, err) {
+    return Users.find( {teacher_id: aData.Id}, function (err, data) {
         if (!err) {
             return callback(data[0]);
         } else {

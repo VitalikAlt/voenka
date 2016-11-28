@@ -7,8 +7,8 @@ var Standart_query = require('../standart_query').standarts(Users);
 var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
 var remove_All = function (anID, callback, error) { return Standart_query.remove_All(callback, error); };
 
-var getProfile = function(aStudentID, callback, error) {
-    return Users.find( {student_id: aStudentID}, function (err, data) {
+var getProfile = function(aData, callback, error) {
+    return Users.find( {student_id: aData.Id}, function (err, data) {
         if (!err) {
             return callback(data[0]);
         } else {
@@ -17,8 +17,8 @@ var getProfile = function(aStudentID, callback, error) {
     });
 };
 
-var getProfileByGroup = function(aGroupID, callback, error) {
-    return Users.find( {group_id: aGroupID}, function (err, data) {
+var getProfileByGroup = function(aData, callback, error) {
+    return Users.find( {group_id: aData.Id}, function (err, data) {
         if (!err) {
             return callback(data);
         } else {

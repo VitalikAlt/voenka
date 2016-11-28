@@ -15,9 +15,11 @@ database =
 
 #   Специальные запросы
 database.addStudent = require('./src/addStudent').addStudent(database.permissions, database.profile_st, database.groups)
+database.addTeacher = require('./src/addTeacher').addTeacher(database.permissions, database.profile_tc)
 database.getStudentList = require('./src/getStudentList').getStudentList(database.permissions, database.profile_st, database.groups)
 database.getTeacherList = require('./src/getTeacherList').getByTeacherList(database.permissions, database.profile_tc)
 database.deleteStudent = require('./src/deleteStudent').deleteStudent(database.permissions, database.profile_st, database.marks, database.standarts_st)
+database.deleteTeacher = require('./src/deleteTeacher').deleteTeacher(database.permissions)
 database.getStandarts = require('./getStandarts').getStandarts(database.standarts, database.standarts_st)
 database.getMarks = require('./getMarks').getMarks(database.discipline, database.marks)
 database.getStudents = require('./getStudents').getMarks(database.discipline, database.marks, database.groups, database.profile_st, database.groups_dis)

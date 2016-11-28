@@ -34,7 +34,6 @@
 
 angular.module('app',
     [
-
         'app.core',
         'app.directives',
         'app.auth',
@@ -107,45 +106,103 @@ angular.module('app',
 (function() {
     angular
         .module('app.admin')
-        .controller('AdminController', function($scope, $http, $cookieStore, currentUser, PERMISSIONS) {
+        .controller('AdminController', function($scope, $mdDialog, $http, $cookieStore, currentUser, PERMISSIONS) {
             var vm = this;
+            vm.mdDialog = $mdDialog;
+            vm.dialogDone = dialogDone;
+            vm.dialogCancel = dialogCancel;
+            var controller = this;
+            $scope.logout = logout;
+            $scope.removeTc = function() {};
+
             function logout() {
                 clearData();
                 $cookieStore.remove('token');
             }
 
             function clearData() {
-                currentUser.setData = {};
+                currentUser.clearData();
                 console.log(currentUser.setPermissions(PERMISSIONS.GUEST));
             }
-            $scope.logout = logout;
-            $scope.removeTc = function() {};
+
             $http.get('/get/studentList')
                 .then(function(res) {
-                    console.log(res.data);
                     $scope.data = res.data;
                 });
+
             $http.get('/get/teacherList')
                 .then(function(res) {
-                    console.log(res.data);
                     $scope.data_tc = res.data;
                 });
-            $scope.remove = function (element) {
-                $http.get('/delete/student', {params: {key: "123", id: $scope.data[element].id}})
-                    .then(function(res) {console.log(res);});
-                console.log($scope.data[element]);
-                this.data.splice(element,1);
-            };
-            $scope.add = function () {
-                this.data.push(
-                    {
-                        name:"serj",
-                        vzvod:"Radist"
-                    }
-                )
 
+            $scope.removeStudent = function (element) {
+                var self = this;
+                $http.get('/delete/student', {params: {key: "123", id: $scope.data[element].id}})
+                    .then(function(res) {
+                        console.log(res);
+                        self.data.splice(element,1);
+                    });
+            };
+
+            $scope.removeTeacher = function (element) {
+                var self = this;
+                console.log(1);
+                $http.get('/delete/teacher', {params: {key: "123", id: $scope.data_tc[element].id}})
+                    .then(function(res) {
+                        console.log(res);
+                        self.data_tc.splice(element,1);
+                    });
+            };
+
+            $scope.addStudent = function startAddStudentDialog(ev) {
+                console.log(1);
+                var self = this;
+                controller.mdDialog.show({
+                    controller: 'AdminController',
+                    controllerAs: 'auth',
+                    templateUrl: 'diaryApp/auth/views/addStudentDialog.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: false
+                }).then(function (objFromDialog) {
+                    console.log(3);
+                    $http.get('/add/student', {params: objFromDialog})
+                        .success(function (res) {
+                            self.data.push({num: self.data.length, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
+                        });
+                }, function (err) {
+                    console.log(err);
+                })
+            };
+
+            $scope.addTeacher = function startAddStudentDialog(ev) {
+                console.log(2);
+                var self = this;
+                controller.mdDialog.show({
+                    controller: 'AuthController',
+                    controllerAs: 'auth',
+                    templateUrl: 'diaryApp/auth/views/addTeacherDialog.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: false
+                }).then(function(newTeacher) {
+                    console.log(4);
+                    $http.get('/add/teacher', {params: newTeacher})
+                        .success(function (res) {
+                            self.data_tc.push({num: self.data_tc.length, name: 'Undefined'});
+                        });
+                    }, function(err) {
+                        console.log(err);
+                    });
+            };
+
+            function dialogDone(objFromDialog) {
+                this.mdDialog.hide(objFromDialog);
             }
 
+            function dialogCancel() {
+                this.mdDialog.cancel();
+            }
         });
 })();
 
@@ -217,10 +274,10 @@ angular.module('app',
                 // Обработка подтверждения действия и закрытия диалогового окна
                 // objFromDialog (Object) - объект изменений
                 function dialogDone(objFromDialog) {
-                    $http.get('/add/student', {params: objFromDialog})
-                        .success(function (res) {
-                            console.log(res);
-                        });
+                    // $http.get('/add/student', {params: objFromDialog})
+                    //     .success(function (res) {
+                    //         console.log(res);
+                    //     });
                     this.mdDialog.hide(objFromDialog);
                     //this.mdDialog.cancel();
                 }
@@ -269,7 +326,7 @@ angular.module('app',
     function login(loginData) {
         // Получение данных permission
         // ...
-        var s = $http.get('/Permissions/get', {params: {login: loginData.login, password: loginData.password}})
+        var s = $http.get('/get/permission', {params: {login: loginData.login, password: loginData.password}})
             .success(function (data) {
                 currentUser.setID(data.ID);
                 switch (data.permission) {
@@ -317,6 +374,7 @@ angular.module('app',
 
             var deferred = $q.defer();
             if (loginData.permissions != PERMISSIONS.GUEST) {
+                console.log(currentUser);
                 currentUser.setData(dataFromServer);
                 deferred.resolve(dataFromServer);
             }
@@ -536,8 +594,6 @@ function AuthorizationError(message) {
                 this.list.push(row);
                 var displayedRow = [];
                 for (var i = 0; i < this.titles.length; i++) {
-                    //displayedRow.push(row[this.titles[i].options.label] || '-');
-                   
                     var currentValue = {};
                     currentValue.value = row[this.titles[i].options.label];
                     currentValue.options = this.titles[i].options;
@@ -968,7 +1024,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 getTableList(vm.standartsHelper, config.standarts);
             }
 
-            $http.get('/api/Progress', {params: {student_id: currentUser.getID()}})
+            $http.get('/get/progress', {params: {student_id: currentUser.getID()}})
                 .success(function (data) {
                     vm.summary = getSummary();
                     function getSummary() {
@@ -995,9 +1051,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 if (resource === config.marks) {
                     $http.get('/get/marks', {params: {student_id: currentUser.getID()}})
                         .success(function (results) {
-                            console.log(results);
-                            results.res.forEach(function (result) {
-                                console.log(result);
+                            results.rows.forEach(function (result) {
                                 helper.addItemRow(result);
                             });
                             vm.summary.average = results.average.toFixed(2);
@@ -1063,18 +1117,19 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 getTableList(vm.standartsHelper, config.standarts);
             }
 
+            vm.summary = getSummary();
+            function getSummary() {
+                var summary = {
+                    average: 0, // Средний балл
+                    missed: 0, // Количество пропусков
+                    placed: 0 // Кол-во присутствий на парах
+                };
+                summary.percentMissed = (summary.missed / (Number(summary.missed) + Number(summary.placed)) * 100).toFixed(1);
+                return summary;
+            }
             $http.get('/api/Progress', {params: {student_id: currentUser.getID()}})
                 .success(function (data) {
-                    vm.summary = getSummary();
-                    function getSummary() {
-                        var summary = {
-                            average: data.average_point, // Средний балл
-                            missed: data.skippings, // Количество пропусков
-                            placed: data.visitings // Кол-во присутствий на парах
-                        };
-                        summary.percentMissed = (summary.missed / (Number(summary.missed) + Number(summary.placed)) * 100).toFixed(1);
-                        return summary;
-                    }
+
                 });
 
             // Получение заголовков таблицы
@@ -1090,9 +1145,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     if (resource === config.marks) {
                         $http.get('/get/marks', {params: {student_id: currentUser.getID()}})
                             .success(function (results) {
-                                console.log(results);
-                                results.res.forEach(function (result) {
-                                    console.log(result);
+                                results.rows.forEach(function (result) {
                                     helper.addItemRow(result);
                                 });
                                 vm.summary.average = results.average.toFixed(2);
@@ -1173,11 +1226,11 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
 
-                $http.get('/Profile_st/get', {params: {ID: currentUser.getID()}})
+                $http.get('/get/student_profile', {params: {Id: currentUser.getID()}})
                     .success(function (data) {
                         vm.student = getStudentData();
 
-                        $http.get('/Groups/get', {params: {ID: data.group_id}})
+                        $http.get('/get/groups', {params: {Id: data.group_id}})
                             .success(function (group) {
                                 vm.student.squad = group.squad;
                                 vm.student.course = group.course;
@@ -1219,10 +1272,10 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.clear = clear;
                 function saveData() {
                     if ((vm.student.squad < 7 && vm.student.squad>=0) || (vm.student.course < 7 && vm.student.course>=0))
-                    $http.get('/groups/add', {params: {squad: vm.student.squad, course:vm.student.course}})
+                    $http.get('/add/group', {params: {squad: vm.student.squad, course:vm.student.course}})
                         .success(function (group) {
                             console.log(group);
-                            $http.get('/Profile_st/update', {params: {
+                            $http.get('/update/student_profile', {params: {
                                 student_id: currentUser.getID(),
 
                                 group_id: group._id,
@@ -1800,7 +1853,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.mdDialog = $mdDialog;
                 vm.dialogDone = dialogDone;
                 vm.dialogCancel = dialogCancel;
-                var s = $http.get('/api/Profile_tc', {params: {ID: currentUser.getID()}})
+                var s = $http.get('/get/teacher_profile', {params: {Id: currentUser.getID()}})
                  .success(function (data) {
                      vm.teacher = getTeacherData();
                      function getTeacherData() {
@@ -1827,7 +1880,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                  vm.saveData = saveData;
                  vm.clear = clear;
                  function saveData() {
-                     $http.get('/Profile_tc/update', {params: {
+                     $http.get('/update/teacher_profile', {params: {
                          teacher_id: currentUser.getID(),
 
                          name: vm.teacher.name,

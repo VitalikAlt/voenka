@@ -18,10 +18,12 @@ module.exports.getStudentList = function(permissions, profile_st, groups) {
             var count = res.length;
 
             res.forEach(function (student) {
-                profile_st.getProfile(student._id, function(res) {
+                console.log(res);
+                profile_st.getProfile({Id: student._id}, function(res) {
+                    //console.log(res.name);
                     var squad, course;
                     if (res.group_id) {
-                        groups.getElementById(res.group_id, function(group) {
+                        groups.getElementById({Id: res.group_id}, function(group) {
                             try {
                                 var name = res.surname + ' ' + res.name[0] + '. ' + res.fatherName[0] + '.';
                                 rows.push({
