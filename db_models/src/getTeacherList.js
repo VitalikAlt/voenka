@@ -22,13 +22,11 @@ module.exports.getByTeacherList = function(permissions, profile_tc) {
                         var name = res.surname + ' ' + res.name[0] + '. ' + res.fatherName[0] + '.';
                         rows.push({
                             id: teacher._id,
-                            num: rows.length + 1,
                             name: name
                         });
                     } catch (e) {
                         rows.push({
                             id: teacher._id,
-                            num: rows.length + 1,
                             name: 'Undefined'
                         })
                     }

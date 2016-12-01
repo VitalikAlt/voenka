@@ -114,10 +114,21 @@ angular.module('app',
             var controller = this;
             $scope.logout = logout;
             $scope.removeTc = function() {};
+            $scope.data = [];
+            $scope.data_tc = [];
             var selectedSt = [];
             var selectedTc = [];
             var data_c = [];
             var data_tc_c = [];
+
+            $scope.reloadNum = function() {
+                for (var i = 0; i < this.data.length; i++) {
+                    this.data[i].num = i + 1;
+                }
+                for (i = 0; i < this.data_tc.length; i++) {
+                    this.data_tc[i].num = i + 1;
+                }
+            };
 
             function logout() {
                 clearData();
@@ -133,26 +144,27 @@ angular.module('app',
                 .then(function(res) {
                     $scope.data = res.data;
                     data_c = res.data;
+                    $scope.reloadNum();
                 });
 
             $http.get('/get/teacherList')
                 .then(function(res) {
                     $scope.data_tc = res.data;
                     data_tc_c = res.data;
+                    $scope.reloadNum();
                 });
 
             $scope.selectStudent = function (st) {
                 if (selectedSt.indexOf(st) !== -1) {
-                    selectedSt.splice(st, 1);
+                    selectedSt.splice(selectedSt.indexOf(st), 1);
                 } else {
                     selectedSt.push(st);
                 }
-                console.log(selectedSt);
             };
 
             $scope.selectTeacher = function (st) {
                 if (selectedTc.indexOf(st) !== -1) {
-                    selectedTc.splice(st, 1);
+                    selectedTc.splice(selectedTc.indexOf(st), 1);
                 } else {
                     selectedTc.push(st);
                 }
@@ -198,8 +210,10 @@ angular.module('app',
                         if (selectedSt.indexOf(self.data[element].id) !== -1) {
                             selectedSt.splice(selectedSt.indexOf(self.data[element].id), 1);
                         }
-                        self.data.splice(element,1);
-                        data_c.splice(element,1);
+                        element = self.data[element];
+                        self.data.splice(self.data.indexOf(element),1);
+                        if (self.data.length != data_c.length) data_c.splice(data_c.indexOf(element),1);
+                        self.reloadNum();
                     });
             };
 
@@ -210,8 +224,10 @@ angular.module('app',
                         if (selectedTc.indexOf(self.data_tc[element].id) !== -1) {
                             selectedTc.splice(selectedTc.indexOf(self.data_tc[element].id), 1);
                         }
-                        self.data_tc.splice(element,1);
-                        data_tc_c.splice(element,1);
+                        element = self.data_tc[element];
+                        self.data_tc.splice(self.data_tc.indexOf(element),1);
+                        if (self.data_tc.length != data_tc_c.length) data_tc_c.splice(data_tc_c.indexOf(element),1);
+                        self.reloadNum();
                     });
             };
 
@@ -221,16 +237,19 @@ angular.module('app',
                         this.data = data_c.filter(function (item) {
                             return item[field].indexOf(value) !== -1;
                         });
+                        this.reloadNum();
                     } else {
                         if (!value) return this.data = data_c;
                         this.data = data_c.filter(function (item) {
                             return item[field] == value;
                         });
+                        this.reloadNum();
                     }
                 } else {
                     this.data_tc = data_tc_c.filter(function (item) {
                         return item[field].indexOf(value) !== -1;
                     });
+                    this.reloadNum();
                 }
             };
 
@@ -248,7 +267,7 @@ angular.module('app',
                         .success(function (res) {
                             console.log(res);
                             self.data.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
-                            data_c.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course})
+                            if (self.data.length -1 != data_c.length) data_c.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
                         });
                 }, function (err) {
                     console.log(err);
@@ -269,7 +288,7 @@ angular.module('app',
                         .success(function (res) {
                             console.log(res);
                             self.data_tc.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
-                            data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
+                            if (self.data_tc.length -1 != data_tc_c.length) data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
                         });
                     }, function(err) {
                         console.log(err);
