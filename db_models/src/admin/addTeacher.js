@@ -1,10 +1,11 @@
 /**
  * Created by vitalik on 28.11.16.
  */
+
 module.exports.addTeacher = function(permissions, profile_tc) {
+    var auth = require('./../adminAuth').adminAuth(permissions);
 
     var addTeacher = function(aData, callback, error) {
-
         var getPermissions = new Promise(function(resolve, reject) {
             permissions.addData({login: aData.login, password: aData.password, permission: 'teacher'}, function(permission) {
                 return resolve(permission);
@@ -18,5 +19,9 @@ module.exports.addTeacher = function(permissions, profile_tc) {
         }, error);
     };
 
-    return addTeacher;
+    return function(aData, callback, error) {
+        auth(aData.auth_key, function() {
+            addTeacher(aData, callback, error);
+        }, error);
+    };
 };

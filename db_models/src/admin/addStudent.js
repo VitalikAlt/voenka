@@ -4,6 +4,7 @@
 // Добавить студента (Логин, пароль, взвод, курс)
 
 module.exports.addStudent = function(permissions, profile_st, groups) {
+    var auth = require('./../adminAuth').adminAuth(permissions);
 
     var addStudent = function(aData, callback, error) {
 
@@ -27,5 +28,9 @@ module.exports.addStudent = function(permissions, profile_st, groups) {
             });
     };
 
-    return addStudent;
+    return function(aData, callback, error) {
+        auth(aData.auth_key, function() {
+            addStudent(aData, callback, error);
+        }, error);
+    };
 };

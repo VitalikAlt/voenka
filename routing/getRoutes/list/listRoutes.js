@@ -7,12 +7,12 @@ module.exports.add = function(core) {
 
     core.routes.push({
         url: '/get/studentList',
-        handler: handlerFactory.create(db.getStudentList)
+        handler: handlerFactory.createWithData(db.getStudentList)
     });
 
     core.routes.push({
         url: '/get/teacherList',
-        handler: handlerFactory.create(db.getTeacherList)
+        handler: handlerFactory.createWithData(db.getTeacherList)
     });
 
     core.routes.push({

@@ -4,7 +4,10 @@
 
 //  получить список студентов в виде (ФИО, взвод, курс)
 
+
 module.exports.getStudentList = function(permissions, profile_st, groups) {
+    var auth = require('./../adminAuth').adminAuth(permissions);
+
     var getStudentList = function(callback, error) {
         var rows = [];
 
@@ -20,7 +23,6 @@ module.exports.getStudentList = function(permissions, profile_st, groups) {
             res.forEach(function (student) {
                 console.log(res);
                 profile_st.getProfile({Id: student._id}, function(res) {
-                    //console.log(res.name);
                     var squad, course;
                     if (res.group_id) {
                         groups.getElementById({Id: res.group_id}, function(group) {
@@ -51,5 +53,9 @@ module.exports.getStudentList = function(permissions, profile_st, groups) {
         })
     };
 
-    return getStudentList;
+    return function(aData, callback, error) {
+        auth(aData.auth_key, function() {
+            getStudentList(callback, error);
+        }, error);
+    };
 };

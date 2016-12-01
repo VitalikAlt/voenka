@@ -3,6 +3,8 @@
  */
 
 module.exports.deleteStudent = function(permissions, profile_st, marks, st_standart) {
+    var auth = require('./../adminAuth').adminAuth(permissions);
+
     var deleteStudent = function(aData, callback, error) {
 
         if (aData.key = "123") {
@@ -33,5 +35,9 @@ module.exports.deleteStudent = function(permissions, profile_st, marks, st_stand
         }
     };
 
-    return deleteStudent;
+    return function(aData, callback, error) {
+        auth(aData.auth_key, function() {
+            deleteStudent(aData, callback, error);
+        }, error);
+    };
 };

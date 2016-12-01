@@ -4,6 +4,8 @@
 // получить список преподавателей
 
 module.exports.getByTeacherList = function(permissions, profile_tc) {
+    var auth = require('./../adminAuth').adminAuth(permissions);
+
     var getTeacherList = function(callback, error) {
         var rows = [];
 
@@ -36,5 +38,9 @@ module.exports.getByTeacherList = function(permissions, profile_tc) {
         });
     };
 
-    return getTeacherList;
+    return function(aData, callback, error) {
+        auth(aData.auth_key, function() {
+            getTeacherList(callback, error);
+        }, error);
+    };
 };

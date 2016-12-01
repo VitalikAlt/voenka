@@ -133,6 +133,7 @@ angular.module('app',
             function logout() {
                 clearData();
                 $cookieStore.remove('token');
+                $cookieStore.remove('ID');
             }
 
             function clearData() {
@@ -140,14 +141,14 @@ angular.module('app',
                 console.log(currentUser.setPermissions(PERMISSIONS.GUEST));
             }
 
-            $http.get('/get/studentList')
+            $http.get('/get/studentList', {params: {auth_key: currentUser.getID()}})
                 .then(function(res) {
                     $scope.data = res.data;
                     data_c = res.data;
                     $scope.reloadNum();
                 });
 
-            $http.get('/get/teacherList')
+            $http.get('/get/teacherList', {params: {auth_key: currentUser.getID()}})
                 .then(function(res) {
                     $scope.data_tc = res.data;
                     data_tc_c = res.data;
@@ -155,6 +156,7 @@ angular.module('app',
                 });
 
             $scope.selectStudent = function (st) {
+                console.log(currentUser.getID());
                 if (selectedSt.indexOf(st) !== -1) {
                     selectedSt.splice(selectedSt.indexOf(st), 1);
                 } else {
@@ -205,7 +207,7 @@ angular.module('app',
 
             $scope.removeStudent = function (element) {
                 var self = this;
-                $http.get('/delete/student', {params: {key: "123", id: $scope.data[element].id}})
+                $http.get('/delete/student', {params: {auth_key: currentUser.getID(), id: $scope.data[element].id}})
                     .then(function(res) {
                         if (selectedSt.indexOf(self.data[element].id) !== -1) {
                             selectedSt.splice(selectedSt.indexOf(self.data[element].id), 1);
@@ -219,7 +221,7 @@ angular.module('app',
 
             $scope.removeTeacher = function (element) {
                 var self = this;
-                $http.get('/delete/teacher', {params: {key: "123", id: $scope.data_tc[element].id}})
+                $http.get('/delete/teacher', {params: {auth_key: currentUser.getID(), id: $scope.data_tc[element].id}})
                     .then(function(res) {
                         if (selectedTc.indexOf(self.data_tc[element].id) !== -1) {
                             selectedTc.splice(selectedTc.indexOf(self.data_tc[element].id), 1);
@@ -263,11 +265,12 @@ angular.module('app',
                     targetEvent: ev,
                     clickOutsideToClose: false
                 }).then(function (objFromDialog) {
+                    objFromDialog.auth_key = currentUser.getID();
                     $http.get('/add/student', {params: objFromDialog})
                         .success(function (res) {
                             console.log(res);
                             self.data.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
-                            if (self.data.length -1 != data_c.length) data_c.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
+                            if (self.data.length != data_c.length) data_c.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
                         });
                 }, function (err) {
                     console.log(err);
@@ -284,11 +287,12 @@ angular.module('app',
                     targetEvent: ev,
                     clickOutsideToClose: false
                 }).then(function(newTeacher) {
+                    newTeacher.auth_key = currentUser.getID();
                     $http.get('/add/teacher', {params: newTeacher})
                         .success(function (res) {
                             console.log(res);
                             self.data_tc.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
-                            if (self.data_tc.length -1 != data_tc_c.length) data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
+                            if (self.data_tc.length != data_tc_c.length) data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
                         });
                     }, function(err) {
                         console.log(err);
@@ -428,6 +432,8 @@ angular.module('app',
         var s = $http.get('/get/permission', {params: {login: loginData.login, password: loginData.password}})
             .success(function (data) {
                 currentUser.setID(data.ID);
+                console.log(data.ID);
+                console.log(currentUser.getID());
                 switch (data.permission) {
                     case 'student':
                     {
@@ -543,6 +549,7 @@ angular.module('app',
         function logout() {
             clearData();
             $cookieStore.remove('token');
+            $cookieStore.remove('ID');
         }
 
         // Устанавливает данные текущему пользователю
@@ -551,7 +558,7 @@ angular.module('app',
             setPermissions(data.permissions || 0);
             
             $cookieStore.put('token', data.token);
-            $cookieStore.put('login', data.login);
+            $cookieStore.put('ID', data.login);
         }
 
         function clearData() {
@@ -582,6 +589,7 @@ angular.module('app',
                         break;
                     }
                 }
+                User.ID = $cookieStore.get('ID');
             }
             if (neededPermissions.length) {
                 if (neededPermissions.indexOf(getPermissions()) != -1) {
