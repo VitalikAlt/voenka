@@ -114,6 +114,10 @@ angular.module('app',
             var controller = this;
             $scope.logout = logout;
             $scope.removeTc = function() {};
+            var selectedSt = [];
+            var selectedTc = [];
+            var data_c = [];
+            var data_tc_c = [];
 
             function logout() {
                 clearData();
@@ -128,34 +132,109 @@ angular.module('app',
             $http.get('/get/studentList')
                 .then(function(res) {
                     $scope.data = res.data;
+                    data_c = res.data;
                 });
 
             $http.get('/get/teacherList')
                 .then(function(res) {
                     $scope.data_tc = res.data;
+                    data_tc_c = res.data;
                 });
+
+            $scope.selectStudent = function (st) {
+                if (selectedSt.indexOf(st) !== -1) {
+                    selectedSt.splice(st, 1);
+                } else {
+                    selectedSt.push(st);
+                }
+                console.log(selectedSt);
+            };
+
+            $scope.selectTeacher = function (st) {
+                if (selectedTc.indexOf(st) !== -1) {
+                    selectedTc.splice(st, 1);
+                } else {
+                    selectedTc.push(st);
+                }
+                console.log(selectedTc);
+            };
+
+            $scope.deleteStudents = function () {
+                var self = this;
+                if (!selectedSt) {
+                    return;
+                }
+
+                for (var i = self.data.length - 1; i >= 0; i--) {
+                    (function(i) {
+                        if (selectedSt.indexOf(self.data[i].id) !== -1) {
+                            selectedSt.splice(selectedSt.indexOf(self.data[i].id), 1);
+                            $scope.removeStudent(i);
+                        }
+                    })(i);
+                }
+            };
+
+            $scope.deleteTeachers = function () {
+                var self = this;
+                if (!selectedTc) {
+                    return;
+                }
+
+                for (var i = self.data_tc.length - 1; i >= 0; i--) {
+                    (function(i) {
+                        if (selectedTc.indexOf(self.data_tc[i].id) !== -1) {
+                            selectedTc.splice(selectedTc.indexOf(self.data_tc[i].id), 1);
+                            $scope.removeTeacher(i);
+                        }
+                    })(i);
+                }
+            };
 
             $scope.removeStudent = function (element) {
                 var self = this;
                 $http.get('/delete/student', {params: {key: "123", id: $scope.data[element].id}})
                     .then(function(res) {
-                        console.log(res);
+                        if (selectedSt.indexOf(self.data[element].id) !== -1) {
+                            selectedSt.splice(selectedSt.indexOf(self.data[element].id), 1);
+                        }
                         self.data.splice(element,1);
+                        data_c.splice(element,1);
                     });
             };
 
             $scope.removeTeacher = function (element) {
                 var self = this;
-                console.log(1);
                 $http.get('/delete/teacher', {params: {key: "123", id: $scope.data_tc[element].id}})
                     .then(function(res) {
-                        console.log(res);
+                        if (selectedTc.indexOf(self.data_tc[element].id) !== -1) {
+                            selectedTc.splice(selectedTc.indexOf(self.data_tc[element].id), 1);
+                        }
                         self.data_tc.splice(element,1);
+                        data_tc_c.splice(element,1);
                     });
             };
 
+            $scope.sort = function(mode, field, value) {
+                if (mode === 'st') {
+                    if (field === 'name') {
+                        this.data = data_c.filter(function (item) {
+                            return item[field].indexOf(value) !== -1;
+                        });
+                    } else {
+                        if (!value) return this.data = data_c;
+                        this.data = data_c.filter(function (item) {
+                            return item[field] == value;
+                        });
+                    }
+                } else {
+                    this.data_tc = data_tc_c.filter(function (item) {
+                        return item[field].indexOf(value) !== -1;
+                    });
+                }
+            };
+
             $scope.addStudent = function startAddStudentDialog(ev) {
-                console.log(1);
                 var self = this;
                 controller.mdDialog.show({
                     controller: 'AdminController',
@@ -165,10 +244,11 @@ angular.module('app',
                     targetEvent: ev,
                     clickOutsideToClose: false
                 }).then(function (objFromDialog) {
-                    console.log(3);
                     $http.get('/add/student', {params: objFromDialog})
                         .success(function (res) {
-                            self.data.push({num: self.data.length, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
+                            console.log(res);
+                            self.data.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
+                            data_c.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course})
                         });
                 }, function (err) {
                     console.log(err);
@@ -176,7 +256,6 @@ angular.module('app',
             };
 
             $scope.addTeacher = function startAddStudentDialog(ev) {
-                console.log(2);
                 var self = this;
                 controller.mdDialog.show({
                     controller: 'AuthController',
@@ -186,10 +265,11 @@ angular.module('app',
                     targetEvent: ev,
                     clickOutsideToClose: false
                 }).then(function(newTeacher) {
-                    console.log(4);
                     $http.get('/add/teacher', {params: newTeacher})
                         .success(function (res) {
-                            self.data_tc.push({num: self.data_tc.length, name: 'Undefined'});
+                            console.log(res);
+                            self.data_tc.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
+                            data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
                         });
                     }, function(err) {
                         console.log(err);

@@ -22,7 +22,7 @@
 <div class="table_student_teacher" ng-app="app.admin">
     <div class="tab-menu">
         <input type="radio" name="tab" id="t1" checked>
-        <label for="t1" >Студенты</label>
+        <label for="t1">Студенты</label>
         <input type="radio" name="tab" id="t2">
         <label for="t2">Преподаватели</label>
 
@@ -41,13 +41,13 @@
                         <td></td>
                         <td>-</td>
                         <td>
-                            <input type="text" style="width:100%">
+                            <input type="text" style="..." ng-model="name" ng-keyup="sort('st', 'name', name)">
                         </td>
                         <td>
-                            <input type="text" style="width:100%">
+                            <input type="text" style="width:100%" ng-model="squad" ng-keyup="sort('st', 'squad', squad)">
                         </td>
                         <td>
-                            <input type="text" style="width:100%">
+                            <input type="text" style="width:100%" ng-model="course" ng-keyup="sort('st', 'course', course)">
                         </td>
                         <td >
                             <img class="img_search" src="/diaryApp/admin/img/Search.png">
@@ -56,7 +56,7 @@
                     </tr>
                     <tr class="hover_string"  ng-repeat="item in data">
                         <td>
-                            <input type="checkbox" style="margin-left:38%">
+                            <input type="checkbox" style="margin-left:38%" ng-click="selectStudent(item.id)">
                         </td>
                         <td>{{item.num}}</td>
                         <td>{{item.name}}</td>
@@ -70,11 +70,8 @@
                 </table>
                 <table table class="table_student">
                     <tr class="right_align">
-                        <td class="column_1">
-                            <input type="checkbox" style="margin-left:38%">
-                        </td>
-                        <td class="column2_end">
-                            <a href="#">Удалить</a>
+                        <td class="column1">
+                            <a href="#" ng-click="deleteStudents()">Удалить</a>
                         </td>
                     </tr>
                 </table>
@@ -93,7 +90,7 @@
                         <td></td>
                         <td>-</td>
                         <td>
-                            <input type="text" style="width:100%">
+                            <input type="text" style="width:100%"  ng-model="name_tc" ng-keyup="sort('tc', 'name', name_tc)" >
                         </td>
                         <td>
 
@@ -108,7 +105,7 @@
                     </tr>
                     <tr class="hover_string" ng-repeat="item in data_tc">
                         <td>
-                            <input type="checkbox" style="margin-left:38%">
+                            <input type="checkbox" style="margin-left:38%" ng-click="selectTeacher(item.id)">
                         </td>
                         <td>{{item.num}}</td>
                         <td>{{item.name}}</td>
@@ -122,11 +119,8 @@
                 </table>
                 <table table class="table_student">
                     <tr class="right_align">
-                        <td class="column_1">
-                            <input type="checkbox" style="margin-left:38%">
-                        </td>
-                        <td id="column2_end">
-                            <a href="#">Удалить</a>
+                        <td id="column1">
+                            <a href="#" ng-click="deleteTeachers()">Удалить</a>
                         </td>
                     </tr>
                 </table>
