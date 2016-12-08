@@ -23,7 +23,9 @@
 
   database.getStudentList = require('./src/admin/getStudentList').getStudentList(database.permissions, database.profile_st, database.groups);
 
-  database.getTeacherList = require('./src/admin/getTeacherList').getByTeacherList(database.permissions, database.profile_tc);
+  database.getTeacherList = require('./src/admin/getTeacherList').getTeacherList(database.permissions, database.profile_tc);
+
+  database.getGroupList = require('./src/admin/getGroupList').getGroupList(database.permissions, database.groups, database.profile_st);
 
   database.deleteStudent = require('./src/admin/deleteStudent').deleteStudent(database.permissions, database.profile_st, database.marks, database.standarts_st);
 
