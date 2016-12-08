@@ -16,6 +16,11 @@ module.exports.add = function(core) {
     });
 
     core.routes.push({
+        url: '/get/groupList',
+        handler: handlerFactory.create(db.getGroupList)
+    });
+
+    core.routes.push({
         url: '/get/permissionList',
         handler: handlerFactory.create(db.permissions.getTableList)
     });

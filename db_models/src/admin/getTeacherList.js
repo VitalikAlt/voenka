@@ -3,7 +3,7 @@
  */
 // получить список преподавателей
 
-module.exports.getByTeacherList = function(permissions, profile_tc) {
+module.exports.getTeacherList = function(permissions, profile_tc) {
     var auth = require('./../adminAuth').adminAuth(permissions);
 
     var getTeacherList = function(callback, error) {
