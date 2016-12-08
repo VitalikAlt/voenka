@@ -20,13 +20,16 @@
                         <td></td>
                         <td>-</td>
                         <td>
-                            <input type="text" style="..." >
+                            <input type="text" style="..." ng-model="name_st"
+                                   ng-keyup="sort('st', 'name', name_st)">
                         </td>
                         <td>
-                            <input type="text" style="width:100%" >
+                            <input type="text" style="width:100%" ng-model="squad"
+                                   ng-keyup="sort('st', 'squad', squad)">
                         </td>
                         <td>
-                            <input type="text" style="width:100%" >
+                            <input type="text" style="width:100%" ng-model="course"
+                                   ng-keyup="sort('st', 'course', course)">
                         </td>
                         <td>
                             <img class="img_search" src="/diaryApp/admin/img/Add.png" ng-click="addStudent()">
