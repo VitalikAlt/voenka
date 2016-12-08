@@ -20,46 +20,6 @@ app.get('/Permissions/add', function(req, res) {
 });
 //=================================================================================================================
 
-//========================== Groups ==========================================================================
-app.get('/Groups/t', function(req,res) {
-    db.groups.getTableList(function(data) {
-        res.send(data);
-    })
-});
-//=================================================================================================================
-
-//====================== Student_profile ==========================================================================
-
-app.get('/Profile_st/add', function(req, res) {
-    db.profile_st.addData(req.query, function(data) {
-        res.send(data);
-    });
-});
-app.get('/Profile_st/table', function(req, res) {
-    db.profile_st.getTableList(function(data) {
-        res.send(data);
-    })
-});
-app.get('/Profile_st/remove', function(req, res) {
-    db.profile_st.removeAll(function(data) {
-        res.send(data);
-    })
-});
-//=================================================================================================================
-
-//====================== Teacher_profile ==========================================================================
-app.get('/api/table1', function(req, res) {
-    db.profile_tc.getTableList(function(data) {
-        res.send(data);
-    })
-});
-app.get('/api/remove1', function(req, res) {
-    db.profile_tc.removeAll(function(data) {
-        res.send(data);
-    })
-});
-//=================================================================================================================
-
 //====================== Discipline =================================================================================
 //test не ведут запросы
 app.get('/db/discipline/get', function(req, res) {
