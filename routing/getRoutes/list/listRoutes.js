@@ -17,7 +17,12 @@ module.exports.add = function(core) {
 
     core.routes.push({
         url: '/get/groupList',
-        handler: handlerFactory.create(db.getGroupList)
+        handler: handlerFactory.createWithData(db.getGroupList)
+    });
+
+    core.routes.push({
+        url: '/get/disciplineList',
+        handler: handlerFactory.create(db.discipline.getTableList)
     });
 
     core.routes.push({

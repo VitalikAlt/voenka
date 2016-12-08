@@ -31,8 +31,6 @@ module.exports.getGroupList = function(permissions, groups, profile_st) {
         }, error);
     };
 
-    return getGroupList;
-
     return function(aData, callback, error) {
         auth(aData.auth_key, function() {
             getGroupList(callback, error);
