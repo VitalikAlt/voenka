@@ -22,7 +22,7 @@ module.exports.add = function(core) {
 
     core.routes.push({
         url: '/get/disciplineList',
-        handler: handlerFactory.create(db.discipline.getTableList)
+        handler: handlerFactory.createWithData(db.getDisciplineList)
     });
 
     core.routes.push({

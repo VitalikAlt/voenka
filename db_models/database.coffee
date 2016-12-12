@@ -19,6 +19,7 @@ database.addTeacher = require('./src/admin/addTeacher').addTeacher(database.perm
 database.getStudentList = require('./src/admin/getStudentList').getStudentList(database.permissions, database.profile_st, database.groups)
 database.getTeacherList = require('./src/admin/getTeacherList').getTeacherList(database.permissions, database.profile_tc)
 database.getGroupList = require('./src/admin/getGroupList').getGroupList(database.permissions, database.groups, database.profile_st)
+database.getDisciplineList = require('./src/admin/getDisciplineList').getDisciplineList(database.permissions, database.discipline, database.profile_tc)
 database.deleteStudent = require('./src/admin/deleteStudent').deleteStudent(database.permissions, database.profile_st, database.marks, database.standarts_st)
 database.deleteTeacher = require('./src/admin/deleteTeacher').deleteTeacher(database.permissions)
 database.getStandarts = require('./getStandarts').getStandarts(database.standarts, database.standarts_st)

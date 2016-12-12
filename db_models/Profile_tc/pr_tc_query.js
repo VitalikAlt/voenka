@@ -15,7 +15,7 @@ var getProfile = function(aData, callback, err) {
             return err(500);
         }
     });
-}
+};
 
 var addData = function(aData, callback, error) {
 
