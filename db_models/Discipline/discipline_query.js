@@ -5,7 +5,7 @@ var Discipline = require('./Discipline').DisciplineModel;
 var Standart_query = require('../standart_query').standarts(Discipline);
 
 var getTableList = function(callback, error) { return Standart_query.list(callback, error); };
-var remove = function (anID, callback, error) { return Standart_query.remove(anID, callback, error); };
+var remove = function (aData, callback, error) { return Standart_query.remove(aData.Id, callback, error); };
 
 // to test (\/ - ready to test) (\/\/ - tested)
 

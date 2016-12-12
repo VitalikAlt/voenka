@@ -7,5 +7,6 @@ var baseRoute = require('./../baseRoute');
 require('./student/studentRoute').add(baseRoute);
 require('./teacher/teacherRoute').add(baseRoute);
 require('./group/groupRoute').add(baseRoute);
+require('./discipline/disciplineRoute').add(baseRoute);
 
 module.exports = baseRoute.routes;
