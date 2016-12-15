@@ -20,7 +20,7 @@ module.exports.createRoute = function(app) {
     });
 
     updateRoutes.forEach(function (route) {
-        app.get(route.url, route.handler);
+        app.post(route.url, route.handler);
     });
 
     return app;

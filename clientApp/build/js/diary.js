@@ -121,7 +121,7 @@ angular.module('app',
             $scope.data_discipline=[];
             $scope.data_group=[];
 
-            
+
             var selectedSt = [];
             var selectedTc = [];
             var data_c = [];
@@ -321,7 +321,6 @@ angular.module('app',
                     });
             };
 
-
             function dialogDone(objFromDialog) {
                 this.mdDialog.hide(objFromDialog);
             }
@@ -343,7 +342,7 @@ angular.module('app',
                     })
                         .then(function(pass) {
                             if (pass.new === pass.new_confirm) {
-                                $http.get('/permissions/change_pass', {params: {/*logg:logg.new,*/_id: $scope.data[idStudent].id, password: pass.old, new_password: pass.new}})
+                                $http.post('/permissions/change_pass', {params: {_id: $scope.data[idStudent].id, password: pass.old, new_password: pass.new}})
                                     .success(function(res) {
                                         console.log(res);
                                     });
@@ -1188,7 +1187,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 });
 
 
-            } 
+            }
         });
 })();
 (function() {
@@ -1660,7 +1659,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     })
                     .then(function(pass) {
                         if (pass.new === pass.new_confirm) {
-                            $http.get('/permissions/change_pass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
+                            $http.post('/permissions/change_pass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
                                 .success(function(res) {
                                     console.log(res);
                                 });
@@ -1978,7 +1977,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         }
                     })
                     console.log(request);
-                    $http.get('/update/marks', {params: {req: request}})
+                    $http.post('/update/marks', {params: {req: request}})
                         .success(function(res) {
                             console.log(res);
                         })
@@ -2264,7 +2263,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     })
                     .then(function(pass) {
                         if (pass.new === pass.new_confirm) {
-                            $http.get('/permissions/change_pass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
+                            $http.post('/permissions/change_pass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
                                 .success(function(res) {
                                     console.log(res);
                                 });

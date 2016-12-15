@@ -7,6 +7,8 @@ var path        = require('path');
 require('coffee-script');
 var RouteHandler = require('./routing/RouteHandler');
 var db = {};
+app.use(body.urlencoded({ extended: false }));
+app.use(body.json());
 app.use(express.static(path.join(__dirname + '/clientApp')));
 
 RouteHandler.createRoute(app);
