@@ -10,6 +10,10 @@ module.exports = (function() {
     this.handlerFactory = (function() {
         this.createWithData = function (handler) {
             return function(req,res) {
+                if (!Object.keys(req.query).length) {
+                    req.query = req.body;
+                }
+                console.log(req.query);
                 handler(req.query, function (succes) {
                     res.send(succes);
                 }, function (err) { res.send(err); });

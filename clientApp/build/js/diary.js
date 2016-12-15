@@ -342,7 +342,7 @@ angular.module('app',
                     })
                         .then(function(pass) {
                             if (pass.new === pass.new_confirm) {
-                                $http.post('/permissions/change_pass', {params: {_id: $scope.data[idStudent].id, password: pass.old, new_password: pass.new}})
+                                $http.post('/permissions/change_pass', {_id: $scope.data[idStudent].id, password: pass.old, new_password: pass.new})
                                     .success(function(res) {
                                         console.log(res);
                                     });
@@ -1659,7 +1659,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     })
                     .then(function(pass) {
                         if (pass.new === pass.new_confirm) {
-                            $http.post('/permissions/change_pass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
+                            $http.post('/permissions/change_pass', {_id: currentUser.getID(), password: pass.old, new_password: pass.new})
                                 .success(function(res) {
                                     console.log(res);
                                 });
@@ -1977,7 +1977,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         }
                     })
                     console.log(request);
-                    $http.post('/update/marks', {params: {req: request}})
+                    $http.post('/update/marks', {req: request})
                         .success(function(res) {
                             console.log(res);
                         })
@@ -2263,7 +2263,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                     })
                     .then(function(pass) {
                         if (pass.new === pass.new_confirm) {
-                            $http.post('/permissions/change_pass', {params: {_id: currentUser.getID(), password: pass.old, new_password: pass.new}})
+                            $http.post('/permissions/change_pass', {_id: currentUser.getID(), password: pass.old, new_password: pass.new})
                                 .success(function(res) {
                                     console.log(res);
                                 });

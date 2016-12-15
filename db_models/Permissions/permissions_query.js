@@ -77,6 +77,7 @@ var remove = function(anId, callback, error) {
 };
 
 var changePass = function(aData, callback, error) {
+    console.log(aData);
     return Users.update( {_id: aData._id, password: aData.password}, {password: aData.new_password}, function (err) {
         if (!err) {
             return callback(true);
