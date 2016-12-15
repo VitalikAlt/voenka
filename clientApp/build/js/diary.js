@@ -1262,6 +1262,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
             console.log('1');
             $http.get('/get/disciplineList', {params: {auth_key: currentUser.getID()}})
                 .then(function(res) {
+                    $scope.dis_data = [];
                     for (var i = 0; i < res.data.length; i++) {
                         $scope.dis_data.push({
                             num: i + 1,

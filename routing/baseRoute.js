@@ -13,7 +13,7 @@ module.exports = (function() {
                 if (!Object.keys(req.query).length) {
                     req.query = req.body;
                 }
-                console.log(req.query);
+
                 handler(req.query, function (succes) {
                     res.send(succes);
                 }, function (err) { res.send(err); });
