@@ -12,11 +12,11 @@ module.exports.createRoute = function(app) {
     });
 
     addRoutes.forEach(function (route) {
-        app.get(route.url, route.handler);
+        app.post(route.url, route.handler);
     });
 
     deleteRoutes.forEach(function (route) {
-        app.get(route.url, route.handler);
+        app.post(route.url, route.handler);
     });
 
     updateRoutes.forEach(function (route) {

@@ -48,6 +48,7 @@ var addData = function(aData, callback, error) {
 };
 
 var updateData = function(aData, callback, error) {
+    console.log(aData);
     return Users.update( {student_id: aData.student_id}, aData, function (err) {
         if (!err) {
             return callback(true);

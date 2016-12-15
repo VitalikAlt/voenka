@@ -5,6 +5,9 @@ module.exports.updateMarks = (marks) ->
     success = true
 
     aData.req.forEach (mark) =>
-      marks.updateData(JSON.parse(mark), ((res) ->), ((error) -> success = false))
+      try
+        marks.updateData(mark, ((res) ->), ((error) -> success = false))
+      catch err
+        error(err)
 
     return if success then callback(true) else error(false)

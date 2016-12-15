@@ -7,6 +7,6 @@ module.exports.add = function(core) {
 
     core.routes.push({
         url: '/add/group',
-        handler: handlerFactory.createWithData(db.groups_dis.addData)
+        handler: handlerFactory.createWithData(db.groups.addData)
     });
 };

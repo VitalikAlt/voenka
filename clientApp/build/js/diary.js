@@ -229,7 +229,7 @@ angular.module('app',
 
             $scope.removeStudent = function (element) {
                 var self = this;
-                $http.get('/delete/student', {params: {auth_key: currentUser.getID(), id: $scope.data[element].id}})
+                $http.post('/delete/student', {auth_key: currentUser.getID(), id: $scope.data[element].id})
                     .then(function(res) {
                         if (selectedSt.indexOf(self.data[element].id) !== -1) {
                             selectedSt.splice(selectedSt.indexOf(self.data[element].id), 1);
@@ -243,7 +243,7 @@ angular.module('app',
 
             $scope.removeTeacher = function (element) {
                 var self = this;
-                $http.get('/delete/teacher', {params: {auth_key: currentUser.getID(), id: $scope.data_tc[element].id}})
+                $http.post('/delete/teacher', {auth_key: currentUser.getID(), id: $scope.data_tc[element].id})
                     .then(function(res) {
                         if (selectedTc.indexOf(self.data_tc[element].id) !== -1) {
                             selectedTc.splice(selectedTc.indexOf(self.data_tc[element].id), 1);
@@ -288,7 +288,7 @@ angular.module('app',
                     clickOutsideToClose: false
                 }).then(function (objFromDialog) {
                     objFromDialog.auth_key = currentUser.getID();
-                    $http.get('/add/student', {params: objFromDialog})
+                    $http.post('/add/student', objFromDialog)
                         .success(function (res) {
                             console.log(res);
                             self.data.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
@@ -310,7 +310,7 @@ angular.module('app',
                     clickOutsideToClose: false
                 }).then(function(newTeacher) {
                     newTeacher.auth_key = currentUser.getID();
-                    $http.get('/add/teacher', {params: newTeacher})
+                    $http.post('/add/teacher', newTeacher)
                         .success(function (res) {
                             console.log(res);
                             self.data_tc.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
@@ -382,7 +382,7 @@ angular.module('app',
                     clickOutsideToClose: false
                 }).then(function(newDiscipline) {
                     newDiscipline.auth_key = currentUser.getID();//не понимаю эту строку
-                    $http.get('/add/discipline', {auth_key: newDiscipline})
+                    $http.post('/add/discipline', {auth_key: newDiscipline})
                         .success(function (res) {
                             console.log(res);
                             self.data_discipline.push({discipline_id: res.discipline_id, num: self.data_discipline.length + 1, name: discipline_name, tc_name:discipline_tc_named});
@@ -395,7 +395,7 @@ angular.module('app',
 
             $scope.removeDiscipline = function (element) {
                 var self = this;
-                $http.get('/delete/discipline', {params: {id: $scope.data_discipline[element].id}})
+                $http.post('/delete/discipline', {id: $scope.data_discipline[element].id})
                     .then(function(res) {
                         if (selectedSt.indexOf(self.data_discipline[element].id) !== -1) {
                             selectedSt.splice(selectedSt.indexOf(self.data_discipline[element].id), 1);
@@ -1556,10 +1556,10 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                 vm.clear = clear;
                 function saveData() {
                     if ((vm.student.squad < 7 && vm.student.squad>=0) || (vm.student.course < 7 && vm.student.course>=0))
-                    $http.get('/add/group', {params: {squad: vm.student.squad, course:vm.student.course}})
+                    $http.post('/add/group', {squad: vm.student.squad, course:vm.student.course})
                         .success(function (group) {
                             console.log(group);
-                            $http.get('/update/student_profile', {params: {
+                            $http.post('/update/student_profile', {
                                 student_id: currentUser.getID(),
 
                                 group_id: group._id,
@@ -1586,7 +1586,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                                 conclusion: vm.student.conclusion,
                                 start_study_year: vm.student.start_study_year,
                                 birthDate: vm.student.birthDate
-                            }})
+                            })
                                 .success(function (data) {
                                     console.log(data);
                                 })
@@ -2179,7 +2179,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                  vm.saveData = saveData;
                  vm.clear = clear;
                  function saveData() {
-                     $http.get('/update/teacher_profile', {params: {
+                     $http.post('/update/teacher_profile', {
                          teacher_id: currentUser.getID(),
 
                          name: vm.teacher.name,
@@ -2193,7 +2193,7 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                          address: vm.teacher.address,
                          start_year: vm.teacher.start_year,
                          birthDate: vm.teacher.birthDate
-                     }})
+                     })
                          .success(function (data) {
                              console.log(data);
                          })

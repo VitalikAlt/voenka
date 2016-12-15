@@ -7,9 +7,15 @@
       success = true;
       aData.req.forEach((function(_this) {
         return function(mark) {
-          return marks.updateData(JSON.parse(mark), (function(res) {}), (function(error) {
-            return success = false;
-          }));
+          var err;
+          try {
+            return marks.updateData(mark, (function(res) {}), (function(error) {
+              return success = false;
+            }));
+          } catch (error1) {
+            err = error1;
+            return error(err);
+          }
         };
       })(this));
       if (success) {
