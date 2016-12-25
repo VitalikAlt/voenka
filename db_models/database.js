@@ -33,6 +33,8 @@
 
   database.deleteTeacher = require('./src/admin/deleteTeacher').deleteTeacher(database.permissions);
 
+  database.deleteDiscipline = require('./src/admin/deleteDiscipline').deleteDiscipline(database.permissions, database.discipline, database.groups_dis);
+
   database.getStandarts = require('./getStandarts').getStandarts(database.standarts, database.standarts_st);
 
   database.getMarks = require('./getMarks').getMarks(database.discipline, database.marks);

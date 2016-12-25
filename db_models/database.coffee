@@ -22,6 +22,7 @@ database.getGroupList = require('./src/admin/getGroupList').getGroupList(databas
 database.getDisciplineList = require('./src/admin/getDisciplineList').getDisciplineList(database.permissions, database.discipline, database.profile_tc)
 database.deleteStudent = require('./src/admin/deleteStudent').deleteStudent(database.permissions, database.profile_st, database.marks, database.standarts_st)
 database.deleteTeacher = require('./src/admin/deleteTeacher').deleteTeacher(database.permissions)
+database.deleteDiscipline = require('./src/admin/deleteDiscipline').deleteDiscipline(database.permissions, database.discipline, database.groups_dis)
 database.getStandarts = require('./getStandarts').getStandarts(database.standarts, database.standarts_st)
 database.getMarks = require('./getMarks').getMarks(database.discipline, database.marks)
 database.getStudents = require('./getStudents').getMarks(database.discipline, database.marks, database.groups, database.profile_st, database.groups_dis)

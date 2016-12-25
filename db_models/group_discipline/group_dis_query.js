@@ -40,7 +40,18 @@ var get = function(aData, callback, error) {
     });
 };
 
+var removeByDis = function (aData, callback, error) {
+    return Group_dis.remove({discipline_id: aData.Id}, function(err, succes) {
+        if(!err) {
+            return callback(succes);
+        } else {
+            return error(err);
+        }
+    });
+};
+
 module.exports.getTableList = getTableList;
 module.exports.addData = addData;
 module.exports.get = get;
 module.exports.remove = remove;
+module.exports.removeByDis = removeByDis;

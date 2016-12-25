@@ -31,7 +31,7 @@ var addData = function(aData, callback, error) {
     Users.find({student_id: aData.student_id}, function (err, data) {
         if (!err) {
             if (data.length) {
-                return callback(data[0])
+                return error('Already created')
             } else {
                 var user = new Users(aData);
 

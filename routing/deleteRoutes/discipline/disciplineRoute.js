@@ -7,6 +7,6 @@ module.exports.add = function(core) {
 
     core.routes.push({
         url: '/delete/discipline',
-        handler: handlerFactory.createWithData(db.discipline.remove)
+        handler: handlerFactory.createWithData(db.deleteDiscipline)
     });
 };

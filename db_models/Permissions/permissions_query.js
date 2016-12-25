@@ -39,11 +39,11 @@ var addData = function(aData, callback, error) {
                     if (!err) {
                         return callback(user);
                     } else {
-                        return error(err);
+                        return error('Already created');
                     }
                 });
             } else {
-                return callback(data[0]);
+                return error(data[0]);
             }
         } else {
             return error(err)

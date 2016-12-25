@@ -16,7 +16,7 @@
                         <tr>
                             <td></td>
                             <td></td>
-                            <td><input type="text" style="width:100%" ></td>
+                            <td><input type="text" style="width:100%" ng-model="name" ng-keyup="sort('discipline', 'name', name)"></td>
                             <td></td>
                             <td></td>
                             <td>
@@ -28,7 +28,7 @@
                         <tr class="hover_string" ng-repeat="item in data_discipline">
 
                             <td>
-                                <input type="checkbox" style="padding-right:10px ">
+
                             </td>
                             <td>{{item.num}}</td>
                             <td>{{item.name}}</td>
@@ -39,14 +39,14 @@
                                     <tr>
                                         <td>
                                             <a title="Добавить группу">
-                                                <img class="img_edit" src="/diaryApp/admin/img/Add.png" ng-click="addDiscGroup($event, item)">
+                                                <img class="img_edit" src="/diaryApp/admin/img/EditLP.png" ng-click="addDiscGroup($event, item)">
                                             </a>
                                         </td>
                                         <td>
-                                            <a title="Изменить">
-                                                <img class="img_remove" src="/diaryApp/admin/img/EditLP.png"
-                                                     ng-click="remakeDiscGroup($index)">
-                                            </a>
+                                            <!--<a title="Изменить">-->
+                                                <!--<img class="img_remove" src="/diaryApp/admin/img/EditLP.png"-->
+                                                     <!--ng-click="remakeDiscGroup($index)">-->
+                                            <!--</a>-->
                                         </td>
                                         <td>
                                             <a title="Удалить">
@@ -56,17 +56,6 @@
                                         </td>
                                     </tr>
                                 </table>
-                            </td>
-                        </tr>
-                    </table>
-                    <table table class="table_student">
-                        <tr class="right_align">
-                            <td class="column1">
-                                <a href="#" style="text-decoration: none" ng-click="deleteDis()">
-                                    <div class="delete">
-                                        Удалить
-                                    </div>
-                                </a>
                             </td>
                         </tr>
                     </table>

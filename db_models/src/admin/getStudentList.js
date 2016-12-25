@@ -21,7 +21,6 @@ module.exports.getStudentList = function(permissions, profile_st, groups) {
             var count = res.length;
 
             res.forEach(function (student) {
-                console.log(res);
                 profile_st.getProfile({Id: student._id}, function(res) {
                     var squad, course;
                     if (res.group_id) {

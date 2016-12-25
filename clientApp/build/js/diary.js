@@ -106,7 +106,7 @@ angular.module('app',
 (function() {
     angular
         .module('app.admin')
-        .controller('AdminProfileController', function($scope, $mdDialog, $http, $cookieStore, currentUser, PERMISSIONS) {
+        .controller('AdminProfileController', function($scope, $mdDialog, $http, $cookieStore, currentUser, PERMISSIONS, $window) {
 
             var vm = this;
             vm.mdDialog = $mdDialog;
@@ -156,19 +156,51 @@ angular.module('app',
                 console.log(currentUser.setPermissions(PERMISSIONS.GUEST));
             }
 
-            $http.get('/get/studentList', {params: {auth_key: currentUser.getID()}})
-                .then(function(res) {
-                    $scope.data = res.data;
-                    data_c = res.data;
-                    $scope.reloadNum();
-                });
+            var getList = function () {
+                var self = this;
+                $scope.data = [];
+                data_c = [];
+                $scope.data_tc = [];
+                data_tc_c = [];
 
-            $http.get('/get/teacherList', {params: {auth_key: currentUser.getID()}})
-                .then(function(res) {
-                    $scope.data_tc = res.data;
-                    data_tc_c = res.data;
-                    $scope.reloadNum();
-                });
+                $http.get('/get/studentList', {params: {auth_key: currentUser.getID()}})
+                    .then(function(res) {
+                        $scope.data = [];
+                        data_c = [];
+                        for (var i = 0; i < res.data.length; i ++) {
+                            $scope.data.push(res.data[i]);
+                            data_c.push(res.data[i]);
+                        }
+                        $scope.reloadNum();
+                    });
+
+                $http.get('/get/teacherList', {params: {auth_key: currentUser.getID()}})
+                    .then(function(res) {
+                        $scope.data_tc = [];
+                        data_tc_c = [];
+                        for (var i = 0; i < res.data.length; i ++) {
+                            $scope.data_tc.push(res.data[i]);
+                            data_tc_c.push(res.data[i]);
+                        }
+                        $scope.reloadNum();
+                    });
+            };
+
+            getList();
+
+            // $http.get('/get/studentList', {params: {auth_key: currentUser.getID()}})
+            //     .then(function(res) {
+            //         $scope.data = res.data;
+            //         data_c = res.data;
+            //         $scope.reloadNum();
+            //     });
+            //
+            // $http.get('/get/teacherList', {params: {auth_key: currentUser.getID()}})
+            //     .then(function(res) {
+            //         $scope.data_tc = res.data;
+            //         data_tc_c = res.data;
+            //         $scope.reloadNum();
+            //     });
 
             $http.get('/get/disciplineList', {params: {auth_key: currentUser.getID()}})
                 .then(function(res) {
@@ -295,12 +327,18 @@ angular.module('app',
                     });
                     this.reloadNum();
                 };
+                if (mode === 'discipline') {
+                    this.data_discipline = data_discipline_dis.filter(function (item) {
+                        return item[field].toString().indexOf(value) !== -1;
+                    });
+                    this.reloadNum();
+                };
             };
 
             $scope.removeDis = function(discipline) {
                 var self = this;
                 console.log(discipline);
-                $http.post('/delete/discipline', {Id: discipline.id})
+                $http.post('/delete/discipline', {auth_key: currentUser.getID(), Id: discipline.id})
                     .then(function(res) {
                         console.log(res);
                         self.data_discipline.splice(self.data_discipline.indexOf(discipline),1);
@@ -321,12 +359,15 @@ angular.module('app',
                     targetEvent: ev,
                     clickOutsideToClose: false
                 }).then(function (objFromDialog) {
+                    if (!objFromDialog || !objFromDialog.login || !objFromDialog.password || !objFromDialog.course || !objFromDialog.squad
+                    || !objFromDialog.login.indexOf("'") || !objFromDialog.password.indexOf("'") || !objFromDialog.course.indexOf("'") || !objFromDialog.squad.indexOf("'")) {
+                        $window.alert('Студент не добавлен!');
+                        return;
+                    };
                     objFromDialog.auth_key = currentUser.getID();
                     $http.post('/add/student', objFromDialog)
                         .success(function (res) {
-                            console.log(res);
-                            self.data.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
-                            if (self.data.length != data_c.length) data_c.push({id: res.student_id, num: self.data.length + 1, name: 'Undefined', squad: objFromDialog.squad, course: objFromDialog.course});
+                            getList();
                         });
                 }, function (err) {
                     console.log(err);
@@ -343,6 +384,10 @@ angular.module('app',
                     targetEvent: ev,
                     clickOutsideToClose: false
                 }).then(function(discipline) {
+                    if (!discipline ||!discipline.name || discipline.name.indexOf("'") || !discipline.tc_name || !discipline.tc_name.indexOf("'")) {
+                        $window.alert('Дисциплина не добавлена!');
+                        return;
+                    };
                     var tc_id;
                     for(var i = 0; i < self.data_tc.length; i++){
                         if(self.data_tc[i].name == discipline.tc_name) {
@@ -372,12 +417,15 @@ angular.module('app',
                     targetEvent: ev,
                     clickOutsideToClose: false
                 }).then(function(newTeacher) {
+                    if ((!newTeacher || !newTeacher.login || !newTeacher.password) || (!newTeacher.login.indexOf("'") || !newTeacher.password.indexOf("'"))) {
+                        $window.alert('Преподаватель не добавлен!');
+                        return;
+                    }
                     newTeacher.auth_key = currentUser.getID();
                     $http.post('/add/teacher', newTeacher)
                         .success(function (res) {
                             console.log(res);
-                            self.data_tc.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
-                            if (self.data_tc.length != data_tc_c.length) data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
+                            getList();
                         });
                     }, function(err) {
                         console.log(err);
@@ -394,6 +442,7 @@ angular.module('app',
 
 
             $scope.changePassword = function startChangePassDialog(ev, idStudent) {
+                var self = this;
                 console.log(currentUser.getID());
                     $mdDialog.show({
                         controller: 'StudentsProfileController',
@@ -420,17 +469,19 @@ angular.module('app',
 
             $scope.showStudentProfile = function (idStudent) {
                 var Id = currentUser.getID();
+                var self = this;
                 currentUser.setID($scope.data[idStudent].id);
                 $mdDialog.show({
                     controller: 'StudentsProfileController',
                     controllerAs: 'profile',
                     templateUrl: 'diaryApp/students/profile/profile.html',
                     parent: angular.element(document.body),
-                    clickOutsideToClose: false,
+                    clickOutsideToClose: true,
                 }).then(function() {
-                    console.log(1);
+                    getList();
                 }, function () {
                     currentUser.setID(Id);
+                    getList();
                 });
             };
 
@@ -438,21 +489,22 @@ angular.module('app',
                 var Id = currentUser.getID();
                 currentUser.setID($scope.data_tc[idTeacher].id);
                 $mdDialog.show({
-                    controller: 'StudentsProfileController',
+                    controller: 'TeachersProfileController',
                     controllerAs: 'profile',
-                    templateUrl: 'diaryApp/students/profile/profile.html',
+                    templateUrl: 'diaryApp/teachers/profile/profile.html',
                     parent: angular.element(document.body),
                     clickOutsideToClose: false,
                 }).then(function() {
-                    console.log(1);
+                    getList();
                 }, function () {
                     currentUser.setID(Id);
+                    getList();
                 });
             };
 
             $scope.removeDiscipline = function (element) {
                 var self = this;
-                $http.post('/delete/discipline', {id: $scope.data_discipline[element].id})
+                $http.post('/delete/discipline', {auth_key: currentUser.getID(), id: $scope.data_discipline[element].id})
                     .then(function(res) {
                         if (selectedSt.indexOf(self.data_discipline[element].id) !== -1) {
                             selectedSt.splice(selectedSt.indexOf(self.data_discipline[element].id), 1);
@@ -478,8 +530,6 @@ angular.module('app',
                 }).then(function(group_list) {
                         for (var i = 0; i < group_list.length; i++) {
                             // group_id + discipline_id
-                            console.log(self.currentDis);
-                            console.log(self.group_list[i]);
                             $http.post('/add/group_dis', {discipline_id: self.currentDis, group_id: group_list[i].id})
                                 .then(function(res) {
                                     console.log(res);
