@@ -21,6 +21,7 @@ module.exports.getGroupList = function(permissions, groups, profile_st) {
             res.forEach(function (group) {
                 profile_st.getProfileByGroup({Id: group._id}, function(res) {
                     rows.push({
+                        id: group._id,
                         course: group.course,
                         squad: group.squad,
                         count: res.length

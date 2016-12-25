@@ -11,6 +11,7 @@ var addData = function(aData, callback, error) {
     Group_dis.find({discipline_id: aData.discipline_id, group_id: aData.group_id}, function (err, data) {
         if (!err) {
             if (!data.length) {
+                console.log(aData);
                 var article = new Group_dis(aData);
 
                 article.save(function (err) {

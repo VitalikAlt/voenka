@@ -120,7 +120,8 @@ angular.module('app',
             $scope.data_tc = [];
             $scope.data_discipline=[];
             $scope.data_group=[];
-
+            $scope.group_list=[];
+            $scope.currentDis = '';
 
             var selectedSt = [];
             var selectedTc = [];
@@ -138,6 +139,9 @@ angular.module('app',
                 }
                 for (i = 0; i < this.data_group.length; i++) {
                     this.data_group[i].num = i + 1;
+                }
+                for (i = 0; i < this.data_discipline.length; i++) {
+                    this.data_discipline[i].num = i + 1;
                 }
             };
 
@@ -338,24 +342,24 @@ angular.module('app',
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose: false
-                }).then(function()
-                {
-                    var tc_id = data_discipline.push();
-                    for(var i = 0; i < self.data_tc.length;i++){
-                        if(self.data_tc[i] == self.discipline_tc_name) {
-                            tc_id.auth_key = self.data_tc[i].getID();
+                }).then(function(discipline) {
+                    var tc_id;
+                    for(var i = 0; i < self.data_tc.length; i++){
+                        if(self.data_tc[i].name == discipline.tc_name) {
+                            tc_id = self.data_tc[i].id;
                         }
                     }
-                    $http.post('/add/discipline', {discipline_name: self.discipline_name,teacher_id: newDiscipline.auth_key})//{dicsipline_name:"dfsdf",teacher_id:}
+                    $http.post('/add/discipline', {discipline_name: discipline.name, teacher_id: tc_id})//{dicsipline_name:"dfsdf",teacher_id:}
                         .success(function (res) {
                             console.log(res);
-                            self.data_discipline.push({discipline_id: res.discipline_id, num: self.data_discipline.length + 1, name: "discipline_3", tc_name:"Petrov"});
-                            if (self.data_tc.length != data_tc_c.length) data_tc_c.push({id: res.discipline_id, num: self.discipline_tc.length + 1, name: 'Undefined'});
+                            console.log(self.data_discipline);
+                            self.data_discipline.push({id: res._id, num: self.data_discipline.length + 1, name: discipline.name, teacher:discipline.tc_name});
+                            //if (self.data_tc.length != data_tc_c.length) data_tc_c.push({id: res.discipline_id, num: self.discipline_tc.length + 1, name: 'Undefined'});
                         });
                 }, function(err) {
                     console.log(err);
                 });
-            }
+            };
 
 
             $scope.addTeacher = function startAddStudentDialog(ev) {
@@ -428,7 +432,8 @@ angular.module('app',
                 }, function () {
                     currentUser.setID(Id);
                 });
-            }
+            };
+
             $scope.showTeacherProfile = function (idTeacher) {
                 var Id = currentUser.getID();
                 currentUser.setID($scope.data_tc[idTeacher].id);
@@ -443,10 +448,7 @@ angular.module('app',
                 }, function () {
                     currentUser.setID(Id);
                 });
-            }
-
-           
-
+            };
 
             $scope.removeDiscipline = function (element) {
                 var self = this;
@@ -462,27 +464,30 @@ angular.module('app',
                     });
             };
 
-            $scope.addDiscGroup = function (ev) {
+            $scope.addDiscGroup = function (ev, item) {
+                $scope.currentDis = item.id;
                 var self = this;
+                this.data_group =
                 controller.mdDialog.show({
-                    controller: 'StudentsProfileController',
+                    controller: 'AdminProfileController',
                     controllerAs: 'profile',
                     templateUrl: 'diaryApp/admin/discipline/views/addDiscGroup.html',
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose: false
-                })/*.then(function(newDiscipline) {
-                    newDiscipline.auth_key = currentUser.getID();//не понимаю эту строку
-                    $http.get('/add/discipline', {auth_key: newDiscipline})
-                        .success(function (res) {
-                            console.log(res);
-                            self.data_discipline.push({discipline_id: res.discipline_id, num: self.data_discipline.length + 1, name: discipline_name, tc_name:discipline_tc_named});
-                            if (self.data_tc.length != data_tc_c.length) data_tc_c.push({id: res.teacher_id, num: self.data_tc.length + 1, name: 'Undefined'});
-                        });
-                }, function(err) {
-                    console.log(err);
-                });*/
-            }
+                }).then(function(group_list) {
+                        for (var i = 0; i < group_list.length; i++) {
+                            // group_id + discipline_id
+                            console.log(self.currentDis);
+                            console.log(self.group_list[i]);
+                            $http.post('/add/group_dis', {discipline_id: self.currentDis, group_id: group_list[i].id})
+                                .then(function(res) {
+                                    console.log(res);
+                                });
+                        }
+                    })
+            };
+
             $scope.remakeDiscGroup = function (idDisc) {
                 var self = this;
                 controller.mdDialog.show({
@@ -492,7 +497,30 @@ angular.module('app',
                     parent: angular.element(document.body),
                     clickOutsideToClose: false
                 })
-            }
+            };
+
+            $scope.addGroupToList = function(item) {
+                if ($scope.group_list.indexOf(item) === -1) {
+                    $scope.group_list.push(item);
+                } else {
+                    $scope.group_list.splice($scope.group_list.indexOf(item), 1);
+                }
+            };
+
+            $scope.addGroupForDisc = function() {
+                for (var i = 0; i < $scope.group_list.length; i++) {
+                    // group_id + discipline_id
+                    console.log($scope.currentDis);
+                    console.log($scope.group_list[i]);
+                    $http.post('/add/group_dis', {discipline_id: $scope.currentDis, group_id: $scope.group_list[i].id})
+                        .then(function(res) {
+                            console.log(res);
+                        });
+                }
+
+                console.log($scope.group_list);
+            };
+
             $scope.addGroup = function (idDisc) {
                 var self = this;
                 controller.mdDialog.show({

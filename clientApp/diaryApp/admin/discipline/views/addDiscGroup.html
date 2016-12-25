@@ -46,7 +46,7 @@
                         </tr>
                         <tr class="hover_string" ng-repeat="item in data_group">
                             <td>
-                                <input type="checkbox" style="margin-left:38%" >
+                                <input type="checkbox" style="margin-left:38%" ng-click="addGroupToList(item)">
                             </td>
                             <td></td>
                             <td>{{item.course}}</td>
@@ -75,7 +75,7 @@
                     <table table class="table_student">
                         <tr class="right_align">
                             <td class="column1">
-                                <a href="#" style="text-decoration: none" ng-click="deleteStudents()">
+                                <a href="#" style="text-decoration: none" ng-click="profile.dialogDone(group_list)">
                                     <div class="delete">
                                         Добавить
                                     </div>
