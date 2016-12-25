@@ -15,10 +15,13 @@
       })(this));
     };
     query.remove = function(anID, callback, error) {
-      return aDatabase({
+      console.log(anID);
+      return aDatabase.remove({
         _id: anID
       }, (function(_this) {
         return function(err, success) {
+          console.log(err);
+          console.log(success);
           if (!err) {
             return callback(success);
           } else {

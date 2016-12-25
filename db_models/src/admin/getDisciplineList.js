@@ -19,6 +19,7 @@ module.exports.getDisciplineList = function(permissions, discipline, profile_tc)
             res.forEach(function (discipline) {
                 profile_tc.getProfile({Id: discipline.teacher_id}, function(res) {
                     rows.push({
+                        id: discipline._id,
                         name: discipline.discipline_name,
                         teacher: res.surname
                     });

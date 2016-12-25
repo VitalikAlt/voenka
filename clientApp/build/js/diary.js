@@ -136,6 +136,9 @@ angular.module('app',
                 for (i = 0; i < this.data_tc.length; i++) {
                     this.data_tc[i].num = i + 1;
                 }
+                for (i = 0; i < this.data_group.length; i++) {
+                    this.data_group[i].num = i + 1;
+                }
             };
 
             function logout() {
@@ -165,14 +168,20 @@ angular.module('app',
 
             $http.get('/get/disciplineList', {params: {auth_key: currentUser.getID()}})
                 .then(function(res) {
-                    $scope.data_discipline = res.data;
-                    data_c = res.data;
+                    $scope.data_discipline = res.data.map(function (item, i) {
+                        item.num = i + 1;
+                        return item;
+                    });
+                    data_discipline_dis = res.data;
                     $scope.reloadNum();
                 });
 
             $http.get('/get/groupList', {params: {auth_key: currentUser.getID()}})
                 .then(function(res) {
-                    $scope.data_group = res.data;
+                    $scope.data_group = res.data.map(function (item, i) {
+                        item.num = i + 1;
+                        return item;
+                    });
                     data_group_gr = res.data;
                     $scope.reloadNum();
                 });
@@ -269,12 +278,33 @@ angular.module('app',
                         });
                         this.reloadNum();
                     }
-                } else {
+                }
+                if (mode === 'tc') {
                     this.data_tc = data_tc_c.filter(function (item) {
                         return item[field].indexOf(value) !== -1;
                     });
                     this.reloadNum();
                 }
+                if (mode === 'group') {
+                    this.data_group = data_group_gr.filter(function (item) {
+                        return item[field].toString().indexOf(value) !== -1;
+                    });
+                    this.reloadNum();
+                };
+            };
+
+            $scope.removeDis = function(discipline) {
+                var self = this;
+                console.log(discipline);
+                $http.post('/delete/discipline', {Id: discipline.id})
+                    .then(function(res) {
+                        console.log(res);
+                        self.data_discipline.splice(self.data_discipline.indexOf(discipline),1);
+                        if (self.data_discipline.length != data_discipline_dis.length) data_discipline_dis.splice(data_discipline_dis.indexOf(discipline),1);
+                        self.reloadNum();
+                    }, function (err) {
+                        console.log(err);
+                    });
             };
 
             $scope.addStudent = function startAddStudentDialog(ev) {
@@ -1294,22 +1324,21 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
     angular
         .module('app.admin')
         .controller('AdminDisciplineController', function ($scope, $mdDialog, $http, $cookieStore, currentUser, PERMISSIONS) {
-            console.log('1');
-            $http.get('/get/disciplineList', {params: {auth_key: currentUser.getID()}})
-                .then(function(res) {
-                    $scope.dis_data = [];
-                    for (var i = 0; i < res.data.length; i++) {
-                        $scope.dis_data.push({
-                            num: i + 1,
-                            name: res.data[i].name,
-                            teacher: res.data[i].teacher
-                        });
-                    }
-                    console.log(res.data);
-                    //console.log($scope.dis_data);
-                }, function (err) {
-                    console.log(err);
-                })
+            // $http.get('/get/disciplineList', {params: {auth_key: currentUser.getID()}})
+            //     .then(function(res) {
+            //         $scope.data_discipline = [];
+            //         for (var i = 0; i < res.data.length; i++) {
+            //             $scope.data_discipline.push({
+            //                 num: i + 1,
+            //                 id: res.data[i].id,
+            //                 name: res.data[i].name,
+            //                 teacher: res.data[i].teacher
+            //             });
+            //
+            //         }
+            //     }, function (err) {
+            //         console.log(err);
+            //     })
         });
 })
 

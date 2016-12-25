@@ -8,7 +8,10 @@ module.exports.standarts = (aDatabase) ->
     )
 
   query.remove = (anID, callback, error) ->
-    aDatabase({_id: anID}, (err, success) =>
+    console.log anID
+    aDatabase.remove({_id: anID}, (err, success) =>
+      console.log err
+      console.log success
       return if !err then callback(success) else error(err))
 
   query.remove_All = (callback, error) ->
