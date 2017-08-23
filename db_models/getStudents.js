@@ -106,7 +106,6 @@ module.exports.getMarks = function(discipline, marks, groups, profile_st, group_
                                     if (count_prf === profile_arr.length) count_dis++;
 
                                     if (success.length === count_dis && count_prf === profile_arr.length) {
-                                        console.log('2');
                                         callback(rows);
                                     }
                                 });

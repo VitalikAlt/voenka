@@ -18,11 +18,15 @@ module.exports.getDisciplineList = function(permissions, discipline, profile_tc)
 
             res.forEach(function (discipline) {
                 profile_tc.getProfile({Id: discipline.teacher_id}, function(res) {
-                    rows.push({
-                        id: discipline._id,
-                        name: discipline.discipline_name,
-                        teacher: res.surname
-                    });
+                    try {
+                        rows.push({
+                            id: discipline._id,
+                            name: discipline.discipline_name,
+                            teacher: res.surname
+                        });
+                    } catch (err) {
+                        console.log(discipline)
+                    }
                     if (rows.length === count) callback(rows);
                 }, error);
             })

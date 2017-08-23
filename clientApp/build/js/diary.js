@@ -384,16 +384,19 @@ angular.module('app',
                     targetEvent: ev,
                     clickOutsideToClose: false
                 }).then(function(discipline) {
-                    if (!discipline ||!discipline.name || discipline.name.indexOf("'") || !discipline.tc_name || !discipline.tc_name.indexOf("'")) {
-                        $window.alert('Дисциплина не добавлена!');
-                        return;
+                    if (!discipline ||!discipline.name || (discipline.name.indexOf("'") !=-1) || !discipline.tc_name || !discipline.tc_name.indexOf("'")) {
+                        return $window.alert('Дисциплина не добавлена!');
                     };
                     var tc_id;
                     for(var i = 0; i < self.data_tc.length; i++){
-                        if(self.data_tc[i].name == discipline.tc_name) {
+                        console.log(self.data_tc[i].name.substr(0, self.data_tc[i].name.indexOf(' ')), discipline.tc_name)
+                        if(self.data_tc[i].name.substr(0, self.data_tc[i].name.indexOf(' ')) == discipline.tc_name) {
                             tc_id = self.data_tc[i].id;
                         }
                     }
+                    if (!tc_id) {
+                        return $window.alert('Дисциплина не добавлена!');
+                    };
                     $http.post('/add/discipline', {discipline_name: discipline.name, teacher_id: tc_id})//{dicsipline_name:"dfsdf",teacher_id:}
                         .success(function (res) {
                             console.log(res);
@@ -1699,6 +1702,12 @@ function badgeCurrentMenuRow(element, elemId, currentState) {
                         }
                         if (!vm.student.photo) {
                             vm.student.preview_img = CONFIG.defaultAvatar;
+                            if (vm.student.name && vm.student.surname && vm.student.fatherName) {
+                                vm.student.preview_img = '/assets/images/' + `${vm.student.surname}.jpg`;
+                                //vm.student.preview_img = '/assets/images/' + `${vm.student.surname} ${vm.student.name[0].toUpperCase()}. ${vm.student.fatherName[0].toUpperCase()}.jpg`;
+                            }
+
+                            console.log(vm.student.preview_img);
                         }
                         vm.student.docs = [];
                         vm.student.birthDate = new Date(data.birthDate);
